@@ -1,12 +1,13 @@
 language: node_js
 node_js:
   - "8.4"
-sudo: false
+sudo: required
 cache:
   directories:
     - $HOME/.npm
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache
 script:
   - npm t
   - npm i react-native-cli -g
