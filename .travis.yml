@@ -4,7 +4,6 @@ node_js:
 sudo: false
 cache:
   directories:
-    - "`pwd`/android-ndk-r10e"
     - $HOME/.npm
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
@@ -25,6 +24,12 @@ matrix:
       before_install:
         - nvm install 8
         - node --version
+        # install NDK
+        - pushd ~
+        - wget -q https://dl.google.com/android/repository/android-ndk-r12b-linux-x86_64.zip
+        - unzip -qo android-ndk-r12b-linux-x86_64.zip
+        - export ANDROID_NDK_HOME="$HOME/android-ndk-r12b"
+        - popd
       install:
         - travis_retry npm i -d
       android:
