@@ -4,6 +4,7 @@ node_js:
 sudo: false
 cache:
   directories:
+    - "`pwd`/android-ndk-r10e"
     - $HOME/.npm
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
@@ -24,13 +25,6 @@ matrix:
       before_install:
         - nvm install 8
         - node --version
-        # Download the Android ndk and unzip.
-        - wget http://dl.google.com/android/ndk/android-ndk-r9-linux-x86_64.tar.bz2
-        - tar xf android-ndk-r9-linux-x86_64.tar.bz2
-        - mv android-ndk-r9 android-ndk-linux
-        # Set up the ndk environment.
-        - export ANDROID_NDK=`pwd`/android-ndk-linux
-        - export PATH=${ANDROID_NDK}:${PATH}
       install:
         - travis_retry npm i -d
       android:
