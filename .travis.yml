@@ -31,8 +31,8 @@ matrix:
         - unzip -qo android-ndk-r12b-linux-x86_64.zip
         - export ANDROID_NDK_HOME="$HOME/android-ndk-r12b"
         - popd
-      install:
-        - travis_retry npm i -d --stacktrace
+     # install:
+      #  - travis_retry npm i -d --stacktrace
       android:
         components:
           - tools
