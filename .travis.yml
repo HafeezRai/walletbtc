@@ -52,7 +52,7 @@ matrix:
       script:
         - cd android && ./gradlew assembleDebug && ./gradlew assembleRelease
     - language: objective-c
-      #os: osx
+      os: osx
       osx_image: xcode8.3
       node_js: false
       before_install:
