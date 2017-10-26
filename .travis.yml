@@ -29,9 +29,9 @@ matrix:
         - git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
         - export ANDROID_NDK_HOME=$HOME/android-ndk-root
         - echo "y" | sdkmanager "cmake;3.6.4111459"
+        - npm update -q
       install:
-        - travis_retry npm i
-        #- travis_retry npm i -d
+        - travis_retry npm i -d
       android:
         components:
           - tools
@@ -59,10 +59,10 @@ matrix:
       before_install:
         - nvm install 8
         - node --version
+        - npm update -q
       install:
         - travis_retry gem install xcpretty
-        #- travis_retry npm i -d
-        - travis_retry npm i
+        - travis_retry npm i -d
       xcode_project: ios/edge.xcworkspace
       xcode_scheme: ios/edge
       script:
