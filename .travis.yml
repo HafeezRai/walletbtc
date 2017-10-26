@@ -54,10 +54,10 @@ matrix:
     - language: objective-c
       #os: osx
       osx_image: xcode8.3
-      #node_js: false
-     # before_install:
-     #   - nvm install 8
-     #   - node --version
+      node_js: false
+      before_install:
+        - nvm install 8
+        - node --version
       install:
         - travis_retry gem install xcpretty
         - travis_retry npm i -d
