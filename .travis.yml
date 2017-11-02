@@ -63,7 +63,7 @@ matrix:
         - nvm install 8
         - node --version
         - export NODE_OPTIONS="--max-old-space-size=2048"
-        echo "yes" | .+
+        - echo "yes" | .+
       install:
         - travis_retry gem install xcpretty
         #- travis_retry npm i -d
