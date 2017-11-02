@@ -32,7 +32,8 @@ matrix:
         - export ANDROID_NDK_HOME=$HOME/android-ndk-root
         - echo "y" | sdkmanager "cmake;3.6.4111459"
       install:
-        - travis_retry npm i -d
+        #- travis_retry npm i -d
+        - travis_retry npm i
         #- npm i -d
       android:
         components:
@@ -62,9 +63,11 @@ matrix:
         - nvm install 8
         - node --version
         - export NODE_OPTIONS="--max-old-space-size=2048"
+        echo "yes" | .+
       install:
         - travis_retry gem install xcpretty
-        - travis_retry npm i -d
+        #- travis_retry npm i -d
+        - travis_retry npm i
         #- npm i -d
       xcode_project: ios/edge.xcworkspace
       xcode_scheme: ios/edge
