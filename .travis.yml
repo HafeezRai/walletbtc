@@ -63,8 +63,8 @@ matrix:
         - export NODE_OPTIONS="--max-old-space-size=2048"
       install:
         - travis_retry gem install xcpretty
-        #- travis_retry npm i -d
-        - npm i -d
+        - travis_retry npm i -d
+        #- npm i -d
       xcode_project: ios/edge.xcworkspace
       xcode_scheme: ios/edge
       script:
