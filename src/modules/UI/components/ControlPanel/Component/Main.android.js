@@ -24,10 +24,10 @@ type Props ={
 type State = {}
 
 export default class Main extends Component<Props, State> {
-  // onLogout = () => {
-  //   this.props.onPressOption()
-  //   this.props.logout()
-  // }
+  onLogout = () => {
+    this.props.onPressOption()
+    this.props.logout()
+  }
 
   render () {
     return this.props.usersView ? <UserList /> : (
