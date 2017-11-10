@@ -51,6 +51,8 @@ matrix:
           - '.+'
       script:
         - cd android && ./gradlew assembleDebug && ./gradlew assembleRelease
+      after_failure:
+        - cat /home/travis/.npm/_logs/*.log
     - language: objective-c
       os: osx
       osx_image: xcode8.3
