@@ -30,7 +30,8 @@ matrix:
         - export ANDROID_NDK_HOME=$HOME/android-ndk-root
         - echo "y" | sdkmanager "cmake;3.6.4111459"
       install:
-        - travis_retry npm i -d
+        #- travis_retry npm i -d
+        #- npm i -d
       android:
         components:
           - tools
@@ -52,7 +53,7 @@ matrix:
       script:
         - cd android && ./gradlew assembleDebug && ./gradlew assembleRelease
       after_failure:
-        - cat /home/travis/.npm/_logs/*.log
+        - cat /home/travis/.npm/_logs/*-debug.log
     - language: objective-c
       os: osx
       osx_image: xcode8.3
