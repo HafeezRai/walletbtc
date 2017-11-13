@@ -13,7 +13,7 @@
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
     "type": "git",
-    "url": "git@github.com:Airbitz/edge-react-gui.git"
+    "url": "git://github.com/Airbitz/edge-react-gui.git"
   },
   "url": "https://airbitz.co",
   "private": true,
