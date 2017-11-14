@@ -51,8 +51,7 @@ matrix:
         licenses:
           - '.+'
       script:
-        - cd android && chmod +x ./gradlew
-        - cd android && ./gradlew assembleDebug && ./gradlew assembleRelease
+        - cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
     - language: objective-c
       os: osx
       osx_image: xcode8.3
