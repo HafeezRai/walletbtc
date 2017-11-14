@@ -26,6 +26,7 @@ matrix:
         - nvm install 8
         - node --version
         # install NDK
+        - chmod +x gradlew
         - git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
         - export ANDROID_NDK_HOME=$HOME/android-ndk-root
         - echo "y" | sdkmanager "cmake;3.6.4111459"
@@ -52,8 +53,6 @@ matrix:
           - '.+'
       script:
         - cd android && ./gradlew assembleDebug && ./gradlew assembleRelease
-      after_failure:
-        - cat /home/travis/.npm/_logs/*-debug.log
     - language: objective-c
       os: osx
       osx_image: xcode8.3
