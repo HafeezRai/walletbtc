@@ -25,7 +25,6 @@ matrix:
       before_install:
         - nvm install 8
         - node --version
-        - openssl aes-256-cbc -K $encrypted_0a6446eb3ae3_key -iv $encrypted_0a6446eb3ae3_key -in env.json.enc -out env.json -d
         # install NDK
         - git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
         - export ANDROID_NDK_HOME=$HOME/android-ndk-root
