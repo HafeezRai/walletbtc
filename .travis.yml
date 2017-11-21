@@ -67,5 +67,6 @@ matrix:
     xcode_scheme: ios/edge
     script:
     - cd ios
-    - xcodebuild -scheme edge -project edge.xcodeproj archive ONLY_ACTIVE_ARCH=NO
+    #- xcodebuild -scheme edge -project edge.xcodeproj archive ONLY_ACTIVE_ARCH=NO
+    - xcodebuild -project {project}.xcodeproj -target {target} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
 
