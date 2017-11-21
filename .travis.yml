@@ -59,13 +59,13 @@ matrix:
     before_install:
     - nvm install 8
     - node --version
+    - openssl aes-256-cbc -K $encrypted_f7ede145bde1_key -iv $encrypted_f7ede145bde1_iv -in env.json.enc -out env.json -d
     install:
     - travis_retry gem install xcpretty
-    - travis_retry npm i -d
+    - travis_wait npm i -d
     xcode_project: ios/edge.xcworkspace
     xcode_scheme: ios/edge
     script:
     - cd ios
     - xcodebuild -scheme edge -project edge.xcodeproj archive ONLY_ACTIVE_ARCH=NO
-before_install:
 
