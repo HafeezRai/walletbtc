@@ -53,7 +53,7 @@ matrix:
       - ".+"
     script:
     - cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
-    - appium
+    #- appium
     - cd tests && npm run test local.conf.js
   - language: objective-c
     os: osx
