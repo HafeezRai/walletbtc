@@ -31,8 +31,8 @@ matrix:
     - export ANDROID_NDK_HOME=$HOME/android-ndk-root
     - echo "y" | sdkmanager "cmake;3.6.4111459"
     install:
+    - npm install -g appium
     - travis_retry npm i -d
-    - npm install apppium -g
     android:
       components:
       - tools
@@ -53,6 +53,7 @@ matrix:
       - ".+"
     script:
     - cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
+    - appium
     - cd tests && npm run test local.conf.js
   - language: objective-c
     os: osx
