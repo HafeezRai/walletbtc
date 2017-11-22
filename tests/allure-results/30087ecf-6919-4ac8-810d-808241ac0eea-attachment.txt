@@ -1,0 +1,4 @@
+16:20:48.756 COMMAND: POST /element - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:49.008 RESULT: undefined
+

@@ -1,0 +1,37 @@
+{
+  "uid" : "98d3104e051c652961429bf95fa0b5d6",
+  "name" : "suites",
+  "children" : [ {
+    "name" : "Login Password",
+    "children" : [ {
+      "name" : "should log in",
+      "uid" : "89a322c58290fb0",
+      "parentUid" : "0eb04ac965907b9a1f9298e5b879ace6",
+      "status" : "passed",
+      "time" : {
+        "start" : 1510173254819,
+        "stop" : 1510173548858,
+        "duration" : 294039
+      },
+      "flaky" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "0eb04ac965907b9a1f9298e5b879ace6"
+  }, {
+    "name" : "Dummy test",
+    "children" : [ {
+      "name" : "should reproduce the steps",
+      "uid" : "3c89b780bedeb8d8",
+      "parentUid" : "01f3e84e3609f6e262b8d39b205b6d84",
+      "status" : "passed",
+      "time" : {
+        "start" : 1510173647034,
+        "stop" : 1510173937271,
+        "duration" : 290237
+      },
+      "flaky" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "01f3e84e3609f6e262b8d39b205b6d84"
+  } ]
+}

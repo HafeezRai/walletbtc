@@ -1,0 +1,75 @@
+{
+  "summary" : {
+    "reportName" : "Allure Report",
+    "testRuns" : [ ],
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 2,
+      "unknown" : 0,
+      "total" : 2
+    },
+    "time" : {
+      "start" : 1510173254819,
+      "stop" : 1510173937271,
+      "duration" : 682452,
+      "minDuration" : 290237,
+      "maxDuration" : 294039,
+      "sumDuration" : 584276
+    }
+  },
+  "environment" : [ {
+    "values" : [ "{\"name\":\"Testing Edge app on Android\",\"tags\":[\"Login Password\",\"Log Out\",\"Login Pin\"],\"appiumVersion\":\"1.6.5\",\"autoAcceptAlerts\":true,\"autoGrantPermissions\":true,\"platformName\":\"Android\",\"platformVersion\":\"6.0\",\"deviceName\":\"Android Emulator\",\"browserName\":\"\",\"app\":\"sauce-storage:edge-release.apk\",\"deviceOrientation\":\"portrait\"}" ],
+    "name" : "capabilities"
+  }, {
+    "values" : [ "[\"/Users/administrator2/Documents/automation fram/edge-react-gui/tests/android_login_password.js\"]" ],
+    "name" : "spec files"
+  } ],
+  "suites" : {
+    "total" : 2,
+    "items" : [ {
+      "uid" : "0eb04ac965907b9a1f9298e5b879ace6",
+      "name" : "Login Password",
+      "statistic" : {
+        "failed" : 0,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 1,
+        "unknown" : 0,
+        "total" : 1
+      }
+    }, {
+      "uid" : "01f3e84e3609f6e262b8d39b205b6d84",
+      "name" : "Dummy test",
+      "statistic" : {
+        "failed" : 0,
+        "broken" : 0,
+        "skipped" : 0,
+        "passed" : 1,
+        "unknown" : 0,
+        "total" : 1
+      }
+    } ]
+  },
+  "history-trend" : [ {
+    "statistic" : {
+      "failed" : 0,
+      "broken" : 0,
+      "skipped" : 0,
+      "passed" : 2,
+      "unknown" : 0,
+      "total" : 2
+    }
+  } ],
+  "behaviors" : {
+    "total" : 2,
+    "items" : [ ]
+  },
+  "executors" : [ ],
+  "categories" : {
+    "total" : 0,
+    "items" : [ ]
+  },
+  "launches" : [ ]
+}

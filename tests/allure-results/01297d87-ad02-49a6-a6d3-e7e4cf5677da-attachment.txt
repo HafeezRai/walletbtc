@@ -1,0 +1,112 @@
+16:23:00.397 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:00.446 RESULT: []
+
+16:23:00.894 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:00.954 RESULT: []
+
+16:23:01.398 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:01.458 RESULT: []
+
+16:23:01.901 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:01.965 RESULT: []
+
+16:23:02.400 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:02.464 RESULT: []
+
+16:23:02.905 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:02.983 RESULT: []
+
+16:23:03.398 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:03.457 RESULT: []
+
+16:23:03.896 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:04.006 RESULT: []
+
+16:23:04.396 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:04.457 RESULT: []
+
+16:23:04.899 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:04.995 RESULT: []
+
+16:23:05.405 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:06.519 RESULT: []
+
+16:23:06.532 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:06.836 RESULT: []
+
+16:23:06.854 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:07.125 RESULT: []
+
+16:23:07.137 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:07.262 RESULT: []
+
+16:23:07.395 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:07.534 RESULT: []
+
+16:23:07.897 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:08.023 RESULT: []
+
+16:23:08.393 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:08.452 RESULT: []
+
+16:23:08.900 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:08.967 RESULT: []
+
+16:23:09.446 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:09.511 RESULT: []
+
+16:23:09.896 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:09.965 RESULT: []
+
+16:23:10.402 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:10.455 RESULT: []
+
+16:23:10.897 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:10.971 RESULT: []
+
+16:23:11.402 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:11.468 RESULT: []
+
+16:23:11.903 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:12.014 RESULT: []
+
+16:23:12.407 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:12.465 RESULT: []
+
+16:23:12.903 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:12.975 RESULT: []
+
+16:23:13.393 COMMAND: POST /elements - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
+
+16:23:13.947 RESULT: [{"ELEMENT":"1"}]
+
+16:23:13.953 COMMAND: GET /element/1/displayed - {}
+
+16:23:14.002 RESULT: true
+

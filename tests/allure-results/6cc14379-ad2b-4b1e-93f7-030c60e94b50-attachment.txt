@@ -1,0 +1,208 @@
+16:20:49.054 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:49.125 RESULT: []
+
+16:20:49.554 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:49.632 RESULT: []
+
+16:20:50.050 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:50.104 RESULT: []
+
+16:20:50.554 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:50.629 RESULT: []
+
+16:20:51.065 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:51.144 RESULT: []
+
+16:20:51.553 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:51.608 RESULT: []
+
+16:20:52.059 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:52.134 RESULT: []
+
+16:20:52.553 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:52.681 RESULT: []
+
+16:20:53.053 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:53.187 RESULT: []
+
+16:20:53.552 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:53.610 RESULT: []
+
+16:20:54.056 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:54.226 RESULT: []
+
+16:20:54.572 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:55.164 RESULT: []
+
+16:20:55.176 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:55.667 RESULT: []
+
+16:20:55.696 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:56.013 RESULT: []
+
+16:20:56.081 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:56.249 RESULT: []
+
+16:20:56.572 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:56.671 RESULT: []
+
+16:20:57.057 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:57.127 RESULT: []
+
+16:20:57.552 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:57.641 RESULT: []
+
+16:20:58.059 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:58.109 RESULT: []
+
+16:20:58.589 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:58.616 RESULT: []
+
+16:20:59.053 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:59.179 RESULT: []
+
+16:20:59.569 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:20:59.657 RESULT: []
+
+16:21:00.063 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:00.357 RESULT: []
+
+16:21:00.557 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:00.688 RESULT: []
+
+16:21:01.052 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:01.108 RESULT: []
+
+16:21:01.563 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:01.644 RESULT: []
+
+16:21:02.053 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:02.087 RESULT: []
+
+16:21:02.553 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:02.611 RESULT: []
+
+16:21:03.059 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:03.149 RESULT: []
+
+16:21:03.563 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:03.706 RESULT: []
+
+16:21:04.051 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:04.113 RESULT: []
+
+16:21:04.557 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:04.668 RESULT: []
+
+16:21:05.055 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:05.103 RESULT: []
+
+16:21:05.559 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:05.631 RESULT: []
+
+16:21:06.053 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:06.088 RESULT: []
+
+16:21:06.555 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:06.619 RESULT: []
+
+16:21:07.050 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:07.113 RESULT: []
+
+16:21:07.552 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:07.628 RESULT: []
+
+16:21:08.051 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:08.116 RESULT: []
+
+16:21:08.566 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:08.638 RESULT: []
+
+16:21:09.055 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:09.117 RESULT: []
+
+16:21:09.565 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:09.656 RESULT: []
+
+16:21:10.052 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:10.135 RESULT: []
+
+16:21:10.553 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:10.636 RESULT: []
+
+16:21:11.053 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:11.138 RESULT: []
+
+16:21:11.551 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:11.644 RESULT: []
+
+16:21:12.054 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:12.089 RESULT: []
+
+16:21:12.553 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:12.639 RESULT: []
+
+16:21:13.051 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:13.113 RESULT: []
+
+16:21:13.557 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:13.645 RESULT: []
+
+16:21:14.065 COMMAND: POST /elements - {"using":"xpath","value":"//XCUIElementTypeOther[1][@name=\"I Understand\"]"}
+
+16:21:14.101 COMMAND: GET /screenshot - {}
+
+16:21:14.197 RESULT: []
+
+16:21:17.673 RESULT: "[base64] 649996 bytes"
+

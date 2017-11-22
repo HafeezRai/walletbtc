@@ -1,0 +1,37 @@
+{
+  "uid" : "83edc06c07f9ae9e47eb6dd1b683e4e2",
+  "name" : "packages",
+  "children" : [ {
+    "name" : "Login Password",
+    "children" : [ {
+      "name" : "should log in",
+      "uid" : "89a322c58290fb0",
+      "parentUid" : "69ddce5e5341ed59ce47aebd2a07ac96",
+      "status" : "passed",
+      "time" : {
+        "start" : 1510173254819,
+        "stop" : 1510173548858,
+        "duration" : 294039
+      },
+      "flaky" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "69ddce5e5341ed59ce47aebd2a07ac96"
+  }, {
+    "name" : "Dummy test",
+    "children" : [ {
+      "name" : "should reproduce the steps",
+      "uid" : "3c89b780bedeb8d8",
+      "parentUid" : "cd14d93456df016e7f42948476779390",
+      "status" : "passed",
+      "time" : {
+        "start" : 1510173647034,
+        "stop" : 1510173937271,
+        "duration" : 290237
+      },
+      "flaky" : false,
+      "parameters" : [ ]
+    } ],
+    "uid" : "cd14d93456df016e7f42948476779390"
+  } ]
+}

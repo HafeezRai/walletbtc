@@ -1,0 +1,4 @@
+{
+    "using": "xpath",
+    "value": "//android.view.ViewGroup[1]/android.widget.EditText"
+}

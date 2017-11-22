@@ -1,0 +1,2 @@
+16:23:14.379 COMMAND: POST /element - {"using":"xpath","value":"//android.widget.TextView[@text='Already have an account? Sign in']"}
+

@@ -32,6 +32,7 @@ matrix:
     - echo "y" | sdkmanager "cmake;3.6.4111459"
     install:
     - travis_retry npm i -d
+    - npm install apppium -g
     android:
       components:
       - tools
@@ -52,6 +53,7 @@ matrix:
       - ".+"
     script:
     - cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
+    - cd tests && npm run test local.conf.js
   - language: objective-c
     os: osx
     osx_image: xcode8.3
@@ -68,5 +70,5 @@ matrix:
     script:
     - cd ios
     #- xcodebuild -scheme edge -project edge.xcodeproj archive ONLY_ACTIVE_ARCH=NO
-    - xcodebuild -project {project}.xcodeproj -target {target} -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
+    - xcodebuild -project edge.xcodeproj -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
 
