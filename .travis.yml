@@ -76,5 +76,5 @@ matrix:
     - react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --platform ios
     - cd ios
     #- xcodebuild -scheme edge -project edge.xcodeproj archive ONLY_ACTIVE_ARCH=NO
-    - derivedDataPath build xcodebuild clean build -scheme edge -configuration release -sdk iphonesimulator10.3 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+    - -derivedDataPath build xcodebuild clean build -scheme edge -configuration release -sdk iphonesimulator10.3 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
 
