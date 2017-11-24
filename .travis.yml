@@ -27,11 +27,11 @@ matrix:
     - nvm install 8
     - node --version
     - openssl aes-256-cbc -K $encrypted_f7ede145bde1_key -iv $encrypted_f7ede145bde1_iv -in env.json.enc -out env.json -d
+    - npm install -g appium
     - git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
     - export ANDROID_NDK_HOME=$HOME/android-ndk-root
     - echo "y" | sdkmanager "cmake;3.6.4111459"
     install:
-    - npm install -g appium
     - travis_retry npm i -d
     android:
       components:
@@ -51,10 +51,18 @@ matrix:
       - cmake
       licenses:
       - ".+"
+    before_script:
+      - appium &
+      # create emulator-------------------------
+      - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
+      - emulator -avd test -no-skin -no-audio -no-window &
+      - android-wait-for-emulator
+      - adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
+      - cd android && chmod +x ./gradlew && ./gradlew installDebug
+      #-------------------------------------
     script:
-    - cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
-    #- appium
-    #- cd tests && npm run test local.conf.js
+    #- cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
+    - cd tests && npm run test local.conf.js
   - language: objective-c
     os: osx
     osx_image: xcode8.3
@@ -68,13 +76,8 @@ matrix:
     - travis_wait npm i -d
     xcode_project: ios/edge.xcworkspace
     xcode_scheme: ios/edge
-    #script:
-    #- cd ios
-    #- xcodebuild -scheme edge -project edge.xcodeproj archive ONLY_ACTIVE_ARCH=NO
-    #- xcodebuild clean build -scheme edge -project edge.xcodeproj -configuration Debug -sdk iphonesimulator9.3 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
     script:
-    #- react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle --platform ios
     - cd ios
-    #- xcodebuild -scheme edge -project edge.xcodeproj archive ONLY_ACTIVE_ARCH=NO
     - xcodebuild -derivedDataPath build clean build -scheme edge -configuration release -sdk iphonesimulator10.3 CODE_SIGNING_REQUIRED=NO CODE_SIGN_IDENTITY=""
+
 
