@@ -64,7 +64,8 @@ matrix:
       #- adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
       #- cd android && chmod +x ./gradlew && ./gradlew installDebug
       #-------------------------------------
-      - cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
+      #- cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
+      - cd android && chmod +x ./gradlew && ./gradlew assembleDebug
     script:
      - npm test
     #- cd tests && npm run test local.conf.js
