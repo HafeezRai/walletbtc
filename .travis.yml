@@ -27,7 +27,7 @@ matrix:
     - nvm install 8
     - node --version
     - openssl aes-256-cbc -K $encrypted_f7ede145bde1_key -iv $encrypted_f7ede145bde1_iv -in env.json.enc -out env.json -d
-    - npm install -g appium
+    #- npm install -g appium
     - git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
     - export ANDROID_NDK_HOME=$HOME/android-ndk-root
     - echo "y" | sdkmanager "cmake;3.6.4111459"
@@ -65,7 +65,7 @@ matrix:
       #- cd android && chmod +x ./gradlew && ./gradlew installDebug
       #-------------------------------------
     script:
-    - cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
+    - cd android && ./gradlew assembleDebug && ./gradlew assembleRelease
     #- cd tests && npm run test local.conf.js
     #- bash upload.sh
   - language: objective-c
