@@ -10,41 +10,45 @@ function createPageElement(selector) {
 };
 
 var AndroidWalletPage = Object.create(Page, {
+
+
     
      /* --- Define elements --- */
      
      wallet: createPageElement('//android.view.ViewGroup[1]/android.widget.TextView'),
-     firstWallet: createPageElement('//android.widget.ScrollView/android.view.View/android.view.View[1]/android.view.View/android.view.View[1]/android.view.View[1]/android.widget.TextView'),
-     secondWallet: createPageElement('//android.view.View[2]/android.view.View/android.view.View[1]/android.view.View[1]/android.widget.TextView'),
+     firstWallet: createPageElement('//android.widget.ScrollView/android.view.View/android.view.View[1]/android.view.View/android.view.View[1]/android.view.View[1]/android.view.View/android.widget.TextView'),
+     secondWallet: createPageElement('//android.widget.ScrollView/android.view.View/android.view.View[2]/android.view.View/android.view.View[1]/android.view.View[1]/android.view.View/android.widget.TextView'),
      requestInsideWallet: createPageElement('//android.widget.TextView[@text="Request"]'),
-     alert: createPageElement('//android.widget.Button[@text="ALLOW"]'),
-     more: createPageElement('//android.widget.TextView[@text="More"]'),
-     logout: createPageElement('//android.widget.TextView[@text="Logout"]'),
-     usernameOnExit: createPageElement('//android.view.ViewGroup[1]/android.widget.TextView[@text="'+ user +'"]'),
+     more: createPageElement('//android.view.View/android.view.View/android.view.View[2]/android.view.View[3]/android.widget.ImageView'),
+     logout: createPageElement('//android.widget.ScrollView/android.view.View/android.view.View[2]/android.view.View/android.view.View[3]'),
+     usernameOnExit: createPageElement('//*[@text="'+ user +'"]'),
      pin: createPageElement('//android.widget.FrameLayout/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View/android.view.View[3]'),
 
      /* --- Request & Send objects --- */
 
      request: createPageElement('//android.view.View[1]/android.widget.TextView[@text="Request"]'),
-     send: createPageElement('//android.widget.TextView[@text="Send"]'),
-     copy: createPageElement('//android.widget.TextView[@text="Copy"]'),
-     scan: createPageElement('//android.widget.TextView[@text="Scan"]'),
+     send: createPageElement('//*[@text="Send"]'),
+     copy: createPageElement('//*[@text="Copy"]'),
+     scan: createPageElement('//*[@text="Scan"]'),
      address: createPageElement('//android.widget.TextView[@text="Address"]'),
-     paste: createPageElement('//android.view.ViewGroup[1]/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.view.ViewGroup[2]'),
-     upDownArrow: createPageElement('//android.view.ViewGroup[2]/android.view.ViewGroup[1]/android.view.ViewGroup[1]/android.widget.TextView'),
-     topText: createPageElement('//android.view.ViewGroup[1]/android.widget.EditText'),
+     paste: createPageElement('//android.view.View[2]/android.view.View/android.view.View[2]/android.view.View[2]/android.widget.TextView'),
+     upDownArrow: createPageElement('//android.view.View/android.widget.ScrollView/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[1]/android.widget.TextView'),
+     topText: createPageElement('//*[1]/android.widget.EditText'),
      bottomText: createPageElement('//android.view.View/android.view.View/android.view.View/android.view.View[5]/android.view.View[2]/android.view.View[2]/android.widget.TextView[2]'),
-     bitsCurrency: createPageElement('//android.widget.TextView[@text="Bits"]'),
-     slideBtn: createPageElement('//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[2]/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup[4]'),
+     currency: createPageElement('//*[@text="USD"]'),
+     slideBtn: createPageElement('//android.view.View/android.view.View[3]/android.view.View/android.view.View[4]'),
+     screen: createPageElement('//android.support.v4.view.ViewPager'),
 
      /* --- Transaction objects --- */
 
-     lastTransaction: createPageElement('//android.view.ViewGroup[6]/android.view.ViewGroup/android.view.ViewGroup[1]'),
-     transactionName: createPageElement('//android.view.ViewGroup[2]/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup/android.widget.EditText'),
+     lastTransaction: createPageElement('//android.widget.ScrollView/android.view.View/android.view.View[8]/android.view.View/android.view.View'),
+     transactionName: createPageElement('//android.view.View[1]/android.widget.ScrollView/android.view.View/android.view.View/android.widget.EditText'),
      btnSave: createPageElement('//android.widget.TextView[@text="Save"]'),
-     //received: createPageElement('//android.view.ViewGroup[2]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView'),
-     received: createPageElement('//android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup[1]/android.view.ViewGroup/android.view.ViewGroup/android.widget.TextView'),
-
+     transactionSentMsg: createPageElement('//*[@text="Transaction Sent"]'),
+     okTransaction: createPageElement('//android.widget.Button[@text="OK"]'),
+     walletDropDown: createPageElement('//android.view.View[2]/android.view.View/android.view.View/android.widget.TextView[2]'),
+     lastWallet: createPageElement('//*[@text="Last Wallet"]'),
+     
 
      /* --- Define page methods --- */
 
@@ -61,13 +65,8 @@ var AndroidWalletPage = Object.create(Page, {
         
      }},
 
-     getFirstWallet: { value: function(text){
-        this.firstWallet.waitForVisible(999999);
-        chai.expect(AndroidWalletPage.firstWallet.getText()).to.be.equal(text);
-    }},
-
     getWallets: { value: function(text, text2){
-        this.firstWallet.waitForVisible(999999);
+        this.firstWallet.waitForVisible(150000);
         chai.expect(AndroidWalletPage.firstWallet.getText()).to.include(text);
         chai.expect(AndroidWalletPage.secondWallet.getText()).to.include(text2);
         //assert.equal(len, '4');
@@ -75,17 +74,17 @@ var AndroidWalletPage = Object.create(Page, {
 
     
     clickFirstWallet: { value: function(text){
-        this.firstWallet.waitForVisible(999999);
+        this.firstWallet.waitForVisible(5000);
         this.firstWallet.click();
     }},
 
     clickSecondWallet: { value: function(text){
-        this.secondWallet.waitForVisible(9999999);
+        this.secondWallet.waitForVisible(25000);
         this.secondWallet.click();
     }},
 
     clickRequestInsideWallet: { value: function(text){
-        this.requestInsideWallet.waitForVisible(999999);
+        this.requestInsideWallet.waitForVisible(25000);
         this.requestInsideWallet.click();
     }},
 
@@ -102,28 +101,37 @@ var AndroidWalletPage = Object.create(Page, {
      }},
 
     checkUserTextAndPin: { value: function(text){
-        this.usernameOnExit.waitForVisible(20000);
+        this.usernameOnExit.waitForVisible(30000);
         chai.expect(AndroidWalletPage.usernameOnExit.getText()).to.be.equal(text);
-        chai.expect(AndroidWalletPage.pin).to.be.visible();
+        chai.expect(AndroidWalletPage.pin).to.exist;
+        this.pin.setValue('1234');
 
      }},
 
     clickLastTransaction: { value: function(text){
         this.lastTransaction.waitForVisible(6000);
-        this.lastTransaction.setValue(text);
+        this.lastTransaction.click();
     }},
 
     changeTransactionName: { value: function(){
         this.transactionName.waitForVisible(6000);
         var name = this.transactionName.getText();
-        var nameToCheck = this.transactionName.setValue(name + '1');
+        this.transactionName.setValue(name + '1');
+
     }},
 
-    clickSave: { value: function(){
-        this.btnSave.waitForVisible(6000);
+    clickSaveAndCheckName: { value: function(){
+        var name = this.transactionName.getText();
         this.btnSave.click();
+        this.lastTransaction.waitForVisible(6000);
+        chai.expect(AndroidWalletPage.lastTransaction.getText()).to.be.equal(name);
     }},
-    
+/*
+    verifyTransactionName:  { value: function(){
+        this.lastTransaction.waitForVisible(6000);
+        chai.expect(AndroidWalletPage.lastTransaction.getText()).to.be.equal(modifiedTransactionName);
+    }},
+  */  
     clickRequest: { value: function(){
         this.request.waitForVisible(99999);
         this.request.click();
@@ -150,42 +158,66 @@ var AndroidWalletPage = Object.create(Page, {
     }},
 
     clickArrow: { value: function(){
+        browser.pause(1000);
         this.upDownArrow.waitForVisible(6000);
         this.upDownArrow.click();
     }},
      
-    setAmmount: { value: function(text){
+    setTopAmmount: { value: function(text){
         this.topText.waitForVisible(6000);
         this.topText.setValue(text);
     }},
 
-    checkAmmount: { value: function(text){
+    checkBottomAmmount: { value: function(){
         this.bottomText.waitForVisible(6000);
-        chai.expect(AndroidWalletPage.bottomText.getText()).to.be.at.least(1);
-    }},
-/*
-    slideToConfirm: { value: function(){
-        this.slideBtn.waitForVisible(6000);
-        browser.touchAction(this.slideBtn, [
-        'press',
-        { action: 'moveTo', x: 115, y: 843},
-        'release'
-       ]);
-    }},
-*/
-    slideToConfirm: { value: function(){
-        this.slideBtn.waitForVisible(6000);
-        //browser.swipe('//android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup[4]', 100 , 840 , 15);
-        browser.swipe('//android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[3]/android.view.ViewGroup/android.view.ViewGroup[4]', 100 , 840 , 15);
+        chai.expect(AndroidWalletPage.bottomText.getText()).to.not.equal('0');
     }},
 
-    checkReceived: { value: function(text){
-        this.received.waitForVisible(25000);
-        chai.expect(AndroidWalletPage.received.getText()).to.include(text);
+
+    clickSend : { value: function(){
+        this.send.waitForVisible(25000);
+        this.send.click();
+    }},
+    
+    dropDownSelectLastWallet : { value: function(){
+        this.walletDropDown.waitForVisible(25000);
+        this.walletDropDown.click();
+        this.lastWallet.waitForVisible(5000);
+        this.lastWallet.click();
 
     }},
     
+    checkCurrency: { value: function(text){
+        this.currency.waitForVisible(25000);
+        chai.expect(AndroidWalletPage.currency.getText()).to.include(text);
 
+    }},
+
+
+    slideToConfirm: { value: function(){
+        this.slideBtn.waitForVisible(6000);
+        //browser.swipe('//android.view.View/android.widget.ScrollView/android.view.View/android.view.View[3]/android.view.View/android.view.View[4]', 130, 783, 15 );
+        browser.swipeLeft('//android.view.View/android.widget.ScrollView/android.view.View/android.view.View[3]/android.view.View/android.view.View[4]', 488 , 15);
+    }},
+  
+    scrollDown: {value: function(){
+       browser.swipeUp('//android.support.v4.view.ViewPager', 1150 , 15);
+    } },
+
+    scrollUp: {value: function(){
+       browser.swipeDown('//android.support.v4.view.ViewPager', 1150 , 15);
+    } },
+
+    checkTransactionMsg: { value: function(text){
+        this.transactionSentMsg.waitForVisible(25000);
+        chai.expect(AndroidWalletPage.transactionSentMsg.getText()).to.include(text);
+
+    }},
+
+    clickOkTransaction : { value: function(){
+        this.okTransaction.waitForVisible(25000);
+        this.okTransaction.click();
+    }},
 
 
 

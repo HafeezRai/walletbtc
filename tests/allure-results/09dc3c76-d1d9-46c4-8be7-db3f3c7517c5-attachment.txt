@@ -1,4 +1,0 @@
-16:23:14.020 COMMAND: POST /element - {"using":"xpath","value":"//android.widget.TextView[@text='I Understand']"}
-
-16:23:14.092 RESULT: {"ELEMENT":"2"}
-

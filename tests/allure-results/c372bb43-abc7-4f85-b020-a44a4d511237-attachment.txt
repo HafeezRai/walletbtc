@@ -1,4 +1,0 @@
-16:23:14.183 COMMAND: POST /element/2/click - {}
-
-16:23:14.366 RESULT: true
-

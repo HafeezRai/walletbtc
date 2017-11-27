@@ -5,23 +5,22 @@ var AndroidWalletPage = require('../pageobjects/android_wallet_page');
 
 describe('Attempt Payment', function () {
     it('Should be able to create a transaction', function () {
-        AndroidLoginPage.clickAlreadyHaveAccount();
-        AndroidLoginPage.setUsername('edgy8');
-        AndroidLoginPage.setPassword('Test123456');  //Pin is 1234
-        AndroidLoginPage.clickLogin();
-        AndroidWalletPage.getFirstWallet('My Ether');
+        AndroidLoginPage.login();
+        AndroidWalletPage.getWallets('My Ether', 'Last Wallet');
         AndroidWalletPage.clickFirstWallet();
         AndroidWalletPage.clickRequestInsideWallet();
-        AndroidWalletPage.setAmmount('1.23');
-        AndroidWalletPage.checkAmmount();
+        AndroidWalletPage.setTopAmmount('1.23');
+        AndroidWalletPage.checkBottomAmmount();
         AndroidWalletPage.clickCopy();
-        AndroidWalletPage.clickScan();
-        AndroidWalletPage.clickAllow();
+        AndroidWalletPage.clickSend();
+        AndroidWalletPage.dropDownSelectLastWallet();
         AndroidWalletPage.clickAddress();
         AndroidWalletPage.clickPaste();
         AndroidWalletPage.clickArrow();
-        AndroidWalletPage.setAmmount(0);
+        AndroidWalletPage.setTopAmmount('0.10');
+        AndroidWalletPage.checkCurrency('USD');
         AndroidWalletPage.slideToConfirm();
-        AndroidWalletPage.checkReceived('Received');
+        AndroidWalletPage.checkTransactionMsg('Transaction Sent');
+        AndroidWalletPage.clickOkTransaction();   
     });
 });

@@ -65,7 +65,7 @@ exports.config = {
    
     sync: true,
 
-    logLevel: 'verbose',
+    logLevel: 'data',
 
     coloredLogs: true,
 
@@ -122,8 +122,23 @@ exports.config = {
     },
     */
 
-    // After test is executed, run "allure generate allure-results  --clean  && allure open" to execute the allure report
+    beforeTest: function () {
+    },
 
+    beforeHook: function () {
+        
+    },
+
+    afterHook: function () {
+       
+    },
+
+    afterTest: function (android_login_pin, android_login_password, android_attempt_payment, android_log_out) {
+       browser.removeApp('co.edgesecure.wallet');
+    },
+
+     // After test is executed, run "allure generate allure-results  --clean  && allure open" to execute the allure report
+     
     reporters: ['spec', 'allure'],
     reporterOptions: {
         allure: {
