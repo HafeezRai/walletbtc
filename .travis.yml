@@ -71,6 +71,7 @@ matrix:
     #- npm test
     #- cd tests && npm run test local.conf.js
     - cd ..
+    - ls 
     - bash upload.sh
   - language: objective-c
     os: osx
