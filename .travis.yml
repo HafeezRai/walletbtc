@@ -68,9 +68,9 @@ matrix:
       #- cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
       - cd android && chmod +x ./gradlew && ./gradlew assembleDebug
     script:
-    #- npm test
+    - npm test
     #- cd tests && npm run test local.conf.js
-    - bash upload.sh
+    #- bash upload.sh
   - language: objective-c
     os: osx
     osx_image: xcode8.3
