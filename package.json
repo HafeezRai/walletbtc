@@ -18,7 +18,7 @@
   "url": "https://airbitz.co",
   "private": true,
   "scripts": {
-    "test": "testcafe \"deviceName\":\"Android Emulator\" tests/local.conf.js"
+    "test":  "testcafe \"saucelabs:Chrome@beta:Windows 10\" tests/local.conf.js"
   },
   "jest": {
     "preset": "react-native"
