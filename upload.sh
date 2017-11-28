@@ -5,4 +5,4 @@ curl -u $SAUCE_USERNAME:$SAUCE_ACCESS_KEY -X POST -H 'Content-Type: application/
 
 cd tests
 
-local.conf.js
+wdio.conf.js
