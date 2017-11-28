@@ -18,7 +18,7 @@
   "url": "https://airbitz.co",
   "private": true,
   "scripts": {
-    "test":  "testcafe \"saucelabs:Chrome@beta:Windows 10\" tests/local.conf.js"
+    "test":  "testcafe \"saucelabs:Chrome@beta:Windows 10\" tests/tests/create_account.js"
   },
   "jest": {
     "preset": "react-native"
