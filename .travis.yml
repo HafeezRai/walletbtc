@@ -67,11 +67,12 @@ matrix:
       #-------------------------------------
       #- cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
       - cd android && chmod +x ./gradlew && ./gradlew assembleDebug
+      - cp -R app/build/outputs/apk/app-debug.apk $HOME
     script:
     #- npm test
     #- cd tests && npm run test local.conf.js
-    - cd ..
-    - ls 
+    #- cd $HOME
+    #- ls
     - bash upload.sh
   - language: objective-c
     os: osx
