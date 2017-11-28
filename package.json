@@ -180,6 +180,6 @@
     "vm": "vm-browserify"
   },
   "scripts": {
-    "test":  "testcafe \"saucelabs:Chrome@beta:Windows 10\" tests/local.conf.js"
+    "test":  "testcafe \"deviceName\":\"Android Emulator\" tests/local.conf.js"
   }
 }
