@@ -16,10 +16,10 @@ exports.config = {
     //
     // https://mochajs.org/
     specs: [
-        //path.join(__dirname, './tests/android_login_password.js')
+        path.join(__dirname, './tests/android_login_password.js')
         //path.join(__dirname, './tests/android_attempt_payment.js')
         //path.join(__dirname, './tests/android_login_pin.js')
-        path.join(__dirname, './tests/android_scroll_check.js')
+        //path.join(__dirname, './tests/android_scroll_check.js')
     ],
 
     // Note:
@@ -48,8 +48,8 @@ exports.config = {
         autoGrantPermissions: true,
        
         platformName: 'Android',
-        platformVersion: '5.0',
-        deviceName: 'S6',
+        platformVersion: '6.0',
+        deviceName: 'Android Emulator',
         fullReset: 'false',
         noReset: 'true',
         /*
