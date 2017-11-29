@@ -19,7 +19,7 @@ var AndroidLoginPage = Object.create(Page, {
     /* --- Define page methods --- */
 
     clickUnderstand: { value: function(){
-        this.understandMsg.waitForVisible(30000);
+        this.understandMsg.waitForVisible(90000);
         this.understandMsg.click();
     } },
 

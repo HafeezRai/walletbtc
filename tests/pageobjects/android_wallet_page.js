@@ -66,7 +66,7 @@ var AndroidWalletPage = Object.create(Page, {
      }},
 
     getWallets: { value: function(text, text2){
-        this.firstWallet.waitForVisible(150000);
+        this.firstWallet.waitForVisible(180000);
         chai.expect(AndroidWalletPage.firstWallet.getText()).to.include(text);
         chai.expect(AndroidWalletPage.secondWallet.getText()).to.include(text2);
         //assert.equal(len, '4');

@@ -48,7 +48,7 @@ exports.config = {
         autoGrantPermissions: true,
        
         platformName: 'Android',
-        platformVersion: '6.0',
+        platformVersion: '5.0',
         deviceName: 'Android Emulator',
         fullReset: 'false',
         noReset: 'true',
@@ -60,8 +60,8 @@ exports.config = {
         */
         browserName: '',
         app: APP_PATH, 
-        appPackage: 'co.edgesecure.wallet',
-        appActivity: 'co.edgesecure.wallet.MainActivity',    
+        appWaitPackage: 'co.edgesecure.wallet',
+        //appWaitActivity: 'co.edgesecure.wallet.MainActivity',    
         deviceOrientation: 'portrait',
         //connectionRetryTimeout: '250',
         //bundleId: 'co.edgesecure.wallet',
