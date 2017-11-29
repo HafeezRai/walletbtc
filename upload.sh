@@ -7,4 +7,5 @@ cd "./tests"
 
 ls
 
-wdio.conf.js
+npm run test wdio.conf.js
+
