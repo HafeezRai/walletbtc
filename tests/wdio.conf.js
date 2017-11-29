@@ -1,13 +1,11 @@
-
 "use strict";
 
 const path = require('path');
-const APP_PATH = path.join('sauce-storage:edge.app');
-//const APP_PATH = path.join('/Users/administrator2/Downloads/app-debug.apk');
-//const APP_PATH = path.join('/Users/administrator2/Downloads/edge.app');
+//const APP_PATH = path.join('sauce-storage:edge.app');
+const APP_PATH = path.join('sauce-storage:app-debug.apk');
 
 exports.config = {
-    port: 4723,
+    //port: 4723,
 
     // Note:
     // When you want to run a single test file for debug,
@@ -16,10 +14,8 @@ exports.config = {
     //
     // https://mochajs.org/
     specs: [
-        //path.join(__dirname, './tests/android_login_password.js')
-        //path.join(__dirname, './tests/android_attempt_payment.js')
-        //path.join(__dirname, './tests/android_login_pin.js')
-        path.join(__dirname, './tests/android_scroll_check.js')
+        path.join(__dirname, './tests/android_login_password.js')
+        //path.join(__dirname, './tests/login_password.js')
     ],
 
     // Note:
@@ -43,25 +39,22 @@ exports.config = {
 
     capabilities: [{
 
+        name:"Testing Edge app on Android",
+        tags:["Login Password","Log Out","Login Pin"],
         appiumVersion: '1.6.5',
         autoAcceptAlerts: true,
         autoGrantPermissions: true,
        
         platformName: 'Android',
-        platformVersion: '5.0',
-        deviceName: 'S6',
-        fullReset: 'false',
-        noReset: 'true',
-        /*
+        platformVersion: '6.0',
+        deviceName: 'Android Emulator',
+       /*
         platformName: 'iOS',
         platformVersion: '9.3',
         deviceName: 'iPhone Simulator',
-        automationName: 'XCUITest',
         */
         browserName: '',
-        app: APP_PATH, 
-        appPackage: 'co.edgesecure.wallet',
-        appActivity: 'co.edgesecure.wallet.MainActivity',    
+        app: APP_PATH,        
         deviceOrientation: 'portrait',
         //connectionRetryTimeout: '250',
         //bundleId: 'co.edgesecure.wallet',
@@ -72,7 +65,7 @@ exports.config = {
    
     sync: true,
 
-    logLevel: 'verbose',
+    logLevel: 'data',
 
     coloredLogs: true,
 
@@ -98,34 +91,37 @@ exports.config = {
     user: process.env.SAUCE_USERNAME,
     key: process.env.SAUCE_ACCESS_KEY,
     sauceConnect: true,
+    /*
+    sauceConnectOpts: {
+        //verboseDebugging: true,
+        //logfile:"./sc.log",
+        //logger: console.log,
+        dns: '8.8.8.8'
+    },
+    */
 
-/*
-   services: ['appium'], // on Windows based pc, services require to be [['appium']]
-   appium: {
+    /*
+    appium: {
         args: {
-            
-            platformName: 'iOS',
-            platformVersion: '10.3',
-            deviceName: 'iPhone 6',
-            automationName: 'XCUITest',
-            
+
+            //platformName: 'iOS',
+            //platformVersion: '10.3',
+            //deviceName: 'iPhone 6',
             platformName: 'Android',
-            platformVersion: '5.0',
-            deviceName: 'S6',
-            appPackage: 'co.edgesecure.wallet',
-            fullReset: 'false', 
-            noReset: 'true',
+            platformVersion: '7.1.1',
+            deviceName: 'GPXL',
+
             address: '127.0.0.1',
             commandTimeout: '7200',
             sessionOverride: true,
             debugLogSpacing: true,
             nativeInstrumentsLib: true,
-            //isolateSimDevice: true,        
+            //isolateSimDevice: true,
+        
         }
     },
+    */
 
-*/
-    
     beforeTest: function () {
     },
 
@@ -140,17 +136,15 @@ exports.config = {
     afterTest: function (android_login_pin, android_login_password, android_attempt_payment, android_log_out) {
        browser.removeApp('co.edgesecure.wallet');
     },
-    
-    // After test is executed, run "allure generate allure-results  --clean  && allure open" to execute the allure report
 
+     // After test is executed, run "allure generate allure-results  --clean  && allure open" to execute the allure report
+     
     reporters: ['spec', 'allure'],
     reporterOptions: {
         allure: {
             outputDir: 'allure-results'
         }
-    },
-
-
+    }
     
 
 };
