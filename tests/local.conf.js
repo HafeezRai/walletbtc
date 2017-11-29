@@ -2,7 +2,7 @@
 "use strict";
 
 const path = require('path');
-const APP_PATH = path.join('sauce-storage:edge.app');
+const APP_PATH = path.join('sauce-storage:edge.apk');
 //const APP_PATH = path.join('/Users/administrator2/Downloads/app-debug.apk');
 //const APP_PATH = path.join('/Users/administrator2/Downloads/edge.app');
 
