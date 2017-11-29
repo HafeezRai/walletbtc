@@ -5,4 +5,6 @@ curl -u $SAUCE_USERNAME:$SAUCE_ACCESS_KEY -X POST -H 'Content-Type: application/
 
 cd "./tests"
 
+ls
+
 wdio.conf.js
