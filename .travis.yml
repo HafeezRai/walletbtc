@@ -67,13 +67,15 @@ matrix:
       #-------------------------------------
       #- cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
       #- cd android && chmod +x ./gradlew && ./gradlew assembleDebug
-      - cd android && chmod +x ./gradlew && ./gradlew assembleRelease
-      - cp -R app/build/outputs/apk/app-release.apk $HOME
+      #- cd android && chmod +x ./gradlew && ./gradlew assembleRelease
+      #- cp -R app/build/outputs/apk/app-release.apk $HOME
     script:
     #- npm test
     #- cd tests && npm run test local.conf.js
     #- cd $HOME
     #- ls
+    - cd android && ./gradlew assembleRelease
+    - cp -R app/build/outputs/apk/app-release.apk $HOME
     - cd ..
     - ls
     - bash upload.sh
