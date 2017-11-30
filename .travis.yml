@@ -29,7 +29,6 @@ matrix:
     before_install:
     - rm -rf node_modules
     - rm -fr $TMPDIR/react-*
-    - watchman watch-del-all
     - nvm install 8
     - node --version
     - openssl aes-256-cbc -K $encrypted_f7ede145bde1_key -iv $encrypted_f7ede145bde1_iv -in env.json.enc -out env.json -d
@@ -74,7 +73,7 @@ matrix:
       #- cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
       - cd android && chmod +x ./gradlew && ./gradlew assembleRelease
       - cp -R app/build/outputs/apk/app-release.apk $HOME
-      - cp -R app/build/outputs/apk/app-debug.apk $HOME
+      #- cp -R app/build/outputs/apk/app-debug.apk $HOME
       #- cp -R app/src/build/app-debug.apk $HOME
     script:
     #- npm test
