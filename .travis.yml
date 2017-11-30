@@ -27,6 +27,9 @@ matrix:
     sudo: required
     node_js: false
     before_install:
+    - rm -rf node_modules && npm install
+    - rm -fr $TMPDIR/react-*
+    - watchman watch-del-all
     - nvm install 8
     - node --version
     - openssl aes-256-cbc -K $encrypted_f7ede145bde1_key -iv $encrypted_f7ede145bde1_iv -in env.json.enc -out env.json -d
