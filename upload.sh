@@ -9,7 +9,5 @@ cd "./tests"
 
 npm install
 
-ls
-
 ./node_modules/.bin/wdio local.conf.js
 
