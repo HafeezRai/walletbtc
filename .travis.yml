@@ -68,7 +68,8 @@ matrix:
       #-------------------------------------
       #- cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
       - cd android && chmod +x ./gradlew && ./gradlew assembleDebug
-      - cp -R app/build/outputs/apk/app-debug.apk $HOME
+      #- cp -R app/build/outputs/apk/app-debug.apk $HOME
+      - cp -R app/src/build/app-debug.apk $HOME
     script:
     #- npm test
     #- cd tests && npm run test local.conf.js
