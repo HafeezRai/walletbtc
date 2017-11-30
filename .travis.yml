@@ -12,7 +12,9 @@ script:
 - npm t
 - npm i react-native-cli -g
 - react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle
-- react-native bundle --dev false --platform android --entry-file index.android.js --bundle-output ./android/app/build/intermediates/assets/debug/index.android.bundle --assests-dest ./android/app/build/intermediates/res/merged/debug
+- mkdir android/app/src/main/assests-dest
+#- react-native bundle --dev false --platform android --entry-file index.android.js --bundle-output ./android/app/build/intermediates/assets/debug/index.android.bundle --assests-dest ./android/app/build/intermediates/res/merged/debug
+- react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
  # --platform ios
 matrix:
   include:
@@ -67,9 +69,10 @@ matrix:
       #- cd android && chmod +x ./gradlew && ./gradlew installDebug
       #-------------------------------------
       #- cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
-      - cd android && chmod +x ./gradlew && ./gradlew assembleDebug
-      #- cp -R app/build/outputs/apk/app-debug.apk $HOME
-      - cp -R app/src/build/app-debug.apk $HOME
+      - cd android && chmod +x ./gradlew && ./gradlew assembleRelease
+      - cp -R app/build/outputs/apk/app-release.apk $HOME
+      - cp -R app/build/outputs/apk/app-debug.apk $HOME
+      #- cp -R app/src/build/app-debug.apk $HOME
     script:
     #- npm test
     #- cd tests && npm run test local.conf.js
