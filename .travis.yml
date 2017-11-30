@@ -31,7 +31,7 @@ matrix:
     - rm -fr $TMPDIR/react-*
     - nvm install 8
     - node --version
-    - openssl aes-256-cbc -K $encrypted_f7ede145bde1_key -iv $encrypted_f7ede145bde1_iv -in env.json.enc -out env.json -d
+    - openssl aes-256-cbc -K $encrypted_e28d423744bc_key -iv $encrypted_e28d423744bc_iv -in env.json.enc -out env.json -d
     #- npm install -g appium
     - git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
     - export ANDROID_NDK_HOME=$HOME/android-ndk-root
@@ -90,7 +90,7 @@ matrix:
     before_install:
     - nvm install 8
     - node --version
-    - openssl aes-256-cbc -K $encrypted_f7ede145bde1_key -iv $encrypted_f7ede145bde1_iv -in env.json.enc -out env.json -d
+    - openssl aes-256-cbc -K $encrypted_e28d423744bc_key -iv $encrypted_e28d423744bc_iv -in env.json.enc -out env.json -d
     install:
     - travis_retry gem install xcpretty
     - travis_wait npm i -d
