@@ -27,7 +27,7 @@ matrix:
     sudo: required
     node_js: false
     before_install:
-    - rm -rf node_modules && npm install
+    - rm -rf node_modules
     - rm -fr $TMPDIR/react-*
     - watchman watch-del-all
     - nvm install 8
