@@ -159,9 +159,8 @@ export const styles = {
     width: platform.deviceWidth,
     height: 50,
     backgroundColor: THEME.COLORS.WHITE,
-    padding: 16,
-    paddingLeft: 20,
-    paddingRight: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 20,
     justifyContent: 'space-between',
     borderBottomWidth: 1,
     borderColor: THEME.COLORS.WHITE
@@ -187,7 +186,26 @@ export const styles = {
     justifyContent: 'center',
     marginRight: 5
   },
-  rowCurrencyLogo: {
+  rowNameTextWrapIOS: {
+    flex: 1,
+    justifyContent: 'center',
+    marginRight: 5
+  },
+  rowNameTextWrapAndroid: {
+    flex: 1,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    marginRight: 5,
+    flexDirection: 'row'
+  },
+  rowCurrencyLogoAndroid: {
+    height: 22,
+    width: 22,
+    marginRight: 5,
+    resizeMode: Image.resizeMode.contain,
+    alignSelf: 'center'
+  },
+  rowCurrencyLogoIOS: {
     height: 22,
     width: 22,
     resizeMode: Image.resizeMode.contain,

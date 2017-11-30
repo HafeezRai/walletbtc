@@ -12,7 +12,7 @@ import * as WALLET_API from '../modules/Core/Wallets/api.js'
 import {bns} from 'biggystring'
 import type {FlipInputFieldInfo} from '../modules/UI/components/FlipInput/FlipInput.ui'
 import strings from '../locales/default'
-
+import {checkShiftTokenAvailability} from '../modules/UI/scenes/CryptoExchange/CryptoExchangeSupportedTokens'
 const DIVIDE_PRECISION = 18
 
 export type SetNativeAmountInfo = {
@@ -97,7 +97,8 @@ export const setNativeAmount = (info: SetNativeAmountInfo) => (dispatch: any, ge
     const toExchangeAmount = bns.mul(fromExchangeAmount, state.cryptoExchange.exchangeRate.toFixed(3))
 
     const toNativeAmount = bns.mul(toExchangeAmount, toPrimaryInfo.exchangeDenomination.multiplier)
-    const toDisplayAmount = bns.div(toNativeAmount, toPrimaryInfo.displayDenomination.multiplier)
+    const toDisplayAmountTemp = bns.div(toNativeAmount, toPrimaryInfo.displayDenomination.multiplier, DIVIDE_PRECISION)
+    const toDisplayAmount = bns.toFixed(toDisplayAmountTemp, 0, 8)
 
     dispatch(setCryptoNativeDisplayAmount(Constants.SET_CRYPTO_FROM_NATIVE_AMOUNT, {native: primaryNativeAmount, display: fromDisplayAmount}))
     dispatch(setCryptoNativeDisplayAmount(Constants.SET_CRYPTO_TO_NATIVE_AMOUNT, {native: toNativeAmount, display: toDisplayAmount}))
@@ -108,7 +109,8 @@ export const setNativeAmount = (info: SetNativeAmountInfo) => (dispatch: any, ge
     const fromExchangeAmount = bns.div(toExchangeAmount, state.cryptoExchange.exchangeRate.toFixed(3), DIVIDE_PRECISION)
 
     const fromNativeAmount = bns.mul(fromExchangeAmount, fromPrimaryInfo.exchangeDenomination.multiplier)
-    const fromDisplayAmount = bns.div(fromNativeAmount, fromPrimaryInfo.displayDenomination.multiplier)
+    const fromDisplayAmountTemp = bns.div(fromNativeAmount, fromPrimaryInfo.displayDenomination.multiplier, DIVIDE_PRECISION)
+    const fromDisplayAmount = bns.toFixed(fromDisplayAmountTemp, 0, 8)
 
     dispatch(setCryptoNativeDisplayAmount(Constants.SET_CRYPTO_TO_NATIVE_AMOUNT, {native: primaryNativeAmount, display: toDisplayAmount}))
     dispatch(setCryptoNativeDisplayAmount(Constants.SET_CRYPTO_FROM_NATIVE_AMOUNT, {native: fromNativeAmount, display: fromDisplayAmount}))
@@ -134,12 +136,14 @@ export const setNativeAmount = (info: SetNativeAmountInfo) => (dispatch: any, ge
 
 export const shiftCryptoCurrency = () => async  (dispatch: any, getState: any) => {
   const state = getState()
-  if (!state.cryptoExchange.transaction) {
-    console.warn('NO VALID TRANSACTION')
-    // call make spend and display error/
+  const srcWallet: AbcCurrencyWallet = CORE_SELECTORS.getWallet(state, state.cryptoExchange.fromWallet.id)
+  if (!srcWallet) {
     return
   }
-  const srcWallet: AbcCurrencyWallet = CORE_SELECTORS.getWallet(state, state.cryptoExchange.fromWallet.id)
+  if (!state.cryptoExchange.transaction) {
+    getShiftTransaction(state.cryptoExchange.fromWallet, state.cryptoExchange.toWallet)
+    return
+  }
   if (srcWallet) {
     try {
       const signedTransaction = await WALLET_API.signTransaction(srcWallet, state.cryptoExchange.transaction)
@@ -152,8 +156,10 @@ export const shiftCryptoCurrency = () => async  (dispatch: any, getState: any) =
         Alert.alert(strings.enUS['exchange_succeeded'], strings.enUS['exchanges_may_take_minutes'])
       },1)
     } catch (error) {
-      console.log(error.message)
-      console.warn(error)
+      dispatch(actions.dispatchActionString(Constants.SHIFT_ERROR,error.message))
+      setTimeout(() => {
+        Alert.alert(strings.enUS['exchange_failed'], error.message)
+      },1)
     }
     return
   }
@@ -278,6 +284,14 @@ export const selectWalletForExchange = (
   walletId: string,
   currencyCode: string
 ) => (dispatch: any, getState: any) => {
+  // This is a hack .. if the currecy code is not supported then we cant do the exchange
+  if (!checkShiftTokenAvailability(currencyCode)) {
+    setTimeout(() => {
+      Alert.alert(strings.enUS['could_not_select'], currencyCode+' '+strings.enUS['token_not_supported'])
+    },1)
+    return
+  }
+
   const state = getState()
   console.log(currencyCode)
   const wallet = state.ui.wallets.byId[walletId]

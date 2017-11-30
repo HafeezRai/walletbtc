@@ -27,6 +27,10 @@ import * as UTILS from '../../../utils.js'
 import styles, {styles as styleRaw} from './style'
 import ABAlert from '../../components/ABAlert/indexABAlert'
 
+import WalletListModal
+from '../../../UI/components/WalletListModal/WalletListModalConnector'
+import * as Constants from '../../../../constants/indexConstants'
+
 type Props = {
   abcWallet: AbcCurrencyWallet,
   sceneName: string,
@@ -64,21 +68,33 @@ export default class Scan extends Component<any, any> {
       cameraPermission: undefined
     }
   }
-  // check the status of a single permission
-  componentDidMount () {
-    PERMISSIONS.request('camera')
-    .then(this.setCameraPermission)
+
+  renderDropUp = () => {
+    if (this.props.showToWalletModal) {
+      return (
+        <WalletListModal
+          topDisplacement={Constants.SCAN_WALLET_DIALOG_TOP}
+          type={Constants.FROM}
+        />
+      )
+    }
+    return null
   }
 
   render () {
+    if (!this.state.cameraPermission) {
+      PERMISSIONS.request('camera')
+      .then((resp) => this.setCameraPermission(resp))
+    }
     return (
       <View style={{flex: 1}}>
         <Gradient style={styles.gradient} />
+        <View style={styles.topSpacer} />
         <View style={styles.container}>
             {this.renderCamera()}
             <View style={[styles.overlay, UTILS.border()]}>
 
-              <AddressModal />
+              <AddressModal onExitButtonFxn={this._onToggleAddressModal} />
 
               <View style={[styles.overlayTop]}>
                 <T style={[styles.overlayTopText]}>
@@ -153,6 +169,7 @@ export default class Scan extends Component<any, any> {
             </View>
           <ABAlert />
         </View>
+        {this.renderDropUp()}
       </View>
     )
   }

@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import {
     View,
-    Picker,
     TextInput,
     TouchableOpacity,
     Keyboard,
@@ -11,16 +10,21 @@ import {
 import {abs, sub} from 'biggystring'
 import {sprintf} from 'sprintf-js'
 import strings from '../../../../locales/default'
+import Picker from 'react-native-picker'
 import FormattedText from '../../components/FormattedText'
-import Modal from 'react-native-modal'
 import {PrimaryButton} from '../../components/Buttons'
 import styles from './style'
 import THEME from '../../../../theme/variables/airbitz'
-import platform from '../../../../theme/variables/platform.js'
 import * as UTILS from '../../../utils'
 import type {AbcTransaction, AbcDenomination} from 'airbitz-core-types'
 
 const categories = ['income', 'expense', 'exchange', 'transfer']
+
+let pickerValues = []
+
+categories.map((key) => {
+  return pickerValues.push(strings.enUS['fragment_transaction_' + key])
+})
 
 type Props = {
   abcTransaction: AbcTransaction,
@@ -68,6 +72,23 @@ class AmountArea extends Component<Props, State> {
     this.state = {
       color: ''
     }
+    Picker.init({
+      pickerData: pickerValues,
+      onPickerConfirm: (data) => {
+        let categoryIndex = pickerValues.indexOf(data[0])
+        let categoryKey = categories[categoryIndex]
+        this.props.onSelectCategory(categoryKey)
+        this.Picker.hide()
+      },
+      onPickerCancel: () => {
+        this.Picker.hide()
+      },
+      pickerTitleText: strings.enUS['tx_detail_picker_title'],
+      pickerConfirmBtnText: strings.enUS['string_confirm'],
+      pickerCancelBtnText: strings.enUS['string_cancel_cap'],
+      pickerFontSize: 22
+    })
+    this.Picker = Picker
   }
 
   handleClick = () => {
@@ -80,8 +101,18 @@ class AmountArea extends Component<Props, State> {
     })
   }
 
+  onEnterCategories = () => {
+    this.props.onEnterCategories()
+    this.Picker.show()
+  }
+
+  onPickerSelect = (input: string) => {
+    this.props.selectCategory(input)
+  }
+
   render () {
     let feeSyntax, leftData, convertedAmount, amountString, absoluteAmount, symbolString
+
     absoluteAmount = abs(this.props.abcTransaction.nativeAmount)
 
     if (this.props.direction === 'receive') {
@@ -147,12 +178,13 @@ class AmountArea extends Component<Props, State> {
           <View style={[styles.editableFiatArea]}>
             <FormattedText style={styles.fiatSymbol}>{this.props.fiatCurrencySymbol}</FormattedText>
             <TextInput
+              underlineColorAndroid={'transparent'}
               returnKeyType='done'
               autoCapitalize='none'
               autoCorrect={false}
               onFocus={this.props.onFocusFiatAmount}
               onChangeText={this.props.onChangeFiatFxn}
-              style={[styles.editableFiat]}
+              style={[styles.editableFiat, UTILS.inputBottomPadding()]}
               keyboardType='numeric'
               placeholder={''}
               value={UTILS.truncateDecimals(this.props.fiatAmount.toString().replace('-',''), 2, true)}
@@ -166,51 +198,34 @@ class AmountArea extends Component<Props, State> {
           </View>
         </View>
         <View style={[styles.categoryRow]}>
-          <TouchableOpacity style={[styles.categoryLeft, {borderColor: this.props.color}]} onPress={this.props.onEnterCategories} disabled={this.props.subCategorySelectVisibility}>
+          <TouchableOpacity style={[styles.categoryLeft, {borderColor: this.props.color}]} onPress={this.onEnterCategories} disabled={this.props.subCategorySelectVisibility}>
             <FormattedText style={[{color: this.props.color}, styles.categoryLeftText]}>{this.props.type.syntax}</FormattedText>
           </TouchableOpacity>
           <View style={[styles.categoryInputArea]}>
             <TextInput
+              underlineColorAndroid={'transparent'}
               blurOnSubmit
               autoCapitalize='words'
               placeholderTextColor={THEME.COLORS.GRAY_}
               onFocus={this.props.onEnterSubcategories}
               onChangeText={this.props.onChangeSubcategoryFxn}
               onSubmitEditing={this.props.onSubcategoryKeyboardReturn}
-              style={[styles.categoryInput]}
+              style={[styles.categoryInput, UTILS.inputBottomPadding()]}
               defaultValue={this.props.subCategory || ''}
               placeholder={strings.enUS['transaction_details_category_title']}
               autoCorrect={false}
             />
           </View>
         </View>
-        <Modal isVisible={this.props.categorySelectVisibility} animationIn='slideInUp' animationOut='slideOutDown' backdropColor='black' backdropOpacity={0.6}>
-          <Picker style={[ UTILS.border(),
-            {
-              backgroundColor: THEME.COLORS.WHITE,
-              width: platform.deviceWidth,
-              height: platform.deviceHeight / 3,
-              position: 'absolute',
-              top: (2/3) * platform.deviceHeight,
-              left: -20
-            }
-          ]}
-            itemStyle={{fontFamily: 'SourceSansPro-Black', color: THEME.COLORS.GRAY_1, fontSize: 22, paddingBottom: 14}}
-            selectedValue={this.props.type.key}
-            onValueChange={(itemValue) => this.props.selectCategory({itemValue})}>
-            {categories.map((x) => (
-              <Picker.Item label={this.props.types[x].syntax} value={x} key={this.props.types[x].key} />
-            ))}
-          </Picker>
-        </Modal>
         <View style={[styles.notesRow]}>
           <View style={[styles.notesInputWrap]} >
             <TextInput
+              underlineColorAndroid={'transparent'}
               onChangeText={this.props.onChangeNotesFxn}
               multiline
               numberOfLines={3}
               defaultValue={notes}
-              style={[styles.notesInput]}
+              style={[styles.notesInput, UTILS.inputBottomPadding()]}
               placeholderTextColor={THEME.COLORS.GRAY_}
               placeholder={strings.enUS['transaction_details_notes_title']}
               autoCapitalize='sentences'

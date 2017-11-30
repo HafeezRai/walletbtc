@@ -2,6 +2,7 @@
 
 import React, {Component} from 'react'
 import strings from '../../../../locales/default'
+import s from '../../../../locales/strings.js'
 import {bns} from 'biggystring'
 import {
   ActivityIndicator,
@@ -31,6 +32,10 @@ import platform from '../../../../theme/variables/platform.js'
 
 import type {AbcTransaction, AbcDenomination} from 'airbitz-core-types'
 import type {GuiWallet} from '../../../../types'
+
+import WalletListModal
+from '../../../UI/components/WalletListModal/WalletListModalConnector'
+import * as Constants from '../../../../constants/indexConstants'
 
 type Props = {
   getTransactions: (walletId: string, currencyCode: string) => void,
@@ -65,7 +70,7 @@ type State = {
 
 type TransactionListTx = any
 
-const SHOW_BALANCE_TEXT = strings.enUS['string_show_balance']
+const SHOW_BALANCE_TEXT = s.strings.string_show_balance
 const REQUEST_TEXT      = strings.enUS['fragment_request_subtitle']
 const SEND_TEXT         = strings.enUS['fragment_send_subtitle']
 const SENT_TEXT         = strings.enUS['fragment_transaction_list_sent_prefix']
@@ -182,6 +187,18 @@ export default class TransactionList extends Component<Props, State> {
   _onCancel = () => this.setState({width: 0})
 
   toggleShowBalance = () => this.setState({showBalance: !this.state.showBalance})
+
+  renderDropUp = () => {
+    if (this.props.showToWalletModal) {
+      return (
+        <WalletListModal
+          topDisplacement={Constants.TRANSACTIONLIST_WALLET_DIALOG_TOP}
+          type={Constants.FROM}
+        />
+      )
+    }
+    return null
+  }
 
   render () {
     const {
@@ -354,6 +371,7 @@ export default class TransactionList extends Component<Props, State> {
             </View>
           </View>
         </ScrollView>
+        {this.renderDropUp()}
       </View>
     )
   }

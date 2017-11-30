@@ -2,7 +2,7 @@
  * Created by paul on 8/16/17.
  */
 // @flow
-
+// trying to trigger a build. .. will remove this line
 import type {AbcDenomination, AbcMetaToken} from 'airbitz-core-types'
 
 export class GuiWallet {
@@ -20,6 +20,7 @@ export class GuiWallet {
   symbolImage: string
   symbolImageDarkMono: string
   metaTokens: Array<AbcMetaToken>
+  tokensEnabled: any
   constructor (
     id: string,
     type: string,
@@ -35,6 +36,7 @@ export class GuiWallet {
     symbolImage: string,
     symbolImageDarkMono: string,
     metaTokens: Array<AbcMetaToken>,
+    tokensEnabled: any,
   ) {
     this.id = id
     this.type = type
@@ -50,6 +52,7 @@ export class GuiWallet {
     this.symbolImage = symbolImage
     this.symbolImageDarkMono = symbolImageDarkMono
     this.metaTokens = metaTokens
+    this.tokensEnabled = tokensEnabled
   }
 }
 

@@ -3,8 +3,10 @@ import {connect} from 'react-redux'
 import {LoginScreen} from 'airbitz-core-js-ui'
 import makeAccountCallbacks from '../../../Core/Account/callbacks'
 import * as CORE_SELECTORS from '../../../Core/selectors.js'
+import * as CONTEXT_API from '../../../Core/Context/api'
 import {initializeAccount} from '../../../Login/action'
 import {Actions} from 'react-native-router-flux'
+import THEME from '../../../../theme/variables/airbitz'
 
 class Login extends Component {
   constructor (props) {
@@ -16,6 +18,11 @@ class Login extends Component {
     if (error || !account) return
     Actions.edge()
     this.props.initializeAccount(account)
+
+    CONTEXT_API.listUsernames(this.props.context) // update users list after each login
+    .then((usernames) => {
+      this.props.addUsernames(usernames)
+    })
   }
 
   componentWillReceiveProps (nextProps) {
@@ -34,6 +41,9 @@ class Login extends Component {
         accountOptions={{callbacks}}
         context={this.props.context}
         onLogin={this.onLogin}
+        fontDescription={{
+          regularFontFamily: THEME.FONTS.DEFAULT
+        }}
         key={this.state.key.toString()}
       />
     )

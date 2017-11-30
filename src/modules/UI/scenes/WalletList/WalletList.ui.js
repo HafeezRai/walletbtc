@@ -20,6 +20,7 @@ import SortableListView from 'react-native-sortable-listview'
 import FullWalletListRow from './components/WalletListRow/FullWalletListRowConnector'
 import SortableWalletListRow from './components/WalletListRow/SortableWalletListRow.ui.js'
 import strings from '../../../../locales/default'
+import s from '../../../../locales/strings.js'
 
 import StylizedModal from '../../components/Modal/Modal.ui'
 import * as UTILS from '../../../utils'
@@ -41,8 +42,8 @@ const options = [
     value: 'sort',
     syntax: strings.enUS['fragment_wallets_sort']
   },{
-    value: 'addToken',
-    syntax: strings.enUS['fragmet_wallets_addtoken_option']
+    value: 'manageTokens',
+    syntax: strings.enUS['fragmet_wallets_managetokens_option']
   },{
     value: 'archive'
   },{
@@ -58,7 +59,9 @@ export default class WalletList extends Component<any, {
   sortableListOpacity: number,
   fullListOpacity: number,
   sortableListZIndex: number,
+  sortableListExists: boolean,
   fullListZIndex: number,
+  fullListExists: boolean,
   balanceBoxVisible: boolean
 }> {
   constructor (props: any) {
@@ -67,8 +70,10 @@ export default class WalletList extends Component<any, {
       sortableMode: false,
       sortableListOpacity: new Animated.Value(0),
       sortableListZIndex: new Animated.Value(0),
+      sortableListExists: false,
       fullListOpacity: new Animated.Value(1),
       fullListZIndex: new Animated.Value(100),
+      fullListExists: true,
       balanceBoxVisible: true
     }
   }
@@ -101,8 +106,9 @@ export default class WalletList extends Component<any, {
         this.enableSorting()
       }
       break
-    case options[2].value: // 'addToken'
-      this.props.walletRowOption(walletId, 'addToken')
+    case options[2].value: // 'manageTokens'
+      console.log('executing option 2')
+      Actions.manageTokens({guiWallet: this.props.wallets[walletId]})
       break
     case options[3].value: // 'archive'
       if (!this.props.walletsp[walletId].archived) {
@@ -169,13 +175,13 @@ export default class WalletList extends Component<any, {
               <View style={styles.leftArea}>
                 <SimpleLineIcons name='wallet' style={[styles.walletIcon]} color='white' />
                 <T style={styles.walletsBoxHeaderText}>
-                  {strings.enUS['fragment_wallets_header']}
+                  {s.strings.fragment_wallets_header}
                 </T>
               </View>
             </View>
 
             <View style={[styles.donePlusContainer, UTILS.border()]}>
-
+              {this.state.sortableListExists && (
               <Animated.View style={[
                 styles.doneContainer,
                 UTILS.border(),
@@ -192,7 +198,8 @@ export default class WalletList extends Component<any, {
                   </T>
                 </TouchableOpacity>
               </Animated.View>
-
+              )}
+              {this.state.fullListExists && (
               <Animated.View style={[
                 styles.plusContainer,
                 UTILS.border(),
@@ -208,7 +215,7 @@ export default class WalletList extends Component<any, {
                   <Ionicon name='md-add' style={[styles.dropdownIcon]} size={28} color='white' />
                 </TouchableOpacity>
               </Animated.View>
-
+              )}
             </View>
           </Gradient>
 
@@ -225,6 +232,7 @@ export default class WalletList extends Component<any, {
     const {width} = platform.deviceWidth
     return (
       <View style={[styles.listsContainer, UTILS.border()]}>
+        {this.state.sortableListExists && (
         <Animated.View testID={'sortableList'} style={[UTILS.border(), {flex: 1, opacity: this.state.sortableListOpacity, zIndex: this.state.sortableListZIndex}, styles.sortableList, UTILS.border()]}>
           <SortableListView
             style={{flex: 1, width}}
@@ -237,6 +245,8 @@ export default class WalletList extends Component<any, {
             dimensions={this.props.dimensions}
           />
         </Animated.View>
+        )}
+        {this.state.fullListExists && (
         <Animated.View testID={'fullList'} style={[{flex: 1, opacity: this.state.fullListOpacity, zIndex: this.state.fullListZIndex}, styles.fullList]}>
           <FlatList
             style={{flex: 1, width}}
@@ -246,6 +256,7 @@ export default class WalletList extends Component<any, {
             sortableMode={this.state.sortableMode}
             executeWalletRowOption={this.executeWalletRowOption} />
         </Animated.View>
+        )}
       </View>
     )
   }
@@ -257,38 +268,42 @@ export default class WalletList extends Component<any, {
     let fullListToOpacity = 0
     let fullListToZIndex = 0
 
-    Animated.parallel([
-      Animated.timing(
-        this.state.sortableListOpacity,
-        {
-          toValue: sortableToOpacity,
-          timing: 300,
-          useNativeDriver: false
-        }
-      ),
-      Animated.timing(
-        this.state.sortableListZIndex,
-        {
-          toValue: sortableListToZIndex,
-          timing: 300
-        }
-      ),
-      Animated.timing(
-        this.state.fullListOpacity,
-        {
-          toValue: fullListToOpacity,
-          timing: 300,
-          useNativeDriver: false
-        }
-      ),
-      Animated.timing(
-        this.state.fullListZIndex,
-        {
-          toValue: fullListToZIndex,
-          timing: 300
-        }
-      )
-    ]).start()
+    this.setState({sortableListExists: true}, () => {
+      Animated.parallel([
+        Animated.timing(
+          this.state.sortableListOpacity,
+          {
+            toValue: sortableToOpacity,
+            timing: 300,
+            useNativeDriver: false
+          }
+        ),
+        Animated.timing(
+          this.state.sortableListZIndex,
+          {
+            toValue: sortableListToZIndex,
+            timing: 300
+          }
+        ),
+        Animated.timing(
+          this.state.fullListOpacity,
+          {
+            toValue: fullListToOpacity,
+            timing: 300,
+            useNativeDriver: false
+          }
+        ),
+        Animated.timing(
+          this.state.fullListZIndex,
+          {
+            toValue: fullListToZIndex,
+            timing: 300
+          }
+        )
+      ]).start(() => {
+        this.setState({fullListExists: false})
+      })
+    })
   }
 
   disableSorting = () => {
@@ -297,38 +312,42 @@ export default class WalletList extends Component<any, {
     let fullListToOpacity = 1
     let fullListToZIndex = 100
 
-    Animated.parallel([
-      Animated.timing(
-        this.state.sortableListOpacity,
-        {
-          toValue: sortableToOpacity,
-          timing: 300,
-          useNativeDriver: false
-        }
-      ),
-      Animated.timing(
-        this.state.sortableListZIndex,
-        {
-          toValue: sortableListToZIndex,
-          timing: 300
-        }
-      ),
-      Animated.timing(
-        this.state.fullListOpacity,
-        {
-          toValue: fullListToOpacity,
-          timing: 300,
-          useNativeDriver: false
-        }
-      ),
-      Animated.timing(
-        this.state.fullListZIndex,
-        {
-          toValue: fullListToZIndex,
-          timing: 300
-        }
-      )
-    ]).start()
+    this.setState({fullListExists: true}, () => {
+      Animated.parallel([
+        Animated.timing(
+          this.state.sortableListOpacity,
+          {
+            toValue: sortableToOpacity,
+            timing: 300,
+            useNativeDriver: false
+          }
+        ),
+        Animated.timing(
+          this.state.sortableListZIndex,
+          {
+            toValue: sortableListToZIndex,
+            timing: 300
+          }
+        ),
+        Animated.timing(
+          this.state.fullListOpacity,
+          {
+            toValue: fullListToOpacity,
+            timing: 300,
+            useNativeDriver: false
+          }
+        ),
+        Animated.timing(
+          this.state.fullListZIndex,
+          {
+            toValue: fullListToZIndex,
+            timing: 300
+          }
+        )
+      ]).start(() => {
+        this.setState({sortableListExists: false})
+      })
+    })
   }
 
   renderArchivedSortableList = (data: any, order: any, label: any, renderRow: any) => {
@@ -396,8 +415,7 @@ export default class WalletList extends Component<any, {
   renderRenameWalletModal = () => <StylizedModal
     featuredIcon={<RenameIcon />}
     headerText='fragment_wallets_rename_wallet'
-    headerSubtext={this.props.walletName}
-    modalMiddle={<WalletNameInput />}
+    modalMiddle={<WalletNameInput label={strings.enUS['fragment_wallets_rename_wallet']} walletName={this.props.walletName} currentWalletNameInput={this.props.renameWalletInput} />}
     modalBottom={<RenameWalletButtons walletName={this.props.walletName} walletId={this.props.walletId} />}
     visibilityBoolean={this.props.renameWalletModalVisible}
     onExitButtonFxn={this.props.closeRenameWalletModal}

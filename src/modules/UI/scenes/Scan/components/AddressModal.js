@@ -23,7 +23,8 @@ type Props = {
   addressModalVisible: boolean,
   toggleAddressModal():void,
   updateParsedURI(AbcParsedUri):void,
-  loginWithEdge(string): void
+  loginWithEdge(string): void,
+  onExitButtonFxn: void
 }
 type State = {
   uri: string,
@@ -78,7 +79,9 @@ export default class AddressModal extends Component<Props,State> {
       copyMessage={copyMessage}
       onChangeText={this.onChangeText}
       onSubmit={this.onSubmit}
-      onPaste={this.onPasteFromClipboard} />
+      onPaste={this.onPasteFromClipboard}
+      uri={this.state.uri}
+      />
 
     const bottom = <AddressInputButtons
       onSubmit={this.onSubmit}
@@ -91,6 +94,8 @@ export default class AddressModal extends Component<Props,State> {
         modalMiddle={middle}
         modalBottom={bottom}
         visibilityBoolean={this.props.addressModalVisible}
+        onExitButtonFxn={this.props.onExitButtonFxn}
+        style={copyMessage && styles.withAddressCopied}
       />
     )
   }
