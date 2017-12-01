@@ -13,9 +13,7 @@ script:
 - npm i react-native-cli -g
 - react-native bundle --dev false --entry-file index.ios.js --bundle-output ios/main.jsbundle
 - mkdir android/app/src/main/assests-dest
-#- react-native bundle --dev false --platform android --entry-file index.android.js --bundle-output ./android/app/build/intermediates/assets/debug/index.android.bundle --assests-dest ./android/app/build/intermediates/res/merged/debug
 - react-native bundle --platform android --dev false --entry-file index.android.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res
- # --platform ios
 matrix:
   include:
   - language: android
@@ -32,12 +30,9 @@ matrix:
     - nvm install 8
     - node --version
     - openssl aes-256-cbc -K $encrypted_e28d423744bc_key -iv $encrypted_e28d423744bc_iv -in env.json.enc -out env.json -d
-    #- npm install -g appium
     - git clone https://github.com/urho3d/android-ndk.git $HOME/android-ndk-root
     - export ANDROID_NDK_HOME=$HOME/android-ndk-root
     - echo "y" | sdkmanager "cmake;3.6.4111459"
-    #- stty cols 80
-    #- npm install -g testcafe
     install:
     - travis_retry npm i -d
     android:
@@ -60,26 +55,9 @@ matrix:
       licenses:
       - ".+"
     before_script:
-     # - appium &
-      # create emulator-------------------------
-      #- android list targets
-      #- echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a
-      #- echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a
-      #- emulator -avd test -no-skin -no-audio -no-window &
-      #- android-wait-for-emulator
-      #- adb shell setprop dalvik.vm.dexopt-flags v=n,o=v
-      #- cd android && chmod +x ./gradlew && ./gradlew installDebug
-      #-------------------------------------
-      #- cd android && chmod +x ./gradlew && ./gradlew assembleDebug && ./gradlew assembleRelease
       - cd android && chmod +x ./gradlew && ./gradlew assembleRelease
       - cp -R app/build/outputs/apk/app-release.apk $HOME
-      #- cp -R app/build/outputs/apk/app-debug.apk $HOME
-      #- cp -R app/src/build/app-debug.apk $HOME
     script:
-    #- npm test
-    #- cd tests && npm run test local.conf.js
-    #- cd $HOME
-    #- ls
     - cd ..
     - ls
     - bash upload.sh

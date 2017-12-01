@@ -48,7 +48,7 @@ exports.config = {
         autoGrantPermissions: true,
        
         platformName: 'Android',
-        platformVersion: '5.0',
+        platformVersion: '6.0',
         deviceName: 'Android Emulator',
         fullReset: 'false',
         noReset: 'true',
