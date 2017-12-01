@@ -29,7 +29,7 @@ var AndroidLoginPage = Object.create(Page, {
     } },
 
     setUsername: { value: function(text){
-        this.username.waitForVisible(6000);
+        this.username.waitForVisible(20000);
         this.username.setValue(text);
     } },
     setPassword: { value: function(text){
