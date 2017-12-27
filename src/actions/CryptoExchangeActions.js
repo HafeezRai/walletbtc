@@ -244,12 +244,12 @@ export const selectToFromWallet = (type: string, wallet: GuiWallet,currencyCode?
 
 export const getCryptoExchangeRate = (fromCurrencyCode: string, toCurrencyCode: string) => (dispatch: Dispatch, getState: GetState) => {
   if (fromCurrencyCode === toCurrencyCode) {
-    dispatch(actions.dispatchActionNumber(Constants.UPDATE_CRYPTO_EXCHANGE_RATE,1))
+    dispatch(actions.dispatchActionNumber(Constants.UPDATE_CRYPTO_EXCHANGE_RATE, 1))
     return
   }
 
   if (!fromCurrencyCode || !toCurrencyCode) {
-    dispatch(actions.dispatchActionNumber(Constants.UPDATE_CRYPTO_EXCHANGE_RATE,1))
+    dispatch(actions.dispatchActionNumber(Constants.UPDATE_CRYPTO_EXCHANGE_RATE, 1))
     return
   }
 
