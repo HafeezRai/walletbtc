@@ -46,7 +46,7 @@ exports.config = {
         autoGrantPermissions: true,
        
         platformName: 'Android',
-        platformVersion: '4.4',
+        platformVersion: '6.0',
         deviceName: 'Android Emulator',
        /*
         platformName: 'iOS',
