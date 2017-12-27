@@ -19,7 +19,7 @@ import CryptoExchangeConfirmTransactionModalComponent from './CryptoExchangeConf
 import {IconButton} from '../../components/Buttons/IconButton.ui'
 import {GuiWallet} from '../../../../types'
 
-type Props ={
+type Props = {
   exchangeRate: number,
   wallets: Array<GuiWallet>,
   intialWalletOne: GuiWallet,
