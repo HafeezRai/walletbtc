@@ -4,6 +4,7 @@ import {Alert} from 'react-native'
 import type {AbcSpendInfo, AbcTransaction, AbcCurrencyWallet} from 'airbitz-core-types'
 import {bns} from 'biggystring'
 
+import type {Dispatch, GetState} from '../modules/ReduxTypes'
 import type {GuiWallet,GuiDenomination, GuiCurrencyInfo} from '../types'
 import * as Constants from '../constants/indexConstants'
 import * as CORE_SELECTORS from '../modules/Core/selectors'
@@ -53,7 +54,7 @@ export const changeFee = (feeSetting: string) => ({
   feeSetting,
 })
 
-export const exchangeMax = () => async (dispatch: any, getState: any) => {
+export const exchangeMax = () => async (dispatch: Dispatch, getState: GetState) => {
   const state = getState()
   const fromWallet = state.cryptoExchange.fromWallet
   const wallet: AbcCurrencyWallet = CORE_SELECTORS.getWallet(state, fromWallet.id)
@@ -81,7 +82,7 @@ export const exchangeMax = () => async (dispatch: any, getState: any) => {
   dispatch(actions.setNativeAmount(setNativeAmountInfo))
 }
 
-export const setNativeAmount = (info: SetNativeAmountInfo) => (dispatch: any, getState: any) => {
+export const setNativeAmount = (info: SetNativeAmountInfo) => (dispatch: Dispatch, getState: GetState) => {
   const state = getState()
   const fromWallet: GuiWallet = state.cryptoExchange.fromWallet
   const toWallet: GuiWallet = state.cryptoExchange.toWallet
@@ -122,6 +123,7 @@ export const setNativeAmount = (info: SetNativeAmountInfo) => (dispatch: any, ge
 
   // make spend
   if (fromWallet && toWallet) {
+    // $FlowFixMe
     dispatch(getShiftTransaction(fromWallet, toWallet)).catch((e) => {
       console.log(e)
       if (e.name === Constants.INSUFFICIENT_FUNDS || e.message === Constants.INSUFFICIENT_FUNDS) {
@@ -137,7 +139,7 @@ export const setNativeAmount = (info: SetNativeAmountInfo) => (dispatch: any, ge
   }
 }
 
-export const shiftCryptoCurrency = () => async  (dispatch: any, getState: any) => {
+export const shiftCryptoCurrency = () => async  (dispatch: Dispatch, getState: GetState) => {
   const state = getState()
   const srcWallet: AbcCurrencyWallet = CORE_SELECTORS.getWallet(state, state.cryptoExchange.fromWallet.id)
 
@@ -163,7 +165,7 @@ export const shiftCryptoCurrency = () => async  (dispatch: any, getState: any) =
   }
 }
 
-const getShiftTransaction = (fromWallet: GuiWallet, toWallet: GuiWallet) => async (dispatch: any, getState: any) => {
+const getShiftTransaction = (fromWallet: GuiWallet, toWallet: GuiWallet) => async (dispatch: Dispatch, getState: GetState) => {
   const state = getState()
   const destWallet = CORE_SELECTORS.getWallet(state, toWallet.id)
   const srcWallet: AbcCurrencyWallet = CORE_SELECTORS.getWallet(state, fromWallet.id)
@@ -197,7 +199,7 @@ const getShiftTransaction = (fromWallet: GuiWallet, toWallet: GuiWallet) => asyn
   }
 }
 
-export const selectToFromWallet = (type: string, wallet: GuiWallet,currencyCode?: string) => (dispatch: any, getState: any) => {
+export const selectToFromWallet = (type: string, wallet: GuiWallet,currencyCode?: string) => (dispatch: Dispatch, getState: GetState) => {
   const state = getState()
   let hasFrom = state.cryptoExchange.fromWallet ? state.cryptoExchange.fromWallet : null
   let hasTo = state.cryptoExchange.toWallet ? state.cryptoExchange.toWallet : null
@@ -232,6 +234,7 @@ export const selectToFromWallet = (type: string, wallet: GuiWallet,currencyCode?
 
   if (hasFrom && hasTo) {
     dispatch(getShiftTransaction(hasFrom,hasTo))
+    // $FlowFixMe
     .catch((e) => {
       console.log(e)
       dispatch(actions.dispatchAction(Constants.INVALIDATE_SHIFT_TRANSACTION))
@@ -239,7 +242,7 @@ export const selectToFromWallet = (type: string, wallet: GuiWallet,currencyCode?
   }
 }
 
-export const getCryptoExchangeRate = (fromCurrencyCode: string, toCurrencyCode: string) => (dispatch: any, getState: any) => {
+export const getCryptoExchangeRate = (fromCurrencyCode: string, toCurrencyCode: string) => (dispatch: Dispatch, getState: GetState) => {
   if (fromCurrencyCode === toCurrencyCode) {
     dispatch(actions.dispatchActionNumber(Constants.UPDATE_CRYPTO_EXCHANGE_RATE,1))
     return
@@ -270,7 +273,7 @@ export const getCryptoExchangeRate = (fromCurrencyCode: string, toCurrencyCode: 
 }
 
 
-export const selectWalletForExchange = (walletId: string, currencyCode: string) => (dispatch: any, getState: any) => {
+export const selectWalletForExchange = (walletId: string, currencyCode: string) => (dispatch: Dispatch, getState: GetState) => {
   // This is a hack .. if the currecy code is not supported then we cant do the exchange
   if (!checkShiftTokenAvailability(currencyCode)) {
     setTimeout(() => { Alert.alert(s.strings.could_not_select, currencyCode+' '+s.strings.token_not_supported) },1)
