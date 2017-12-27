@@ -16,7 +16,6 @@ import WalletListModal
 import CryptoExchangeConfirmTransactionModalComponent from './CryptoExchangeConfirmTransactionModalComponent'
 import {IconButton} from '../../components/Buttons/IconButton.ui'
 import {GuiWallet} from '../../../../types'
-// $FlowFixMe
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 type Props ={
