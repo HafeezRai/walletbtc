@@ -276,7 +276,7 @@ export const getCryptoExchangeRate = (fromCurrencyCode: string, toCurrencyCode: 
 export const selectWalletForExchange = (walletId: string, currencyCode: string) => (dispatch: Dispatch, getState: GetState) => {
   // This is a hack .. if the currecy code is not supported then we cant do the exchange
   if (!checkShiftTokenAvailability(currencyCode)) {
-    setTimeout(() => { Alert.alert(s.strings.could_not_select, currencyCode+' '+s.strings.token_not_supported) },1)
+    setTimeout(() => { Alert.alert(s.strings.could_not_select, currencyCode+' '+s.strings.token_not_supported) }, 1)
     return
   }
 
