@@ -1,0 +1,30 @@
+{
+  "name": "appiumintegration",
+  "version": "1.0.0",
+  "description": "Automated tests for AirBitz",
+  "main": "index.js",
+  "scripts": {
+    "test": "wdio"
+  },
+  "author": "sg",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "*",
+    "spec-xunit-file": "0.0.1-3",
+    "wdio-allure-reporter": "*",
+    "wdio-appium-service": "^0.2.3",
+    "wdio-junit-reporter": "^0.3.1",
+    "wdio-mocha-framework": "*",
+    "wdio-sauce-service": "*",
+    "wdio-selenium-standalone-service": "*",
+    "wdio-spec-reporter": "^0.1.2",
+    "webdriverio": "^4.8.0",
+    "wdio-sauce-service": "~0.4.4",
+    "wdio-allure-reporter": "~0.0.2"
+  },
+  "dependencies": {
+    "mocha-report": "0.0.2",
+    "selenium-webdriver": "^3.0.0-beta-3",
+    "wct-xunit-reporter": "^1.0.2"
+  }
+}

@@ -1,0 +1,7 @@
+errorShots/*
+.DS_Store
+*.log
+report.xml
+node_modules/
+allure-report/
+allure-results/
