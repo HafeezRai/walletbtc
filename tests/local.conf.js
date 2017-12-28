@@ -43,7 +43,7 @@ exports.config = {
 
     capabilities: [{
 
-        appiumVersion: '1.6.5',
+        appiumVersion: '1.6.4',
         autoAcceptAlerts: true,
         autoGrantPermissions: true,
        
