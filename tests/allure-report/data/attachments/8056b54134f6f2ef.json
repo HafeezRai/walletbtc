@@ -1,4 +1,0 @@
-{
-    "using": "xpath",
-    "value": "//android.widget.TextView[@text='Already have an account? Sign in']"
-}

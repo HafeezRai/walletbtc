@@ -1,4 +1,0 @@
-{
-    "script": "sauce:context=Dummy test - should reproduce the steps",
-    "args": []
-}
