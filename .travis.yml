@@ -56,7 +56,7 @@ matrix:
       - ".+"
     before_script:
       - cd android && chmod +x ./gradlew && ./gradlew assembleRelease
-      - cd app/build/outputs/apk
+      - cd app/build/outputs/apk/release
       - ls
       - cp -R app/build/outputs/apk/app-release.apk $HOME
     script:
