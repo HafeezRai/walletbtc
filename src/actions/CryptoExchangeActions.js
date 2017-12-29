@@ -3,6 +3,7 @@
 import {Alert} from 'react-native'
 import type {AbcSpendInfo, AbcTransaction, AbcCurrencyWallet} from 'airbitz-core-types'
 import {bns} from 'biggystring'
+import {sprintf} from 'sprintf-js'
 
 import type {Dispatch, GetState} from '../modules/ReduxTypes'
 import type {GuiWallet,GuiDenomination, GuiCurrencyInfo} from '../types'
@@ -170,28 +171,38 @@ const getShiftTransaction = (fromWallet: GuiWallet, toWallet: GuiWallet) => asyn
   const state = getState()
   const destWallet = CORE_SELECTORS.getWallet(state, toWallet.id)
   const srcWallet: AbcCurrencyWallet = CORE_SELECTORS.getWallet(state, fromWallet.id)
+  const { fromNativeAmount, fromCurrencyCode, toCurrencyCode, nativeMax, nativeMin } = state.cryptoExchange
   const spendInfo: AbcSpendInfo = {
     networkFeeOption: Constants.STANDARD_FEE,
-    currencyCode: state.cryptoExchange.fromCurrencyCode,
-    nativeAmount: state.cryptoExchange.fromNativeAmount,
+    currencyCode: fromCurrencyCode,
+    nativeAmount: fromNativeAmount,
     spendTargets: [
       {
         destWallet: destWallet,
-        currencyCode: state.cryptoExchange.toCurrencyCode
+        currencyCode: toCurrencyCode
       }
     ]
   }
   const srcCurrencyCode = spendInfo.currencyCode
   const destCurrencyCode = spendInfo.spendTargets[0].currencyCode
 
-  const { fromNativeAmount, nativeMax, nativeMin } = state.cryptoExchange
-  const isTooMuch = bns.gt(fromNativeAmount, nativeMax)
-  const isTooLittle = bns.lt(fromNativeAmount, nativeMin)
-  if (isTooMuch || isTooLittle) {
-    throw Error('Out of bounds exchange amount')
-  }
+  const isAboveLimit = bns.gt(fromNativeAmount, nativeMax)
+  const isBelowLimit = bns.lt(fromNativeAmount, nativeMin)
 
-  console.log('breakpoint')
+  if (isAboveLimit) {
+    const displayDenomination = SETTINGS_SELECTORS.getDisplayDenomination(state, fromCurrencyCode)
+    const nativeToDisplayRatio = displayDenomination.multiplier
+    const displayMax = UTILS.convertNativeToDisplay(nativeToDisplayRatio)(nativeMax)
+    const errorMessage = sprintf(s.strings.amount_above_limit, displayMax)
+    throw Error(errorMessage)
+  }
+  if (isBelowLimit) {
+    const displayDenomination = SETTINGS_SELECTORS.getDisplayDenomination(state, fromCurrencyCode)
+    const nativeToDisplayRatio = displayDenomination.multiplier
+    const displayMin = UTILS.convertNativeToDisplay(nativeToDisplayRatio)(nativeMin)
+    const errorMessage = sprintf(s.strings.amount_below_limit, displayMin)
+    throw Error(errorMessage)
+  }
 
   if (srcCurrencyCode !== destCurrencyCode) {
     let abcTransaction = await srcWallet.makeSpend(spendInfo)
