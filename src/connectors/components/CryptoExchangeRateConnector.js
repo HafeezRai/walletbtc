@@ -22,7 +22,8 @@ export const mapStateToProps = (state: State, ownProps: Object) => {
   return {
     style: ownProps.style,
     exchangeRate: exchangeRateString,
-    insufficient
+    insufficient,
+    genericError
   }
 }
 

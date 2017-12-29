@@ -1,12 +1,16 @@
-//@flow
+// @flow
 
 import React, {Component} from 'react'
 import {View, Text} from 'react-native'
+
 type Props = {
   exchangeRate: string,
+  genericError: string,
+  insufficient: boolean,
   style: any
 }
-export default class CryptoExchageRate extends Component<Props> {
+type State = {}
+export default class CryptoExchageRate extends Component<Props, State> {
   render () {
     const {
       container,

@@ -132,10 +132,6 @@ export const setNativeAmount = (info: SetNativeAmountInfo) => (dispatch: Dispatc
         dispatch(actions.dispatchAction(Constants.RECEIVED_INSUFFICIENT_FUNDS_ERROR))
         return
       }
-      if (e.message === Constants.DUST) {
-        dispatch(actions.dispatchAction(Constants.RECEIVED_DUST_ERROR))
-        return
-      }
       dispatch(actions.dispatchActionString(Constants.GENERIC_SHAPE_SHIFT_ERROR, e.message))
     })
   }

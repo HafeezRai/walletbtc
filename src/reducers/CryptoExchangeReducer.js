@@ -89,7 +89,8 @@ function cryptoExchangerReducer (state = initialState, action) {
     return result
   }
   case Constants.UPDATE_SHIFT_TRANSACTION:
-    return {...state, transaction: action.data.abcTransaction,
+    return {...state,
+      transaction: action.data.abcTransaction,
       fee: action.data.networkFee && state.fromCurrencyCode ? s.strings.string_fee_with_colon + ' ' + action.data.networkFee + ' ' + state.fromCurrencyCode : ' ',
       insufficientError: false,
       genericShapeShiftError: null
@@ -108,11 +109,13 @@ function cryptoExchangerReducer (state = initialState, action) {
     return {...state, toNativeAmount: action.data.native, toDisplayAmount:action.data.display }
   case Constants.SET_CRYPTO_FROM_NATIVE_AMOUNT:
     return {...state, fromNativeAmount: action.data.native, fromDisplayAmount:action.data.display}
-  case Constants.RECEIVED_INSUFFICIENT_FUNDS_ERROR :
-    return {...state, transaction: null, insufficientError: true}
-  case Constants.GENERIC_SHAPE_SHIFT_ERROR :
+  case Constants.RECEIVED_INSUFFICIENT_FUNDS_ERROR:
+    return {...state, transaction: null, insufficientError: true, genericShapeShiftError: null}
+  case Constants.RECEIVED_DUST_ERROR:
+    return {...state, transaction: null, insufficientError: true, genericShapeShiftError: action.data}
+  case Constants.GENERIC_SHAPE_SHIFT_ERROR:
     return {...state, transaction: null, genericShapeShiftError: action.data}
-  case Constants.CHANGE_EXCHANGE_FEE :
+  case Constants.CHANGE_EXCHANGE_FEE:
     return {...state,  feeSetting: action.feeSetting}
   default:
     return state
