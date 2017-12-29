@@ -43,13 +43,13 @@ exports.config = {
 
     capabilities: [{
 
-        appiumVersion: '1.6.5',
+        appiumVersion: '1.6.4',
         autoAcceptAlerts: true,
         autoGrantPermissions: true,
        
         platformName: 'Android',
-        platformVersion: '6.0',
-        deviceName: 'Android Emulator',
+        platformVersion: '7.0',
+        deviceName: 'Android GoogleAPI Emulator',
         fullReset: 'false',
         noReset: 'true',
         /*
