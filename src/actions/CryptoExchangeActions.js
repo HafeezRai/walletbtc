@@ -184,9 +184,9 @@ const getShiftTransaction = (fromWallet: GuiWallet, toWallet: GuiWallet) => asyn
   const srcCurrencyCode = spendInfo.currencyCode
   const destCurrencyCode = spendInfo.spendTargets[0].currencyCode
 
-  const { toNativeAmount, nativeMax, nativeMin } = state.cryptoExchange
-  const isTooMuch = bns.gt(toNativeAmount, nativeMax)
-  const isTooLittle = bns.lt(toNativeAmount, nativeMin)
+  const { fromNativeAmount, nativeMax, nativeMin } = state.cryptoExchange
+  const isTooMuch = bns.gt(fromNativeAmount, nativeMax)
+  const isTooLittle = bns.lt(fromNativeAmount, nativeMin)
   if (isTooMuch || isTooLittle) {
     throw Error('Out of bounds exchange amount')
   }
