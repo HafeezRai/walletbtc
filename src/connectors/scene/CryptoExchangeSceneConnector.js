@@ -13,8 +13,8 @@ export const mapStateToProps = (state: State) => {
     wallets.push(state.ui.wallets.byId[wallet])
   }
   const exchangeRate =  state.cryptoExchange.exchangeRate
-  const fromAmountNative =  '.01'
-  const toAmountNative = Number(fromAmountNative)*exchangeRate //TODO: math with exchange rate. ( from )
+  const fromAmountNative = '.01'
+  const toAmountNative = Number(fromAmountNative) * exchangeRate //TODO: math with exchange rate. ( from )
 
   return {
     exchangeRate,

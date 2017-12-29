@@ -16,6 +16,7 @@ import * as WALLET_API from '../modules/Core/Wallets/api.js'
 import type {FlipInputFieldInfo} from '../modules/UI/components/FlipInput/FlipInput.ui'
 import s from '../locales/strings.js'
 import {checkShiftTokenAvailability} from '../modules/UI/scenes/CryptoExchange/CryptoExchangeSupportedTokens'
+import * as CONTEXT_API from '../modules/Core/Context/api'
 
 const DIVIDE_PRECISION = 18
 
@@ -183,6 +184,15 @@ const getShiftTransaction = (fromWallet: GuiWallet, toWallet: GuiWallet) => asyn
   const srcCurrencyCode = spendInfo.currencyCode
   const destCurrencyCode = spendInfo.spendTargets[0].currencyCode
 
+  const { toNativeAmount, nativeMax, nativeMin } = state.cryptoExchange
+  const isTooMuch = bns.gt(toNativeAmount, nativeMax)
+  const isTooLittle = bns.lt(toNativeAmount, nativeMin)
+  if (isTooMuch || isTooLittle) {
+    throw Error('Out of bounds exchange amount')
+  }
+
+  console.log('breakpoint')
+
   if (srcCurrencyCode !== destCurrencyCode) {
     let abcTransaction = await srcWallet.makeSpend(spendInfo)
     const primaryInfo = state.cryptoExchange.fromWalletPrimaryInfo
@@ -255,21 +265,23 @@ export const getCryptoExchangeRate = (fromCurrencyCode: string, toCurrencyCode: 
 
   const state = getState()
   const context = CORE_SELECTORS.getContext(state)
-  context
-  .getExchangeSwapRate(fromCurrencyCode, toCurrencyCode)
+  CONTEXT_API.getExchangeSwapInfo(context, fromCurrencyCode, toCurrencyCode)
   .then((response) => {
-    dispatch(actions.dispatchActionString(Constants.UPDATE_CRYPTO_EXCHANGE_RATE, response))
+    dispatch(actions.dispatchActionObject(Constants.UPDATE_CRYPTO_EXCHANGE_INFO, response))
     return response
   })
-  .catch((e) => { console.log(e) })
+  .catch((e) => {
+    console.log(e)
+  })
 
-  context
-  .getExchangeSwapRate(toCurrencyCode, fromCurrencyCode)
+  CONTEXT_API.getExchangeSwapInfo(context, toCurrencyCode, fromCurrencyCode)
   .then((response) => {
-    dispatch(actions.dispatchActionString(Constants.UPDATE_CRYPTO_REVERSE_EXCHANGE_RATE, response))
+    dispatch(actions.dispatchActionObject(Constants.UPDATE_CRYPTO_REVERSE_EXCHANGE_INFO, response))
     return response
   })
-  .catch((e) => { console.log(e) })
+  .catch((e) => {
+    console.log(e)
+  })
 }
 
 

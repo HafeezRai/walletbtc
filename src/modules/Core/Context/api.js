@@ -18,7 +18,11 @@ export const exchangeSwapRate = (context: AbcContext, sourceCurrencyCode: string
   return context.getExchangeSwapRate(sourceCurrencyCode, targetCurrencyCode)
 }
 
-export const exchangeSwapInfo = (context: AbcContext, sourceCurrencyCode: string, targetCurrencyCode: string) => {
+export const getExchangeSwapRate = (context: AbcContext, sourceCurrencyCode: string, targetCurrencyCode: string) => {
+  return context.getExchangeSwapRate(sourceCurrencyCode, targetCurrencyCode)
+}
+
+export const getExchangeSwapInfo = (context: AbcContext, sourceCurrencyCode: string, targetCurrencyCode: string) => {
   // $FlowExpectedError
   return context.getExchangeSwapInfo(sourceCurrencyCode, targetCurrencyCode)
 }
