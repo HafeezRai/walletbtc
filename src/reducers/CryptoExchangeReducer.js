@@ -29,7 +29,6 @@ const initialState = {
   toCurrencyIconDark: null,
 
   insufficientError: false,
-  // fee: '',
   feeSetting: Constants.STANDARD_FEE,
   walletListModalVisible: false,
   confirmTransactionModalVisible: false,
@@ -93,7 +92,8 @@ function cryptoExchangerReducer (state = initialState, action) {
     return {...state, transaction: action.data.abcTransaction,
       fee: action.data.networkFee && state.fromCurrencyCode ? s.strings.string_fee_with_colon + ' ' + action.data.networkFee + ' ' + state.fromCurrencyCode : ' ',
       insufficientError: false,
-      genericShapeShiftError: null}
+      genericShapeShiftError: null
+    }
   case Constants.INVALIDATE_SHIFT_TRANSACTION:
     return {...state, transaction: null, insufficientError: false, genericShapeShiftError: null}
   case Constants.SHIFT_COMPLETE:

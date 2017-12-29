@@ -186,24 +186,6 @@ const getShiftTransaction = (fromWallet: GuiWallet, toWallet: GuiWallet) => asyn
   const srcCurrencyCode = spendInfo.currencyCode
   const destCurrencyCode = spendInfo.spendTargets[0].currencyCode
 
-  const isAboveLimit = bns.gt(fromNativeAmount, nativeMax)
-  const isBelowLimit = bns.lt(fromNativeAmount, nativeMin)
-
-  if (isAboveLimit) {
-    const displayDenomination = SETTINGS_SELECTORS.getDisplayDenomination(state, fromCurrencyCode)
-    const nativeToDisplayRatio = displayDenomination.multiplier
-    const displayMax = UTILS.convertNativeToDisplay(nativeToDisplayRatio)(nativeMax)
-    const errorMessage = sprintf(s.strings.amount_above_limit, displayMax)
-    throw Error(errorMessage)
-  }
-  if (isBelowLimit) {
-    const displayDenomination = SETTINGS_SELECTORS.getDisplayDenomination(state, fromCurrencyCode)
-    const nativeToDisplayRatio = displayDenomination.multiplier
-    const displayMin = UTILS.convertNativeToDisplay(nativeToDisplayRatio)(nativeMin)
-    const errorMessage = sprintf(s.strings.amount_below_limit, displayMin)
-    throw Error(errorMessage)
-  }
-
   if (srcCurrencyCode !== destCurrencyCode) {
     let abcTransaction = await srcWallet.makeSpend(spendInfo)
     const primaryInfo = state.cryptoExchange.fromWalletPrimaryInfo
@@ -215,6 +197,23 @@ const getShiftTransaction = (fromWallet: GuiWallet, toWallet: GuiWallet) => asyn
       abcTransaction,
       networkFee,
       displayAmount
+    }
+    const isAboveLimit = bns.gt(fromNativeAmount, nativeMax)
+    const isBelowLimit = bns.lt(fromNativeAmount, nativeMin)
+
+    if (isAboveLimit) {
+      const displayDenomination = SETTINGS_SELECTORS.getDisplayDenomination(state, fromCurrencyCode)
+      const nativeToDisplayRatio = displayDenomination.multiplier
+      const displayMax = UTILS.convertNativeToDisplay(nativeToDisplayRatio)(nativeMax)
+      const errorMessage = sprintf(s.strings.amount_above_limit, displayMax)
+      throw Error(errorMessage)
+    }
+    if (isBelowLimit) {
+      const displayDenomination = SETTINGS_SELECTORS.getDisplayDenomination(state, fromCurrencyCode)
+      const nativeToDisplayRatio = displayDenomination.multiplier
+      const displayMin = UTILS.convertNativeToDisplay(nativeToDisplayRatio)(nativeMin)
+      const errorMessage = sprintf(s.strings.amount_below_limit, displayMin)
+      throw Error(errorMessage)
     }
     dispatch(setShapeTransaction(Constants.UPDATE_SHIFT_TRANSACTION, returnObject))
   }
