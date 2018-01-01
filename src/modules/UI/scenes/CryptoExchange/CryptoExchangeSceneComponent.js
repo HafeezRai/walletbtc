@@ -59,6 +59,7 @@ export default class CryptoExchangeSceneComponent extends Component<Props, State
   animatedValue: any
   frontInterpolate: any
   backInterpolate: any
+  listenerAnimatedValue: any
 
   constructor (props: Props) {
     super(props)
@@ -90,12 +91,24 @@ export default class CryptoExchangeSceneComponent extends Component<Props, State
     })
     if (this.state.isToggled) {
       Animated.spring(this.animatedValue,{
+        toValue: 90,
+        friction: 8,
+        tension: 10
+      }).start()
+      this.props.swapFromAndToWallets()
+      Animated.spring(this.animatedValue,{
         toValue: 0,
         friction: 8,
         tension: 10
       }).start()
     }
     if (!this.state.isToggled) {
+      Animated.spring(this.animatedValue,{
+        toValue: 90,
+        friction: 8,
+        tension: 10
+      }).start()
+      this.props.swapFromAndToWallets()
       Animated.spring(this.animatedValue,{
         toValue: 180,
         friction: 8,
@@ -211,10 +224,11 @@ export default class CryptoExchangeSceneComponent extends Component<Props, State
               <View style={style.shim} />
               <CryptoExchangeFlipConnector
                 style={style.flipWrapper}
-                uiWallet={this.props.toWallet}
-                currencyCode={this.props.toCurrencyCode}
-                whichWallet={Constants.TO}
+                uiWallet={this.props.fromWallet}
+                currencyCode={this.props.fromCurrencyCode}
+                whichWallet={Constants.FROM}
                 launchWalletSelector={this.launchWalletSelector}
+                fee={this.props.fee}
               />
               <View style={style.shim} />
               <IconButton
@@ -225,11 +239,10 @@ export default class CryptoExchangeSceneComponent extends Component<Props, State
               <View style={style.shim} />
               <CryptoExchangeFlipConnector
                 style={style.flipWrapper}
-                uiWallet={this.props.fromWallet}
-                currencyCode={this.props.fromCurrencyCode}
-                whichWallet={Constants.FROM}
+                uiWallet={this.props.toWallet}
+                currencyCode={this.props.toCurrencyCode}
+                whichWallet={Constants.TO}
                 launchWalletSelector={this.launchWalletSelector}
-                fee={this.props.fee}
               />
               <View style={style.shim} />
               <View style={style.actionButtonContainer} >
