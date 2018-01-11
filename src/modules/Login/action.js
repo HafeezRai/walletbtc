@@ -65,6 +65,19 @@ export const initializeAccount = (account: AbcAccount, touchIdInfo: Object) => (
 const loadSettings = (dispatch: Dispatch, getState: GetState) => {
   const {account} = getState().core
 
+  Promise.all([
+    SETTINGS_API.getSyncedSettings(account),
+    SETTINGS_API.getLocalSettings(account),
+    SETTINGS_API.getCoreSettings(account)
+  ])
+  .then(([syncedSettings, localSettings, coreSettings]) => {
+    dispatch(SETTINGS_ACTIONS.loadSettings({
+      syncedSettings,
+      localSettings,
+      coreSettings
+    }))
+  })
+
   SETTINGS_API.getSyncedSettings(account)
   .then((settings) => {
     const syncDefaults = SETTINGS_API.SYNCED_ACCOUNT_DEFAULTS
@@ -109,9 +122,6 @@ const loadSettings = (dispatch: Dispatch, getState: GetState) => {
         dispatch(SETTINGS_ACTIONS.setDenominationKey(token.currencyCode, token.multiplier))
       })
     }
-  })
-  .catch((error) => {
-    console.error(error)
   })
   .then(() => {
     SETTINGS_API.getLocalSettings(account)

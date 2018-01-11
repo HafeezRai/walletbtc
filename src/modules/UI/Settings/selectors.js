@@ -167,6 +167,7 @@ export const getSettingsLock = (state: State) => {
   const settings = getSettings(state)
   return settings.changesLocked
 }
+
 export const getAutoLogoutTimeInSeconds = (state: State): number => {
   const settings = getSettings(state)
   const autoLogoutTimeInSeconds: number = settings.autoLogoutTimeInSeconds

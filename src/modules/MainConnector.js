@@ -24,6 +24,7 @@ import makeContextCallbacks from './Core/Context/callbacks'
 const mapStateToProps = () => ({})
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  dispatch,
   dispatchEnableScan: () => {
     return dispatch(enableScan())
   },

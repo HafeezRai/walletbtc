@@ -32,13 +32,20 @@
     "lint:fix": "npm run lint -- --fix",
     "flow:0": "flow; exit 0",
     "flow": "flow",
+    "jest": "jest",
     "test": "npm run lint && npm run flow && jest",
     "watch": "npm test -- --watch",
     "server": "node ./loggingServer.js",
     "precommit": "npm test"
   },
   "jest": {
-    "preset": "react-native"
+    "preset": "react-native",
+    "transformIgnorePatterns": [
+      "node_modules/(?!(jest-)?react-native|react-navigation|mobx|airbitz-core-types)"
+    ],
+    "setupFiles": [
+      "./testSetup.js"
+    ]
   },
   "rnpm": {
     "assets": [
@@ -122,7 +129,6 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
-    "babel-jest": "^20.0.3",
     "babel-preset-react-native": "^1.9.0",
     "body-parser": "^1.18.2",
     "eslint": "^3.11.1",
@@ -133,7 +139,7 @@
     "express": "^4.16.2",
     "flow-bin": "^0.54.1",
     "husky": "^0.12.0",
-    "jest": "^20.0.4",
+    "jest": "^22.0.5",
     "jsonfile": "^4.0.0",
     "nyc": "^10.0.0",
     "rn-nodeify": "^7.0.1",

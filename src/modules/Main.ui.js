@@ -171,6 +171,8 @@ export default class Main extends Component<Props, State> {
   constructor (props: Props) {
     super(props)
 
+    this.props.dispatch({type: 'QWEQWE'})
+
     this.state = {
       context: undefined
     }

@@ -1,5 +1,7 @@
 // @flow
 
+import {AbcCurrencyPlugin} from 'airbitz-core-types'
+
 import * as SETTINGS_SELECTORS from './selectors'
 
 import type {Dispatch, GetState} from '../../ReduxTypes'
@@ -23,7 +25,7 @@ export const SET_OTP_MODE = PREFIX + 'SET_OTP_MODE'
 export const SET_OTP = PREFIX + 'SET_OTP'
 
 // Synced Account Settings
-export const SET_AUTO_LOGOUT_TIME = PREFIX + 'SET_AUTO_LOGOUT_TIME'
+export const SET_AUTO_LOGOUT_MODE = PREFIX + 'SET_AUTO_LOGOUT_MODE'
 export const SET_DEFAULT_FIAT = PREFIX + 'SET_DEFAULT_FIAT'
 export const SET_MERCHANT_MODE = PREFIX + 'SET_MERCHANT_MODE'
 
@@ -41,16 +43,25 @@ export const SET_DENOMINATION_KEY = PREFIX + 'SET_DENOMINATION_KEY'
 
 // Plugins
 export const ADD_CURRENCY_PLUGIN = PREFIX + 'ADD_CURRENCY_PLUGIN'
+export const LOAD_CURRENCY_PLUGINS = PREFIX + 'LOAD_CURRENCY_PLUGINS'
 
 // tokens
 export const SET_CUSTOM_TOKENS = PREFIX + 'SET_CUSTOM_TOKENS'
 
+export const SET_TRANSACTION_SPENDING_LIMIT = PREFIX + 'SET_TRANSACTION_SPENDING_LIMIT'
 export const UPDATE_TRANSACTION_SPENDING_LIMIT_START = PREFIX + 'UPDATE_TRANSACTION_SPENDING_LIMIT_START'
 export const UPDATE_TRANSACTION_SPENDING_LIMIT_SUCCESS = PREFIX + 'UPDATE_TRANSACTION_SPENDING_LIMIT_SUCCESS'
 export const UPDATE_TRANSACTION_SPENDING_LIMIT_ERROR = PREFIX + 'UPDATE_TRANSACTION_SPENDING_LIMIT_ERROR'
+
+export const SET_DAILY_SPENDING_LIMIT = PREFIX + 'SET_DAILY_SPENDING_LIMIT'
 export const UPDATE_DAILY_SPENDING_LIMIT_START = PREFIX + 'UPDATE_DAILY_SPENDING_LIMIT_START'
 export const UPDATE_DAILY_SPENDING_LIMIT_SUCCESS = PREFIX + 'UPDATE_DAILY_SPENDING_LIMIT_SUCCESS'
 export const UPDATE_DAILY_SPENDING_LIMIT_ERROR = PREFIX + 'UPDATE_DAILY_SPENDING_LIMIT_ERROR'
+
+export const SET_TOUCH_ID_MODE = PREFIX + 'SET_TOUCH_ID_MODE'
+export const SET_SUDO_MODE = PREFIX + 'SET_SUDO_MODE'
+
+export const SET_DISPLAY_DENOMINATION = PREFIX + 'SET_DISPLAY_DENOMINATION'
 
 export const LOAD_CURRENCY_SETTINGS = PREFIX + 'LOAD_CURRENCY_SETTINGS'
 
@@ -79,7 +90,7 @@ export const updateSettings = (settings: Object) => ({
   data: {settings}
 })
 
-export const loadSettings = (settings: Object) => ({
+export const loadSettings = (settings: {syncedSettings: Object, localSettings: Object, coreSettings: Object}) => ({
   type: LOAD_SETTINGS,
   data: {settings}
 })
@@ -105,8 +116,13 @@ export const setOTP = (otp: string) => ({
 })
 
 export const setAutoLogoutTimeInSeconds = (autoLogoutTimeInSeconds: number) => ({
-  type: SET_AUTO_LOGOUT_TIME,
+  type: SET_AUTO_LOGOUT_MODE,
   data: {autoLogoutTimeInSeconds}
+})
+
+export const setAutoLogoutMode = (autoLogoutMode: {isEnabled: boolean, seconds: number}) => ({
+  type: SET_AUTO_LOGOUT_MODE,
+  data: {autoLogoutMode}
 })
 
 export const setDefaultFiat = (defaultFiat: string) => ({
@@ -150,8 +166,15 @@ export const addCurrencyPlugin = (plugin: Object) => {
   }
 }
 
-// tokens
+// $FlowExpectedError
+export const loadCurrencyPlugins = (currencyPlugins: Array<AbcCurrencyPlugin>) => {
+  return {
+    type: LOAD_CURRENCY_PLUGINS,
+    data: {currencyPlugins}
+  }
+}
 
+// tokens
 export const setCustomTokens = (customTokens: any) => {
   return {
     type: SET_CUSTOM_TOKENS,
