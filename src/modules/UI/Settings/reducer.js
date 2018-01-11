@@ -16,7 +16,7 @@ const DEFAULT_SETTINGS = {
   currencyInfos: {},
   currencies: {},
   defaultFiat: 'USD',
-  loginStatus: false,
+  loginStatus: null,
   merchantMode: { isEnabled: false },
   otpMode: { isEnabled: false, key: '' },
   pinMode: { isEnabled: false, pin: '' },
@@ -58,7 +58,7 @@ const defaultFiat = (state = DEFAULT_SETTINGS.defaultFiat, action) => {
   }
 }
 
-const loginStatus = (state = false, action) => {
+const loginStatus = (state = null, action) => {
   switch (action.type) {
     case actions.SET_LOGIN_STATUS: {
       return action.data.loginStatus
