@@ -1,3 +1,5 @@
+// @flow
+
 import React, {Component} from 'react'
 import {TouchableHighlight, View} from 'react-native'
 
@@ -9,7 +11,12 @@ import styles, {styles as styleRaw} from '../../../components/Modal/style'
 const CANCEL_TEXT = s.strings.string_cancel_cap
 const DONE_TEXT = s.strings.calculator_done
 
-export default class ModalButtons extends Component {
+export type Props = {
+  onDone: Function,
+  onCancel: Function
+}
+
+export default class ModalButtons extends Component<Props> {
   render () {
     const {
       onDone,

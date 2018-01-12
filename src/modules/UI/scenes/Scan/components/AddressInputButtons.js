@@ -1,3 +1,5 @@
+// @flow
+
 import React, {Component} from 'react'
 import {
   View,
@@ -12,10 +14,15 @@ import {styles as styleRaw} from '../style'
 const CANCEL_TEXT = s.strings.string_cancel_cap
 const DONE_TEXT = s.strings.string_done_cap
 
-export class AddressInputButtons extends Component {
+export type Props = {
+  onCancel: Function,
+  onSubmit: Function
+}
+
+export class AddressInputButtons extends Component<Props> {
   render () {
     return (
-      <View style={[ModalStyle.buttonsWrap, border('gray')]}>
+      <View style={[ModalStyle.buttonsWrap]}>
 
         <TouchableHighlight style={[
           ModalStyle.cancelButtonWrap,

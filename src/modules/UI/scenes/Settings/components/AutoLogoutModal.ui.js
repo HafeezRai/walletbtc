@@ -1,3 +1,5 @@
+// @flow
+
 import React, {Component} from 'react'
 import {Picker, View} from 'react-native'
 
@@ -16,18 +18,30 @@ const HOURS_TEXT = s.strings.settings_hours
 const MINUTEST_TEXT = s.strings.settings_minutes
 const SECONDS_TEXT = s.strings.settings_seconds
 
-export default class AutoLogoutModal extends Component {
-  constructor (props) {
+export type Props = {
+  autoLogoutTimeInMinutes: number,
+  onDone: Function,
+  onCancel: Function
+}
+
+export type State = {
+  timeNumber: number,
+  timeMeasurement: string,
+  showModal: boolean
+}
+
+export default class AutoLogoutModal extends Component<Props, State> {
+  constructor (props: Props) {
     super(props)
     const {value, measurement} = UTILS.getTimeWithMeasurement(this.props.autoLogoutTimeInMinutes)
     this.state = {
       timeNumber: value,
-      timeMeasurement: measurement
+      timeMeasurement: measurement,
+      showModal: false
     }
   }
 
-  onDone = (props) => {
-    const {timeNumber, timeMeasurement} = props
+  onDone = (timeMeasurement: string, timeNumber: number) => {
     const minutes = UTILS.getTimeInMinutes({value: timeNumber, measurement: timeMeasurement})
     this.props.onDone(minutes)
   }
@@ -77,14 +91,14 @@ export default class AutoLogoutModal extends Component {
     </View>
 
     const modalBottom = <ModalButtons
-      onDone={() => this.onDone({ timeMeasurement: this.state.timeMeasurement, timeNumber: this.state.timeNumber })}
+      onDone={() => this.onDone(this.state.timeMeasurement, this.state.timeNumber)}
       onCancel={this.onCancel} />
 
     const icon = <IonIcon name='ios-time-outline' size={24}
       style={styles.icon} />
 
     return <StylizedModal
-      visibilityBoolean={this.props.showModal}
+      visibilityBoolean={this.state.showModal}
       featuredIcon={icon}
       headerText={s.strings.dialog_title}
       modalMiddle={modalMiddle}

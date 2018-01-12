@@ -1,3 +1,5 @@
+// @flow
+
 import React, {Component} from 'react'
 import {
   View
@@ -7,7 +9,16 @@ import styles from '../style.js'
 import s from '../../../../../locales/strings.js'
 import {FormField} from '../../../../../components/FormField.js'
 
-export class AddressInput extends Component { // this component is for the input area of the Recipient Address Modal
+export type Props = {
+  uri: string,
+  onChangeText: Function,
+  onSubmit: Function,
+  onPaste: Function,
+  copyMessage: string
+}
+
+// this component is for the input area of the Recipient Address Modal
+export class AddressInput extends Component<Props> {
   render () {
     return (
       <View>

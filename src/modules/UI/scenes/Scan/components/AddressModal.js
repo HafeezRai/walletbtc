@@ -74,7 +74,7 @@ export default class AddressModal extends Component<Props, State> {
     const copyMessage =
       this.state.clipboard
       ? sprintf(s.strings.string_paste_address, this.state.clipboard)
-      : null
+      : ''
     const middle = <AddressInput
       copyMessage={copyMessage}
       onChangeText={this.onChangeText}
