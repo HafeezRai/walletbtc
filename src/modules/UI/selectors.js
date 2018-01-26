@@ -1,6 +1,6 @@
 // @flow
 
-import type {AbcTransaction} from 'airbitz-core-types'
+import type {AbcTransaction} from 'edge-core'
 import _ from 'lodash'
 
 import type {State} from '../ReduxTypes'

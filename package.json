@@ -42,7 +42,7 @@
   "jest": {
     "preset": "react-native",
     "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-navigation|mobx|airbitz-core-types)"
+      "node_modules/(?!(jest-)?react-native|react-navigation|mobx|edge-core)"
     ],
     "setupFiles": [
       "./testSetup.js"
@@ -54,9 +54,8 @@
     ]
   },
   "dependencies": {
-    "airbitz-core-js-ui": "git://github.com/Airbitz/airbitz-core-js-ui.git#react-native",
-    "airbitz-core-react-native": "^0.6.0",
-    "airbitz-core-types": "git://github.com/Airbitz/airbitz-core-types.git",
+    "airbitz-core-js-ui": "git://github.com/Airbitz/airbitz-core-js-ui.git#edge-core",
+    "edge-core": "git://github.com/Airbitz/airbitz-core-js#edge-core",
     "biggystring": "^3.0.1",
     "browserify-zlib": "^0.1.4",
     "buffer": "^5.0.8",
@@ -65,8 +64,8 @@
     "currency-symbol-map": "^4.0.1",
     "dns.js": "^1.0.1",
     "domain-browser": "^1.1.7",
-    "edge-currency-bitcoin": "^2.12.4",
-    "edge-currency-ethereum": "^0.7.4",
+    "edge-currency-bitcoin": "git://github.com/Airbitz/edge-currency-bitcoin#edge-core",
+    "edge-currency-ethereum": "git://github.com/Airbitz/edge-currency-ethereum#edge-core",
     "edge-exchange-plugins": "^0.1.1",
     "https-browserify": "0.0.1",
     "intl": "^1.2.5",

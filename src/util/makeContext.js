@@ -4,7 +4,7 @@ import type {
   AbcContextCallbacks,
   AbcCorePlugin,
   AbcContextOptions
-} from 'airbitz-core-types'
+} from 'edge-core'
 
 import {makeFakeContexts, makeReactNativeContext} from 'airbitz-core-react-native'
 import ENV from '../../env.json'

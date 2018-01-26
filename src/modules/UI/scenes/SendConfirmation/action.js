@@ -11,7 +11,7 @@ import type {
   AbcTransaction,
   AbcCurrencyWallet,
   AbcSpendTarget
-} from 'airbitz-core-types'
+} from 'edge-core'
 
 const PREFIX = 'UI/SendConfimation/'
 

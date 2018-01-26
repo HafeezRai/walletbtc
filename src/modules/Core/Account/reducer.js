@@ -1,6 +1,6 @@
 // @flow
 
-import type { AbcAccount } from 'airbitz-core-types'
+import type { AbcAccount } from 'edge-core'
 
 import type { Action } from '../../ReduxTypes.js'
 import * as Constants from '../../../constants/indexConstants.js'

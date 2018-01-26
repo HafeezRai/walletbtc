@@ -5,7 +5,7 @@ import type {FlipInputFieldInfo} from '../../components/FlipInput/FlipInput.ui'
 
 import type {State, Dispatch} from '../../../ReduxTypes'
 import type {GuiWallet, GuiDenomination} from '../../../../types'
-import type {AbcCurrencyWallet, AbcTransaction, AbcParsedUri} from 'airbitz-core-types'
+import type {AbcCurrencyWallet, AbcTransaction, AbcParsedUri} from 'edge-core'
 
 import {bns} from 'biggystring'
 

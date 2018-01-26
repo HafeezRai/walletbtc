@@ -1,6 +1,6 @@
 // @flow
 
-import type {AbcCurrencyWallet} from 'airbitz-core-types'
+import type {AbcCurrencyWallet} from 'edge-core'
 import type {State} from '../ReduxTypes'
 
 export const getCore = (state: State) => state.core

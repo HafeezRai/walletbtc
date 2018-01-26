@@ -1,7 +1,7 @@
 // @flow
 import * as ACTION from './action'
 import * as Constants from '../../../../constants/indexConstants'
-import type { AbcTransaction, AbcParsedUri } from 'airbitz-core-types'
+import type { AbcTransaction, AbcParsedUri } from 'edge-core'
 
 export type SendConfirmationState = {
   transaction: AbcTransaction | null,

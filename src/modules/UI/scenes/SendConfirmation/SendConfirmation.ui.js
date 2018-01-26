@@ -22,7 +22,7 @@ import Gradient from '../../components/Gradient/Gradient.ui'
 import * as UTILS from '../../../utils.js'
 
 import type {GuiWallet, CurrencyConverter} from '../../../../types'
-import type {AbcCurrencyWallet, AbcParsedUri, AbcTransaction} from 'airbitz-core-types'
+import type {AbcCurrencyWallet, AbcParsedUri, AbcTransaction} from 'edge-core'
 import type {SendConfirmationState} from './reducer'
 
 const DIVIDE_PRECISION = 18
