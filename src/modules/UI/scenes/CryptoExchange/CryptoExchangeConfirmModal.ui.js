@@ -27,7 +27,7 @@ type Props = {
   closeFunction(): void,
   confirmFunction(): void
 }
-export default class CryptoExchangeConfirmTransactionModalComponent extends Component<Props> {
+export default class CryptoExchangeConfirmModal extends Component<Props> {
   render () {
     const style = this.props.style
     const icon = <Icon

@@ -3,10 +3,10 @@
 import type {Dispatch, State} from '../../modules/ReduxTypes'
 import {connect} from 'react-redux'
 import {
-  CryptoExchangeSceneComponent,
-  type CryptoExchangeSceneComponentStateProps,
-  type CryptoExchangeSceneComponentDispatchProps
-} from '../../modules/UI/scenes/CryptoExchange/CryptoExchangeSceneComponent'
+  CryptoExchange,
+  type CryptoExchangeStateProps,
+  type CryptoExchangeDispatchProps
+} from '../../modules/UI/scenes/CryptoExchange/CryptoExchange.ui'
 import * as actions from '../../actions/indexActions'
 import * as Constants from '../../constants/indexConstants'
 import { getExchangeRate } from '../../modules/Core/selectors.js'
@@ -17,7 +17,7 @@ import type { SetNativeAmountInfo } from '../../actions/CryptoExchangeActions'
 
 const DIVIDE_PRECISION = 18
 
-export const mapStateToProps = (state: State): CryptoExchangeSceneComponentStateProps => {
+export const mapStateToProps = (state: State): CryptoExchangeStateProps => {
   const fromWallet = state.cryptoExchange.fromWallet
   const toWallet = state.cryptoExchange.toWallet
 
@@ -106,7 +106,7 @@ export const mapStateToProps = (state: State): CryptoExchangeSceneComponentState
   }
 }
 
-export const mapDispatchToProps = (dispatch: Dispatch): CryptoExchangeSceneComponentDispatchProps => ({
+export const mapDispatchToProps = (dispatch: Dispatch): CryptoExchangeDispatchProps => ({
   swapFromAndToWallets: () => dispatch(actions.dispatchAction(Constants.SWAP_FROM_TO_CRYPTO_WALLETS)),
   openModal: (data: string) => dispatch(actions.dispatchActionString(Constants.OPEN_WALLET_SELECTOR_MODAL, data)),
   shift: () => dispatch(actions.shiftCryptoCurrency()),
@@ -115,4 +115,4 @@ export const mapDispatchToProps = (dispatch: Dispatch): CryptoExchangeSceneCompo
   setNativeAmount: (data: SetNativeAmountInfo) => dispatch(actions.setNativeAmount(data))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(CryptoExchangeSceneComponent)
+export default connect(mapStateToProps, mapDispatchToProps)(CryptoExchange)

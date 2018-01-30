@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react'
-import {FlipInput, type FlipInputFieldInfo} from './FlipInput2.ui.js'
+import {FlipInput, type FlipInputFieldInfo} from './FlipInput.ui.js'
 import {bns} from 'biggystring'
 import type {GuiCurrencyInfo} from '../../../../types'
 import { precisionAdjust } from '../../../utils.js'

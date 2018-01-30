@@ -3,7 +3,7 @@
 import {connect} from 'react-redux'
 
 import LinkedComponent
-  from '../../modules/UI/components/CryptoExchangeRate/CryptoExchangeRate'
+  from '../../modules/UI/components/CryptoExchangeRate/CryptoExchangeRate.ui'
 import s from '../../locales/strings.js'
 import type {State} from '../../modules/ReduxTypes'
 

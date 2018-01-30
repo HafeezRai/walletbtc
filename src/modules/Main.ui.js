@@ -34,7 +34,7 @@ import TransactionDetails from './UI/scenes/TransactionDetails/TransactionDetail
 import Request from './UI/scenes/Request/index'
 import SendConfirmation from './UI/scenes/SendConfirmation/index'
 import Scan from './UI/scenes/Scan/ScanConnector'
-import ExchangeConnector from '../connectors/scene/CryptoExchangeSceneConnector'
+import ExchangeConnector from '../connectors/scene/CryptoExchangeConnector'
 import WalletList from './UI/scenes/WalletList/WalletListConnector'
 import { CreateWalletNameComponent } from './UI/scenes/CreateWallet/CreateWalletName.ui.js'
 import { CreateWalletSelectCrypto } from './UI/scenes/CreateWallet/CreateWalletSelectCryptoConnector'

@@ -1,7 +1,7 @@
 // @flow
 import React, {Component} from 'react'
 import {View, Image, Text, StyleSheet} from 'react-native'
-import { ExchangedFlipInput, type ExchangedFlipInputAmounts } from './ExchangedFlipInput2.js'
+import { ExchangedFlipInput, type ExchangedFlipInputAmounts } from './ExchangedFlipInput.ui.js'
 import {TextAndIconButton} from '../Buttons'
 import * as Constants from '../../../../constants/indexConstants'
 import type { GuiWallet, GuiCurrencyInfo } from '../../../../types'
@@ -24,7 +24,7 @@ export type Props = {
   onCryptoExchangeAmountChanged: (ExchangedFlipInputAmounts) => void
 }
 
-export class CryptoExchangeFlipInputWrapperComponent extends Component<Props, State> {
+export class CryptoExchangeFlipInput extends Component<Props, State> {
   renderFee (style: StyleSheet.Styles) {
     if (this.props.fee) {
       return (

@@ -11,21 +11,21 @@ import SafeAreaView from '../../components/SafeAreaView'
 import CryptoExchangeConnector
   from '../../../../connectors/components/CryptoExchangeRateConnector'
 import {CryptoExchangeSceneStyle} from '../../../../styles/indexStyles'
-import { CryptoExchangeFlipInputWrapperComponent }
-  from '../../components/FlipInput/CryptoExchangeFlipInputWrapperComponent.js'
+import { CryptoExchangeFlipInput }
+  from '../../components/FlipInput/CryptoExchangeFlipInput.ui.js'
 import type { ExchangedFlipInputAmounts }
-  from '../../components/FlipInput/ExchangedFlipInput2'
+  from '../../components/FlipInput/ExchangedFlipInput.ui'
 import {PrimaryButton} from '../../components/Buttons/index'
 import WalletListModal
   from '../../../UI/components/WalletListModal/WalletListModalConnector'
-import CryptoExchangeConfirmTransactionModalComponent from './CryptoExchangeConfirmTransactionModalComponent'
+import CryptoExchangeConfirmTransactionModalComponent from './CryptoExchangeConfirmModal.ui'
 import {IconButton} from '../../components/Buttons/IconButton.ui'
 import type { GuiWallet, GuiCurrencyInfo } from '../../../../types'
 import type { SetNativeAmountInfo } from '../../../../actions/CryptoExchangeActions.js'
 import { getDenomFromIsoCode } from '../../../utils.js'
 import { emptyCurrencyInfo } from '../../../../types'
 
-export type CryptoExchangeSceneComponentStateProps = {
+export type CryptoExchangeStateProps = {
   // The following props are used to populate the CryptoExchangeFlipInputs
   fromWallet: GuiWallet,
   fromExchangeAmount: string,
@@ -60,7 +60,7 @@ export type CryptoExchangeSceneComponentStateProps = {
   showConfirmShiftModal: boolean
 }
 
-export type CryptoExchangeSceneComponentDispatchProps = {
+export type CryptoExchangeDispatchProps = {
   swapFromAndToWallets: () => any,
 
   // Opens the wallet selector
@@ -71,7 +71,7 @@ export type CryptoExchangeSceneComponentDispatchProps = {
   setNativeAmount: (data: SetNativeAmountInfo) => any
 }
 
-type Props = CryptoExchangeSceneComponentStateProps & CryptoExchangeSceneComponentDispatchProps
+type Props = CryptoExchangeStateProps & CryptoExchangeDispatchProps
 
 type State = {
   whichWallet: string, // Which wallet selector dropdown was tapped
@@ -81,7 +81,7 @@ type State = {
   toExchangeAmount: string
 }
 
-export class CryptoExchangeSceneComponent extends Component<Props, State> {
+export class CryptoExchange extends Component<Props, State> {
   constructor (props: Props) {
     super(props)
     const newState: State = {
@@ -154,7 +154,7 @@ export class CryptoExchangeSceneComponent extends Component<Props, State> {
           >
             <CryptoExchangeConnector style={style.exchangeRateBanner} />
             <View style={style.shim} />
-            <CryptoExchangeFlipInputWrapperComponent
+            <CryptoExchangeFlipInput
               style={style.flipWrapper}
               guiWallet={this.props.fromWallet}
               fee={this.props.fee}
@@ -175,7 +175,7 @@ export class CryptoExchangeSceneComponent extends Component<Props, State> {
               onPress={this.flipThis}
             />
             <View style={style.shim} />
-            <CryptoExchangeFlipInputWrapperComponent
+            <CryptoExchangeFlipInput
               style={style.flipWrapper}
               guiWallet={this.props.toWallet}
               fee={null}
