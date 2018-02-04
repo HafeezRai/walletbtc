@@ -31,7 +31,8 @@ export type CreateWalletSelectCryptoStateProps = {
 
 type State = {
   selectedWalletType: string,
-  searchTerm: string
+  searchTerm: string,
+  isWalletTypeInputFocused: boolean
 }
 
 export type CreateWalletSelectCryptoProps = CreateWalletSelectCryptoOwnProps & CreateWalletSelectCryptoStateProps
@@ -41,8 +42,15 @@ export class CreateWalletSelectCrypto extends Component<CreateWalletSelectCrypto
     super(props)
     this.state = {
       selectedWalletType: '',
-      searchTerm: ''
+      searchTerm: '',
+      isWalletTypeInputFocused: false
     }
+  }
+
+  componentDidMount () {
+    this.setState({
+      isWalletTypeInputFocused: true
+    })
   }
 
   isValidWalletType = (): boolean => {
@@ -115,6 +123,7 @@ export class CreateWalletSelectCrypto extends Component<CreateWalletSelectCrypto
           <Gradient style={styles.gradient} />
           <View style={styles.view}>
             <FormField style={styles.picker}
+              autoFocus={this.state.isWalletTypeInputFocused}
               clearButtonMode={'while-editing'}
               onFocus={this.handleOnFocus}
               onBlur={this.handleOnBlur}
