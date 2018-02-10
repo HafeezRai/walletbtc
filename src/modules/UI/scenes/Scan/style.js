@@ -4,18 +4,19 @@ import {
   StyleSheet,
   Platform
 } from 'react-native'
+
 import THEME from '../../../../theme/variables/airbitz.js'
-import platform from '../../../../theme/variables/platform.js'
+import { PLATFORM } from '../../../../theme/variables/platform.js'
 
 export const styles = {
   gradient: {
     height: THEME.HEADER
   },
   container: {
-    height: platform.deviceHeight - 66 - platform.footerHeight,
+    height: PLATFORM.deviceHeight - 66 - PLATFORM.footerHeight,
     flex: 1,
     flexDirection: 'row',
-    position: 'relative',
+    position: 'relative'
   },
   preview: {
     flex: 1,
@@ -178,11 +179,6 @@ export const styles = {
     color: THEME.COLORS.PRIMARY
   },
   icon: {
-    position: 'relative',
-    top: 12,
-    left: 13,
-    height: 24,
-    width: 24,
     backgroundColor: THEME.COLORS.TRANSPARENT,
     zIndex: 1015,
     elevation: 1015

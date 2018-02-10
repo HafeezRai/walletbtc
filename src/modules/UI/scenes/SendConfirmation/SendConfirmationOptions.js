@@ -3,38 +3,37 @@
 import React, {Component} from 'react'
 import {Text, View} from 'react-native'
 import Menu, {MenuOptions, MenuOption, MenuTrigger} from 'react-native-menu'
-import {sprintf} from 'sprintf-js'
 import s from '../../../../locales/strings.js'
 import {border} from '../../../utils'
+import styles from './styles'
+import type {EdgeCurrencyWallet} from 'edge-login'
 
-
-const CHANGE_MINING_FEE_TEXT = sprintf(s.strings.change_mining_fee_title)
-const CHANGE_CURRENCY_TEXT = 'Change Currency'
-const SEND_MAX_TEXT = sprintf(s.strings.send_confirmation_max_button_title)
-const HELP_TEXT = sprintf(s.strings.string_help)
+const CHANGE_MINING_FEE_TEXT = s.strings.title_change_mining_fee
+const CHANGE_CURRENCY_TEXT = s.strings.change_currency_fee
+const SEND_MAX_TEXT = s.strings.send_confirmation_max_button_title
+const HELP_TEXT = s.strings.string_help
 
 const CHANGE_MINING_FEE = 'CHANGE_MINING_FEE'
-const CHANGE_CURRENCY   = 'CHANGE_CURRENCY'
-const SEND_MAX          = 'SEND_MAX'
-const HELP              = 'HELP'
-
-import styles from './styles'
+const CHANGE_CURRENCY = 'CHANGE_CURRENCY'
+const SEND_MAX = 'SEND_MAX'
+const HELP = 'HELP'
 
 type Props = {
-  changeMiningFee: () => void,
+  changeMiningFee: (EdgeCurrencyWallet) => void,
   openHelpModal: () => void,
-  sendMaxSpend: () => void
+  sendMaxSpend: () => void,
+  sourceWallet: EdgeCurrencyWallet
 }
 type State = {}
 export default class SendConfirmationOptions extends Component<Props, State> {
   handleMenuOptions (key: string) {
     switch (key) {
-    case CHANGE_MINING_FEE:
-      return this.props.changeMiningFee()
-    case HELP:
-      return this.props.openHelpModal()
-    case SEND_MAX:
-      return this.props.sendMaxSpend()
+      case CHANGE_MINING_FEE:
+        return this.props.changeMiningFee(this.props.sourceWallet)
+      case HELP:
+        return this.props.openHelpModal()
+      case SEND_MAX:
+        return this.props.sendMaxSpend()
     }
   }
 

@@ -3,9 +3,10 @@
 import React, {Component} from 'react'
 import {View, FlatList, ActivityIndicator} from 'react-native'
 import {Actions} from 'react-native-router-flux'
+import SafeAreaView from '../../components/SafeAreaView'
 
-import type {AbcMetaToken} from 'airbitz-core-types'
-import type { GuiWallet } from '../../../../types'
+import type {AbcMetaToken} from 'edge-login'
+import type { GuiWallet, CustomTokenInfo } from '../../../../types'
 
 import * as UTILS from '../../../utils'
 import Text from '../../components/FormattedText'
@@ -14,48 +15,40 @@ import Gradient from '../../components/Gradient/Gradient.ui'
 import ManageTokenRow from './ManageTokenRow.ui.js'
 import {PrimaryButton, SecondaryButton} from '../../components/Buttons'
 import styles from './style.js'
+import _ from 'lodash'
 
-export type Props = {
-  guiWallet: GuiWallet,
-  manageTokensPending: boolean,
-  accountMetaTokenInfo: Array<AbcMetaToken>
+export type ManageTokensOwnProps = {
+  guiWallet: GuiWallet
 }
-export type DispatchProps = {
-  getEnabledTokensList: (string) => void,
+export type ManageTokensDispatchProps = {
   setEnabledTokensList: (string, Array<string>, Array<string>) => void
 }
+
+export type ManageTokensStateProps = {
+  guiWallet: GuiWallet,
+  manageTokensPending: boolean,
+  settingsCustomTokens: Array<CustomTokenInfo>
+}
+
+export type ManageTokensProps = ManageTokensOwnProps & ManageTokensDispatchProps & ManageTokensStateProps
+
 export type State = {
   enabledList: Array<string>,
   combinedCurrencyInfos: Array<AbcMetaToken>
 }
-export default class ManageTokens extends Component<Props & DispatchProps, State> {
-  constructor (props: Props & DispatchProps) {
+
+export default class ManageTokens extends Component<ManageTokensProps, State> {
+  constructor (props: ManageTokensProps) {
     super(props)
     this.state = {
-      enabledList: this.props.guiWallet.enabledTokens || [],
+      enabledList: [...this.props.guiWallet.enabledTokens],
       combinedCurrencyInfos: []
     }
   }
 
-  componentDidMount () {
-    const { metaTokens } = this.props.guiWallet
-    let accountMetaTokenInfo = this.props.accountMetaTokenInfo || []
-    let combinedTokenInfo = UTILS.mergeTokens(metaTokens, accountMetaTokenInfo)
-
-    let sortedTokenInfo = combinedTokenInfo.sort((a, b) => {
-      if (a.currencyCode < b.currencyCode) return -1
-      if (a === b) return 0
-      return 1
-    })
-
-    this.setState({
-      combinedCurrencyInfos: sortedTokenInfo
-    })
-  }
-
   toggleToken = (currencyCode: string) => {
-    let newEnabledList = this.state.enabledList
-    let index = newEnabledList.indexOf(currencyCode)
+    const newEnabledList = this.state.enabledList
+    const index = newEnabledList.indexOf(currencyCode)
     if (index >= 0) {
       newEnabledList.splice(index, 1)
     } else {
@@ -68,9 +61,9 @@ export default class ManageTokens extends Component<Props & DispatchProps, State
 
   saveEnabledTokenList = () => {
     const { id } = this.props.guiWallet
-    let disabledList: Array<string> = []
+    const disabledList: Array<string> = []
     // get disabled list
-    for (let val of this.state.combinedCurrencyInfos) {
+    for (const val of this.state.combinedCurrencyInfos) {
       if (this.state.enabledList.indexOf(val.currencyCode) === -1) disabledList.push(val.currencyCode)
     }
     this.props.setEnabledTokensList(id, this.state.enabledList, disabledList)
@@ -78,43 +71,63 @@ export default class ManageTokens extends Component<Props & DispatchProps, State
   }
 
   render () {
+    const { metaTokens } = this.props.guiWallet
+    const accountMetaTokenInfo = [...this.props.settingsCustomTokens]
+    const combinedTokenInfo = UTILS.mergeTokensRemoveInvisible(metaTokens, accountMetaTokenInfo)
+
+    const sortedTokenInfo = combinedTokenInfo.sort((a, b) => {
+      if (a.currencyCode < b.currencyCode) return -1
+      if (a === b) return 0
+      return 1
+    })
+
     return (
-      <View style={[styles.manageTokens]}>
-        <Gradient style={styles.gradient} />
-        <View style={styles.container}>
-          {this.header()}
-          <View style={styles.instructionalArea}>
-            <Text style={styles.instructionalText}>{s.strings.managetokens_top_instructions}</Text>
-          </View>
-          <View style={[styles.metaTokenListArea]}>
-            <View style={[styles.metaTokenListWrap]}>
-              <FlatList
-                keyExtractor={(item) => item.currencyCode}
-                data={this.state.combinedCurrencyInfos}
-                renderItem={(metaToken) => <ManageTokenRow metaToken={metaToken} toggleToken={this.toggleToken} enabledList={this.state.enabledList} />}
-                style={[styles.tokenList]}
-              />
+      <SafeAreaView>
+        <View style={[styles.manageTokens]}>
+          <Gradient style={styles.gradient} />
+          <View style={styles.container}>
+            {this.header()}
+            <View style={styles.instructionalArea}>
+              <Text style={styles.instructionalText}>{s.strings.managetokens_top_instructions}</Text>
             </View>
-            <View style={[styles.buttonsArea]}>
-              <SecondaryButton
-                style={[styles.addButton]}
-                text={'Add'}
-                onPressFunction={this.goToAddTokenScene}
-              />
-              <PrimaryButton
-                text={'Save'}
-                style={[styles.saveButton]}
-                onPressFunction={this.saveEnabledTokenList}
-                processingElement={<ActivityIndicator />}
-                processingFlag={this.props.manageTokensPending}
-              />
+            <View style={[styles.metaTokenListArea]}>
+              <View style={[styles.metaTokenListWrap]}>
+                <FlatList
+                  keyExtractor={(item) => item.currencyCode}
+                  data={sortedTokenInfo}
+                  renderItem={(metaToken) =>
+                  <ManageTokenRow
+                    goToEditTokenScene={this.goToEditTokenScene}
+                    metaToken={metaToken}
+                    walletId={this.props.guiWallet.id}
+                    toggleToken={this.toggleToken}
+                    enabledList={this.state.enabledList}
+                    customTokensList={this.props.settingsCustomTokens}
+                    metaTokens={this.props.guiWallet.metaTokens}
+                  />}
+                  style={[styles.tokenList]}
+                />
+              </View>
+              <View style={[styles.buttonsArea]}>
+                <SecondaryButton
+                  style={[styles.addButton]}
+                  text={s.strings.addtoken_add}
+                  onPressFunction={this.goToAddTokenScene}
+                />
+                <PrimaryButton
+                  text={s.strings.string_save}
+                  style={[styles.saveButton]}
+                  onPressFunction={this.saveEnabledTokenList}
+                  processingElement={<ActivityIndicator />}
+                  processingFlag={this.props.manageTokensPending}
+                />
+              </View>
             </View>
           </View>
         </View>
-      </View>
+      </SafeAreaView>
     )
   }
-
 
   header () {
     const {name} = this.props.guiWallet
@@ -131,8 +144,20 @@ export default class ManageTokens extends Component<Props & DispatchProps, State
     )
   }
 
+  _onAddToken = (currencyCode: string) => {
+    const newEnabledList = _.union(this.state.enabledList, [currencyCode])
+    this.setState({
+      enabledList: newEnabledList
+    })
+  }
+
   goToAddTokenScene = () => {
-    const { id } = this.props.guiWallet
-    Actions.addToken({walletId: id})
+    const { id, metaTokens } = this.props.guiWallet
+    Actions.addToken({walletId: id, metaTokens, onAddToken: this._onAddToken})
+  }
+
+  goToEditTokenScene = (currencyCode: string) => {
+    const { id, metaTokens } = this.props.guiWallet
+    Actions.editToken({ walletId: id, currencyCode, metaTokens })
   }
 }

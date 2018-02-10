@@ -5,7 +5,8 @@ import {
   Platform,
   Image
 } from 'react-native'
-import platform from '../../../../theme/variables/platform.js'
+
+import { PLATFORM } from '../../../../theme/variables/platform.js'
 import THEME from '../../../../theme/variables/airbitz'
 
 export const styles = {
@@ -73,8 +74,7 @@ export const styles = {
     flexDirection: 'row'
   },
   walletIcon: {
-    backgroundColor: THEME.COLORS.TRANSPARENT,
-    fontSize: 22
+    backgroundColor: THEME.COLORS.TRANSPARENT
   },
   walletsBoxHeaderText: {
     fontSize: 18,
@@ -158,10 +158,10 @@ export const styles = {
   sortableList: {
     flex: 1,
     position: 'absolute',
-    height: platform.usableHeight - 130 - 50,
+    height: PLATFORM.usableHeight - 130 - 50
   },
   sortableWalletListRow: {
-    width: platform.deviceWidth,
+    width: PLATFORM.deviceWidth,
     height: 50,
     backgroundColor: THEME.COLORS.WHITE,
     paddingVertical: 6,
@@ -172,13 +172,12 @@ export const styles = {
   },
   fullList: {
     flex: 1,
-    position: 'absolute',
-    height: platform.usableHeight - 130 - 50,
+    // position: 'absolute',
+    height: PLATFORM.usableHeight - 130 - 50
   },
   rowContainer: {
     padding: 6,
     paddingLeft: 16,
-    marginRight: 4,
     flexDirection: 'row',
     backgroundColor: THEME.COLORS.WHITE
   },
@@ -242,6 +241,10 @@ export const styles = {
   rowDragIcon: {
     position: 'relative',
     top: 16
+  },
+
+  symbol: {
+    fontFamily: THEME.FONTS.SYMBOLS
   },
   // beginning of options component
   editIcon: {
@@ -362,6 +365,12 @@ export const styles = {
   },
   emptyRowUnderlay: {
     color: THEME.COLORS.ROW_PRESSED
+  },
+  getSeedModal: {
+    top: PLATFORM.deviceHeight / 18
+  },
+  seedText: {
+    textAlign: 'center'
   }
 }
 

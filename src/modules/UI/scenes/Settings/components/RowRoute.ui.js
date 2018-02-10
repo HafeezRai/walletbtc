@@ -10,11 +10,17 @@ import styles, {styles as styleRaw} from '../style'
 import {border as b} from '../../../../utils'
 
 type Props = {
-    leftText: string,
-    right?: any,
-    routeFunction(): void
+  leftText: string,
+  disabled: boolean,
+  right?: any,
+  routeFunction(): void
 }
-export default class RowRoute extends Component<Props> {
+
+type State = {
+
+}
+
+export default class RowRoute extends Component<Props, State> {
   render () {
     return (
       <TouchableHighlight style={[styles.settingsRowContainer]}
@@ -24,7 +30,7 @@ export default class RowRoute extends Component<Props> {
 
         <View style={[styles.settingsRowTextRow, b('red')]}>
           <View style={[styles.settingsRowLeftContainer, b('blue')]}>
-            <T style={[styles.settingsRowLeftText, b('green')]}>
+            <T style={[styles.settingsRowLeftText, b('green'), this.props.disabled ? styles.settingsRowLeftTextDisabled : null]}>
               {this.props.leftText}
             </T>
           </View>
@@ -39,4 +45,3 @@ export default class RowRoute extends Component<Props> {
     )
   }
 }
-

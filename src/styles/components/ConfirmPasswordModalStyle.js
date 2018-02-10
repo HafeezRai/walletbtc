@@ -3,47 +3,55 @@ import THEME from '../../theme/variables/airbitz'
 const ConfirmPasswordModalStyle = {
   middle: {
     container: {
-      width:'100%',
+      width: '100%'
     },
     top: {
       flex: 4,
-      flexDirection : 'row',
+      flexDirection: 'row'
     },
-    topRight:{
+    topRight: {
       flex: 8
     },
-    topLeft:{
+    topLeft: {
       flex: 2,
       flexDirection: 'column',
       alignItems: 'center'
     },
-    shim:{
+    shim: {
       height: 10,
       backgroundColor: THEME.COLORS.WHITE
     },
+    clearShim: {
+      height: 20
+    },
     bottom: {
       flex: 4,
-      flexDirection : 'row',
+      flexDirection: 'row'
     },
-    bottomRight:{
+    bottomRight: {
       flex: 8
     },
-    bottomLeft:{
+    bottomLeft: {
       flex: 2,
       flexDirection: 'column',
-      alignItems: 'center',
+      alignItems: 'center'
     },
     text: {
       color: THEME.COLORS.GRAY_1
     }
   },
   bottom: {
-    width:'100%',
+    width: '100%'
+  },
+  bottomActivity: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-around'
   },
   icon: {
     color: THEME.COLORS.SECONDARY,
-    position:'relative',
-    alignItems:'center',
+    position: 'relative',
+    alignItems: 'center',
     textAlign: 'center',
     justifyContent: 'center',
     backgroundColor: THEME.COLORS.TRANSPARENT

@@ -31,6 +31,18 @@ export const font = {
   default:  'SourceSansPro-Black'
 }
 
+let gradientHeaderHeight
+if (Platform.OS !== 'ios') {
+  gradientHeaderHeight = 56
+} else {
+  const majorVersionIOS = parseInt(Platform.Version, 10)
+  if (majorVersionIOS > 9 && majorVersionIOS < 11) {
+    gradientHeaderHeight = 62
+  } else {
+    gradientHeaderHeight = 44
+  }
+}
+
 // https://projects.invisionapp.com/d/main#/console/10954562/239168414/inspect
 export default {
   BUTTONS: {
@@ -38,10 +50,12 @@ export default {
   },
 
   SPACER: {
-    HEADER: Platform.OS === 'ios' ? 66 : 56
+    HEADER: gradientHeaderHeight
   },
 
-  HEADER: Platform.OS === 'ios' ? 66 : 56,
+  HEADER: gradientHeaderHeight,
+
+  FOOTER_TABS_HEIGHT: 50,
 
   DEBUG: {
     COLORS: {
@@ -49,7 +63,8 @@ export default {
     }
   },
   FONTS: {
-    DEFAULT: 'SourceSansPro-Black'
+    DEFAULT: 'SourceSansPro-Black',
+    SYMBOLS: Platform.OS === 'android' ? 'SF-UI-Text-Regular' : 'SourceSansPro-Black'
   },
 
   OPACITY: {
@@ -79,6 +94,10 @@ export default {
       DARK:  '#0D2145',
       LIGHT: '#0E4B75'
     },
+    GRADIENT_REVERSE: {
+      LIGHT:  '#0D2145',
+      DARK: '#0E4B75'
+    },
 
     ACCENT_GREEN:  '#0073D9',
     ACCENT_ORANGE: '#F1AA19',
@@ -92,8 +111,10 @@ export default {
     GRAY_4: '#F4F5F6',
     WHITE:  '#FFFFFF',
     CLEAR:  'rgba(0, 0, 0, 0)',
+    OPACITY_WHITE:  'rgba(255, 255, 255, 0.1)',
 
     TRANSPARENT: 'transparent',
+    MODAL_BOX: 'rgba(0, 0, 0, .6)',
 
     ROW_PRESSED: '#D9E3ED', // same as GRAY_3
   }

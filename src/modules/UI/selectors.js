@@ -1,10 +1,11 @@
-// UI/selectors
 // @flow
 
-import type {AbcTransaction} from 'airbitz-core-types'
+import type {AbcTransaction} from 'edge-login'
+import _ from 'lodash'
 
 import type {State} from '../ReduxTypes'
 import type {GuiDenomination, GuiWallet} from '../../types'
+import * as SETTINGS_SELECTORS from './Settings/selectors'
 
 export const getWallets = (state: State) => { // returns an object with GUI Wallets as Keys Not sure how to tpye that
   const wallets = state.ui.wallets.byId
@@ -17,7 +18,7 @@ export const getWallet = (state: State, walletId: string) => {
   return wallet
 }
 
-export const getSelectedWalletId = (state: State): string  => {
+export const getSelectedWalletId = (state: State): string => {
   const selectedWalletId = state.ui.wallets.selectedWalletId
   return selectedWalletId
 }
@@ -54,16 +55,25 @@ export const getDenominations = (state: State, currencyCode: string) => {
   return denominations
 }
 
+// $FlowFixMe
 export const getExchangeDenomination = (state: State, currencyCode: string, specificWallet?: GuiWallet): GuiDenomination => {
   let wallet = getSelectedWallet(state)
+  const customTokens = SETTINGS_SELECTORS.getCustomTokens(state)
   if (specificWallet) {
     wallet = getWallet(state, specificWallet.id)
   }
-  for (const key of Object.keys(wallet.allDenominations[currencyCode])) {
-    const denomination = wallet.allDenominations[currencyCode][key]
-    if (denomination.name === currencyCode) return denomination
+  if (wallet.allDenominations[currencyCode]) {
+    for (const key of Object.keys(wallet.allDenominations[currencyCode])) {
+      const denomination = wallet.allDenominations[currencyCode][key]
+      if (denomination.name === currencyCode) return denomination
+    }
+  } else {
+    const customToken = _.find(customTokens, (item) => item.currencyCode === currencyCode)
+    if (customToken && customToken.denomination && customToken.denomination[0]) {
+      const denomination = customToken.denominations[0]
+      return denomination
+    }
   }
-
   throw new Error('Edge: Denomination not found. Possible invalid currencyCode.')
 }
 
@@ -81,9 +91,4 @@ export const getScenesState = (state: State) => {
 export const getSceneState = (state: State, sceneKey: string) => {
   const sceneState = getScenesState(state)[sceneKey]
   return sceneState
-}
-
-export const getDropdownAlertState = (state: State): {displayAlert: boolean, message: string} => {
-  const dropdownAlertState = getUIState(state).dropdownAlert
-  return dropdownAlertState
 }

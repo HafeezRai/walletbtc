@@ -1,20 +1,40 @@
+// @flow
+
 import React, {Component} from 'react'
 import {
   FlatList,
   View
 } from 'react-native'
-import PropTypes from 'prop-types'
-import style from './styles'
-import platform from '../../../../theme/variables/platform.js'
 
-export default class SearchResults extends Component {
-  constructor (props) {
+import style from './styles'
+import { PLATFORM } from '../../../../theme/variables/platform.js'
+import type {DeviceDimensions} from '../../../../types.js'
+
+export type Props = {
+  regularArray: Array<any>,
+  filterArray: Array<any>,
+  dimensions: DeviceDimensions,
+  height: number,
+  extraTopSpace: number,
+  containerStyle: Object,
+  onRegularSelectFxn: (string) => void,
+  scrollRenderAheadDistance: number,
+  renderRegularResultFxn: (rowData: any, onRegularSelectFxn: (any) => void, filterArray: Array<any>) => void,
+  keyExtractor: (Object) => number,
+  regularResult: (data: Object, onPressFxn: () => void) => void
+}
+export type State = {
+  dataSource: Array<Object>
+}
+export default class SearchResults extends Component<Props, State> {
+  constructor (props: Props) {
     super(props)
-    let completedDataList = this.props.regularArray.map((x, i) => {
-      let newValue = x
+    const completedDataList = this.props.regularArray.map((x, i) => {
+      const newValue = x
       newValue.key = i
       return newValue
     })
+
     this.state = {
       dataSource: completedDataList
     }
@@ -22,13 +42,8 @@ export default class SearchResults extends Component {
 
   render () {
     let searchResultsHeight
-    let completedDataList = this.props.regularArray.map((x, i) => {
-      let newValue = x
-      newValue.key = i
-      return newValue
-    })
     if (this.props.dimensions.keyboardHeight) {
-      searchResultsHeight = this.props.height + platform.toolbarHeight - this.props.dimensions.keyboardHeight
+      searchResultsHeight = this.props.height + PLATFORM.toolbarHeight - this.props.dimensions.keyboardHeight
     } else {
       searchResultsHeight = this.props.height
     }
@@ -37,29 +52,24 @@ export default class SearchResults extends Component {
         style.searchResultsContainer,
         {
           height: searchResultsHeight,
-          width: platform.deviceWidth,
-          top: platform.toolbarHeight + this.props.extraTopSpace,
+          width: PLATFORM.deviceWidth,
+          top: PLATFORM.toolbarHeight + this.props.extraTopSpace,
           zIndex: 999
-        }]}>
-        <FlatList
-          style={[{width: '100%'}]}
-          data={completedDataList}
-          renderItem={(rowData) => this.props.renderRegularResultFxn(rowData, this.props.onRegularSelectFxn)}
-          initialNumToRender={this.props.initialNumToRender || 12}
-          scrollRenderAheadDistance={this.props.scrollRenderAheadDistance || 800}
-          keyExtractor={this.props.keyExtractor}
-          overScrollMode='never'
-          keyboardShouldPersistTaps='handled'
+        },
+        this.props.containerStyle]}>
+          <FlatList
+            style={[{width: '100%'}]}
+            data={this.props.regularArray}
+            renderItem={(rowData) => this.props.renderRegularResultFxn(rowData, this.props.onRegularSelectFxn, this.props.filterArray)}
+            initialNumToRender={this.props.initialNumToRender || 12}
+            scrollRenderAheadDistance={this.props.scrollRenderAheadDistance || 800}
+            keyExtractor={this.props.keyExtractor}
+            overScrollMode='never'
+            keyboardShouldPersistTaps='handled'
         />
       </View>
     )
   }
 
-  renderRegularRow = (data, onPressFxn) => this.props.regularResult(data, onPressFxn)
-}
-
-SearchResults.propTypes = {
-  onRegularSelect: PropTypes.func,
-  regularData: PropTypes.object,
-  usableHeight: PropTypes.number
+  renderRegularRow = (data: Object, onPressFxn: () => void) => this.props.regularResult(data, onPressFxn)
 }

@@ -20,11 +20,12 @@ type Props = {
   headerSubtext?: string,
   visibilityBoolean: boolean,
   featuredIcon: Node,
+  modalHeaderIcon?: {},
   modalVisibleStyle?: {},
   modalBoxStyle?: {},
   modalContentStyle?: {},
   modalBodyStyle?: {},
-  modalMiddle: Node,
+  modalMiddle?: Node, // should be allowed to not give a middle component
   modalMiddleStyle?: {},
   modalBottom: Node,
   modalBottomStyle?: {},
@@ -45,14 +46,14 @@ export default class StylizedModal extends Component<Props, State> {
         </TouchableOpacity>
       </View>
     }
-    return <View style={[styles.exitRow]} />
+    return <View style={[styles.exitRowEmpty]} />
   }
   render () {
     const {headerText, headerSubtext} = this.props
 
     return (
-      <Modal style={[styles.topLevelModal, b('yellow'), this.props.style]} isVisible={this.props.visibilityBoolean}>
-        <View style={[styles.modalHeaderIconWrapBottom]}>
+      <Modal style={[styles.topLevelModal, this.props.style]} isVisible={this.props.visibilityBoolean}>
+        <View style={[styles.modalHeaderIconWrapBottom, this.props.modalHeaderIcon]}>
           {this.props.featuredIcon}
         </View>
 
@@ -69,21 +70,21 @@ export default class StylizedModal extends Component<Props, State> {
                     {headerText}
                   </T>
 
-                  {this.props.headerSubtext
-                    && <T style={[styles.modalTopSubtext]}>
+                  {this.props.headerSubtext &&
+                    <T style={[styles.modalTopSubtext]}>
                       {headerSubtext ? s.strings[headerSubtext] : ''}
                     </T>
                   }
                 </View>
 
-                {this.props.modalMiddle
-                  && <View style={[styles.modalMiddle, this.props.modalMiddleStyle]}>
+                {this.props.modalMiddle &&
+                  <View style={[styles.modalMiddle, this.props.modalMiddleStyle]}>
                     {this.props.modalMiddle}
                   </View>
                 }
 
-                {this.props.modalBottom
-                  && <View style={[styles.modalBottom, this.props.modalBottomStyle]}>
+                {this.props.modalBottom &&
+                  <View style={[styles.modalBottom, this.props.modalBottomStyle]}>
                     {this.props.modalBottom}
                   </View>
                 }

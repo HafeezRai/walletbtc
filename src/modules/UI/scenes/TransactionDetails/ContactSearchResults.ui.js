@@ -1,8 +1,8 @@
 import React, {Component} from 'react'
 import {
-    View,
-    TouchableHighlight,
-    Image
+  View,
+  TouchableHighlight,
+  Image
 } from 'react-native'
 import SearchResults from '../../components/SearchResults'
 import FormattedText from '../../components/FormattedText'
@@ -10,7 +10,6 @@ import ContactImage from '../../../../assets/images/contact.png'
 import styles from './style'
 
 class ContactSearchResults extends Component {
-
   render () {
     const filteredArray = this.props.contacts.filter((entry) =>
       (entry.givenName + ' ' + entry.familyName).indexOf(this.props.currentPayeeText) >= 0)
@@ -23,7 +22,7 @@ class ContactSearchResults extends Component {
         usableHeight={this.props.usableHeight}
         style={styles.SearchResults}
         keyExtractor={this.keyExtractor}
-        height={this.props.usableHeight - 32}
+        height={this.props.usableHeight - 60}
         extraTopSpace={-10}
       />
     )

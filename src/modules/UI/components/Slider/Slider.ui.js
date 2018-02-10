@@ -6,16 +6,22 @@ import styles from './styles.js'
 import Slider from 'react-native-slider'
 import s from '../../../../locales/strings.js'
 import * as UTILS from '../../../utils.js'
+import leftArrowImg from '../../../../assets/images/slider/keyboard-arrow-left.png'
 
 const SLIDE_TO_COMPLETE_TEXT = s.strings.send_confirmation_slide_to_confirm
 
 type Props = {
+  resetSlider?: boolean,
   sliderDisabled: boolean,
+  forceUpdateGuiCounter: number,
   onSlidingComplete: () => {},
   parentStyle: any
 }
 
 type State = {
+  onSlidingComplete: () => {},
+  forceUpdateGuiCounter: number,
+  sliderDisabled: boolean,
   value: number
 }
 
@@ -24,6 +30,7 @@ export default class ABSlider extends Component<Props, State> {
     super(props)
 
     this.state = {
+      forceUpdateGuiCounter: 0,
       value: 10,
       sliderDisabled: props.sliderDisabled,
       onSlidingComplete: props.onSlidingComplete
@@ -36,7 +43,19 @@ export default class ABSlider extends Component<Props, State> {
     } else {
       this.setState({value: 10})
     }
-  };
+  }
+
+  componentWillReceiveProps (nextProps: Props) {
+    if (
+      nextProps.resetSlider &&
+      nextProps.forceUpdateGuiCounter !== this.state.forceUpdateGuiCounter
+    ) {
+      this.setState({
+        value: 10,
+        forceUpdateGuiCounter: nextProps.forceUpdateGuiCounter
+      })
+    }
+  }
 
   onValueChange = (value: number) => {
     this.setState({value})
@@ -55,6 +74,7 @@ export default class ABSlider extends Component<Props, State> {
           style={styles.slider}
           trackStyle={styles.track}
           thumbStyle={styles.thumb}
+          thumbImage={leftArrowImg}
           minimumTrackTintColor='transparent'
           maximumTrackTintColor='transparent'
           thumbTouchSize={{width: 160, height: 160}}

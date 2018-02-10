@@ -1,17 +1,16 @@
 // @flow
-import type {AbcCurrencyWallet} from 'airbitz-core-types'
+import type {AbcCurrencyWallet} from 'edge-login'
 import type {Dispatch, GetState} from '../../ReduxTypes'
+import * as CORE_SELECTORS from '../selectors'
+import * as SETTINGS_SELECTORS from '../../UI/Settings/selectors'
 
 export const PREFIX = 'Core/Wallets/'
 export const UPDATE_WALLETS = PREFIX + 'UPDATE_WALLETS'
 
-import * as CORE_SELECTORS from '../selectors'
-import * as SETTINGS_SELECTORS from '../../UI/Settings/selectors'
-
 export const updateWallets = (
   activeWalletIds: Array<string>,
   archivedWalletIds: Array<string>,
-  currencyWallets: Array<AbcCurrencyWallet>) => ({
+  currencyWallets: {[id: string]: AbcCurrencyWallet}) => ({
     type: UPDATE_WALLETS,
     data: {
       activeWalletIds,
@@ -35,7 +34,10 @@ export const updateWalletsRequest = () => (dispatch: Dispatch, getState: GetStat
   for (const walletId:string of Object.keys(currencyWallets)) {
     const abcWallet:AbcCurrencyWallet = currencyWallets[walletId]
     if (abcWallet.type === 'wallet:ethereum') {
-      abcWallet.enableTokens([])
+      if (state.ui.wallets && state.ui.wallets.byId && state.ui.wallets.byId[walletId]) {
+        const enabledTokens = state.ui.wallets.byId[walletId].enabledTokens
+        abcWallet.enableTokens(enabledTokens)
+      }
     }
   }
 

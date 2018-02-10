@@ -1,7 +1,7 @@
 // @flow
 
 import React, {Component} from 'react'
-import {View, Image, Text} from 'react-native'
+import {View, Image, Text, TouchableOpacity} from 'react-native'
 import {sprintf} from 'sprintf-js'
 
 import Slider from '../../components/Slider'
@@ -9,11 +9,11 @@ import StylizedModal from '../../components/Modal/Modal.ui'
 import {Icon} from '../../components/Icon/Icon.ui'
 import * as Constants from '../../../../constants/indexConstants'
 import s from '../../../../locales/strings.js'
-import {GuiWallet} from '../../../../types'
+import type { GuiWallet } from '../../../../types'
 import THEME from '../../../../theme/variables/airbitz'
 
-type Props = {
-  style: any,
+type CryptoExchangeConfirmTransactionModalOwnProps = {
+  style: Object,
   fromWallet: GuiWallet,
   toWallet: GuiWallet,
   fromCurrencyIconDark?: string,
@@ -27,28 +27,34 @@ type Props = {
   closeFunction(): void,
   confirmFunction(): void
 }
-export default class CryptoExchangeConfirmTransactionModalComponent extends Component<Props> {
-  renderBottom = (style: any) => {
-    return <View style={style.bottom}>
-      <Slider onSlidingComplete={this.props.confirmFunction} sliderDisabled={false}
-        parentStyle={{
-          backgroundColor: THEME.COLORS.SECONDARY,
-          borderRadius: 40,
-          marginBottom: 10,
-          marginLeft: 0,
-          marginRight: 0
-        }} />
-    </View>
+export default class CryptoExchangeConfirmTransactionModal extends Component<CryptoExchangeConfirmTransactionModalOwnProps> {
+  render () {
+    const style = this.props.style
+    const icon = <Icon
+      style={style.icon}
+      name={Constants.EXCHANGE_ICON}
+      size={style.iconSize}
+      type={Constants.FONT_AWESOME}/>
+
+    return <StylizedModal
+      visibilityBoolean={true}
+      featuredIcon={icon}
+      headerText={s.strings.title_confirm_exchange}
+      headerTextStyle={{color: THEME.COLORS.PRIMARY, marginTop: -10, marginBottom: 10}}
+      modalMiddle={this.renderMiddle(style)}
+      modalBottom={this.renderBottom(style)}
+      modalBottomStyle={style.bottom}
+      onExitButtonFxn={this.props.closeFunction} />
   }
 
-  renderLogo = (style: any, logo?: string) => {
+  renderLogo = (style: Object, logo?: string) => {
     if (logo) {
       return <Image style={style.middle.currencyIcon} source={{uri: logo}} />
     }
     return <Text style={style.middle.altCurrencyText}>{this.props.currencyCode}</Text>
   }
 
-  renderMiddle = (style: any) => {
+  renderMiddle = (style: Object) => {
     const {
       container,
       top,
@@ -67,6 +73,7 @@ export default class CryptoExchangeConfirmTransactionModalComponent extends Comp
       fromWallet,
       toWallet
     } = this.props
+
     return <View style={container}>
       <View style={top}>
         <View style={topLeft}>
@@ -91,26 +98,20 @@ export default class CryptoExchangeConfirmTransactionModalComponent extends Comp
         <View style={shim} />
         <View style={shim} />
       </View>
-
+      <Slider onSlidingComplete={this.props.confirmFunction} sliderDisabled={false}
+        parentStyle={{
+          backgroundColor: THEME.COLORS.SECONDARY,
+          borderRadius: 40,
+          marginBottom: 10,
+          marginLeft: 0,
+          marginRight: 0,
+          width: 270,
+          alignSelf: 'center'
+        }} />
     </View>
   }
-  render () {
-    const style = this.props.style
-    const icon = <Icon
-      style={style.icon}
-      name={Constants.EXCHANGE_ICON}
-      size={style.iconSize}
-      type={Constants.ION_ICONS}/>
 
-    return <StylizedModal
-      visibilityBoolean={true}
-      featuredIcon={icon}
-      headerText={s.strings.title_confirm_exchange}
-      headerTextStyle={{color: THEME.COLORS.PRIMARY, marginTop: -10, marginBottom: 10}}
-      modalMiddle={this.renderMiddle(style)}
-      modalMiddleStyle={{paddingBottom: 40}}
-      modalBottom={this.renderBottom(style)}
-      modalBottomStyle={{paddingBottom: 8}}
-      onExitButtonFxn={this.props.closeFunction} />
+  renderBottom = (style: Object) => {
+    return <TouchableOpacity><Text style={style.bottomButton} onPress={this.props.closeFunction}>{s.strings.string_cancel_cap}</Text></TouchableOpacity>
   }
 }

@@ -11,22 +11,28 @@ import {
 import {bns} from 'biggystring'
 import {sprintf} from 'sprintf-js'
 
-import type {AbcCurrencyWallet, AbcEncodeUri} from 'airbitz-core-types'
+import type {AbcCurrencyWallet, AbcEncodeUri} from 'edge-login'
 
 import styles from './styles.js'
-import ExchangedFlipInput from '../../components/FlipInput/ExchangedFlipInput.js'
+import { ExchangedFlipInput, type ExchangedFlipInputAmounts } from '../../components/FlipInput/ExchangedFlipInput2.js'
 import ExchangedExchangeRate from '../../components/ExchangeRate/ExchangedExchangeRate.ui.js'
 import QRCode from '../../components/QRCode/index.js'
 import RequestStatus from '../../components/RequestStatus/index.js'
 import ShareButtons from '../../components/ShareButtons/index.js'
-import * as UTILS from '../../../utils.js'
 import ContactsWrapper from 'react-native-contacts-wrapper'
 import Gradient from '../../components/Gradient/Gradient.ui'
+import SafeAreaView from '../../components/SafeAreaView/index.js'
 import s from '../../../../locales/strings.js'
 import WalletListModal
 from '../../../UI/components/WalletListModal/WalletListModalConnector'
 import * as WALLET_API from '../../../Core/Wallets/api.js'
 import * as Constants from '../../../../constants/indexConstants'
+import type {
+  GuiTransactionRequest,
+  GuiCurrencyInfo,
+  GuiWallet,
+  GuiReceiveAddress
+} from '../../../../types.js'
 
 type State = {
   publicAddress: string,
@@ -34,76 +40,96 @@ type State = {
   loading: boolean,
   result: string
 }
-type Props = {
+
+export type RequestStateProps = {
   loading: boolean,
-  abcWallet: AbcCurrencyWallet,
   currencyCode: string,
-  primaryInfo: any,
-  secondaryInfo: any,
-  secondaryToPrimaryRatio: number,
-  request: any,
-  saveReceiveAddress(string): void,
+  // next line will need review
+  request: GuiTransactionRequest | Object,
+  abcWallet: AbcCurrencyWallet | null,
+  guiWallet: GuiWallet | null,
+  exchangeSecondaryToPrimaryRatio: number,
+  currencyCode: string,
+  primaryCurrencyInfo: GuiCurrencyInfo,
+  secondaryCurrencyInfo: GuiCurrencyInfo,
+  showToWalletModal: boolean
 }
 
-export default class Request extends Component<Props, State> {
+export type RequestDispatchProps = {
+  saveReceiveAddress(GuiReceiveAddress): any,
+}
+
+type Props = RequestStateProps & RequestDispatchProps
+
+export class Request extends Component<Props, State> {
   constructor (props: Props) {
     super(props)
-    this.state = {
+    const newState: State = {
       publicAddress: '',
       encodedURI: '',
       loading: props.loading,
       result: ''
     }
+    this.state = newState
   }
 
   componentWillReceiveProps (nextProps: Props) {
-    if (nextProps.abcWallet.id !== this.props.abcWallet.id) {
-      const {abcWallet, currencyCode} = nextProps
+    if (nextProps.abcWallet && (!this.props.abcWallet || nextProps.abcWallet.id !== this.props.abcWallet.id)) {
+      const abcWallet: AbcCurrencyWallet | null = nextProps.abcWallet
+      const {currencyCode} = nextProps
+      if (!abcWallet) return
       WALLET_API.getReceiveAddress(abcWallet, currencyCode)
       .then((receiveAddress) => {
         const {publicAddress} = receiveAddress
         const abcEncodeUri: AbcEncodeUri = {publicAddress}
-        const encodedURI = this.props.abcWallet.encodeUri ? this.props.abcWallet.encodeUri(abcEncodeUri) : ''
+        const encodedURI = nextProps.abcWallet ? nextProps.abcWallet.encodeUri(abcEncodeUri) : ''
         this.setState({
           encodedURI,
           publicAddress
         })
       })
-      .catch((e) => console.log(e))
+      .catch((e) => {
+        this.setState({encodedURI: '', publicAddress: ''})
+        console.log(e)
+      })
     }
   }
 
   componentDidMount () {
-    const {abcWallet, currencyCode} = this.props
-    if (this.props.loading) return
+    const {currencyCode} = this.props
+    const abcWallet: AbcCurrencyWallet | null = this.props.abcWallet
+    if (!abcWallet || this.props.loading) return
 
     WALLET_API.getReceiveAddress(abcWallet, currencyCode)
     .then((receiveAddress) => {
       const {publicAddress} = receiveAddress
       const abcEncodeUri: AbcEncodeUri = {publicAddress}
-      const encodedURI = this.props.abcWallet.encodeUri ? this.props.abcWallet.encodeUri(abcEncodeUri) : ''
+      const encodedURI = this.props.abcWallet ? this.props.abcWallet.encodeUri(abcEncodeUri) : ''
       this.setState({
         encodedURI,
         publicAddress
       })
     })
-    .catch((e) => console.log(e))
+    .catch((e) => {
+      this.setState({encodedURI: '', publicAddress: ''})
+      console.log(e)
+    })
   }
 
-  onAmountsChange = ({primaryDisplayAmount}: {primaryDisplayAmount: string}) => {
-    const primaryNativeToDenominationRatio = this.props.primaryInfo.displayDenomination.multiplier.toString()
-    const primaryNativeAmount = UTILS.convertDisplayToNative(primaryNativeToDenominationRatio)(primaryDisplayAmount)
-
-    const parsedURI = {
-      publicAddress: this.state.publicAddress,
-      nativeAmount: bns.gt(primaryNativeAmount, '0') ? primaryNativeAmount : null
+  onExchangeAmountChanged = (amounts: ExchangedFlipInputAmounts) => {
+    const parsedURI: AbcEncodeUri = {
+      publicAddress: this.state.publicAddress
     }
-    const encodedURI = this.props.abcWallet.encodeUri(parsedURI)
+    if (bns.gt(amounts.nativeAmount, '0')) {
+      parsedURI.nativeAmount = amounts.nativeAmount
+    }
+    const encodedURI = this.props.abcWallet ? this.props.abcWallet.encodeUri(parsedURI) : ''
 
     this.setState({
       encodedURI
     })
   }
+
   renderDropUp = () => {
     if (this.props.showToWalletModal) {
       return (
@@ -123,38 +149,43 @@ export default class Request extends Component<Props, State> {
 
     const color = 'white'
     const {
-      secondaryToPrimaryRatio,
-      primaryInfo,
-      secondaryInfo
+      primaryCurrencyInfo,
+      secondaryCurrencyInfo,
+      exchangeSecondaryToPrimaryRatio
     } = this.props
     return (
-      <Gradient style={styles.view}>
-        <Gradient style={styles.gradient} />
+      <SafeAreaView>
+        <Gradient style={styles.view}>
+          <Gradient style={styles.gradient} />
 
-        <View style={styles.exchangeRateContainer}>
-          <ExchangedExchangeRate
-            primaryInfo={primaryInfo}
-            secondaryInfo={secondaryInfo}
-            secondaryToPrimaryRatio={secondaryToPrimaryRatio} />
-        </View>
+          <View style={styles.exchangeRateContainer}>
+            <ExchangedExchangeRate
+              primaryCurrencyInfo={primaryCurrencyInfo}
+              secondaryCurrencyInfo={secondaryCurrencyInfo}
+              exchangeSecondaryToPrimaryRatio={exchangeSecondaryToPrimaryRatio} />
+          </View>
 
-        <View style={styles.main}>
-          <ExchangedFlipInput
-            primaryInfo={primaryInfo}
-            secondaryInfo={secondaryInfo}
-            secondaryToPrimaryRatio={secondaryToPrimaryRatio}
-            onAmountsChange={this.onAmountsChange}
-            color={color} />
+          <View style={styles.main}>
+            <ExchangedFlipInput
+              primaryCurrencyInfo={primaryCurrencyInfo}
+              secondaryCurrencyInfo={secondaryCurrencyInfo}
+              exchangeSecondaryToPrimaryRatio={exchangeSecondaryToPrimaryRatio}
+              overridePrimaryExchangeAmount={''}
+              forceUpdateGuiCounter={0}
+              onExchangeAmountChanged={this.onExchangeAmountChanged}
+              keyboardVisible={false}
+              color={color} />
 
-          <QRCode value={this.state.encodedURI} />
-          <RequestStatus requestAddress={this.state.publicAddress} amountRequestedInCrypto={0} amountReceivedInCrypto={0} />
-        </View>
+            <QRCode value={this.state.encodedURI} />
+            <RequestStatus requestAddress={this.state.publicAddress} amountRequestedInCrypto={0} amountReceivedInCrypto={0} />
+          </View>
 
-        <View style={styles.shareButtonsContainer}>
-          <ShareButtons styles={styles.shareButtons} shareViaEmail={this.shareViaEmail} shareViaSMS={this.shareViaSMS} shareViaShare={this.shareViaShare} copyToClipboard={this.copyToClipboard} />
-        </View>
-        {this.renderDropUp()}
-      </Gradient>
+          <View style={styles.shareButtonsContainer}>
+            <ShareButtons styles={styles.shareButtons} shareViaEmail={this.shareViaEmail} shareViaSMS={this.shareViaSMS} shareViaShare={this.shareViaShare} copyToClipboard={this.copyToClipboard} />
+          </View>
+          {this.renderDropUp()}
+        </Gradient>
+      </SafeAreaView>
     )
   }
 
@@ -184,7 +215,7 @@ export default class Request extends Component<Props, State> {
     Share.share({
       message: this.state.encodedURI,
       title: sprintf(s.strings.request_qr_email_title, APP_NAME)
-    }, {dialogTitle: 'Share Airbitz Request'})
+    }, {dialogTitle: 'Share Edge Request'})
     .then(this.showResult)
     .catch((error) => this.setState({
       result: 'error: ' + error.message
@@ -197,9 +228,8 @@ export default class Request extends Component<Props, State> {
       this.shareMessage()
       // console.log('shareViaEmail')
     })
-    .catch(() => {
-      // console.log('ERROR CODE: ', error.code)
-      // console.log('ERROR MESSAGE: ', error.message)
+    .catch((e) => {
+      console.log(e)
     })
   }
 
@@ -208,9 +238,8 @@ export default class Request extends Component<Props, State> {
       this.shareMessage()
       // console.log('shareViaSMS')
     })
-    .catch(() => {
-      // console.log('ERROR CODE: ', error.code)
-      // console.log('ERROR MESSAGE: ', error.message)
+    .catch((e) => {
+      console.log(e)
     })
   }
 

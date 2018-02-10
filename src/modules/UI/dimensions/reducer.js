@@ -1,17 +1,26 @@
-import {combineReducers} from 'redux'
-import * as ACTION from './action'
+// @flow
 
-const keyboardHeight = (state = 0, action) => {
-  switch (action.type) {
-  case ACTION.SET_KEYBOARD_HEIGHT:
-    return action.data
-  default:
-    return state
-  }
+import * as ACTION from './action'
+import type { Action } from '../../ReduxTypes'
+
+type DimensionsState = {
+  keyboardHeight: number
 }
 
-const dimensions = combineReducers({
-  keyboardHeight
-})
+const initialState = {
+  keyboardHeight: 0
+}
+
+export const dimensions = (state: DimensionsState = initialState, action: Action) => {
+  switch (action.type) {
+    case ACTION.SET_KEYBOARD_HEIGHT:
+      return {
+        ...state,
+        keyboardHeight: action.data
+      }
+    default:
+      return state
+  }
+}
 
 export default dimensions

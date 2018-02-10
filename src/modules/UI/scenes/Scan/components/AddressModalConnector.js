@@ -6,10 +6,12 @@ import * as UI_SELECTORS from '../../../selectors.js'
 import * as CORE_SELECTORS from '../../../../Core/selectors.js'
 import {updateParsedURI} from '../../SendConfirmation/action.js'
 import {loginWithEdge} from '../../../../../actions/indexActions'
-import type {AbcParsedUri, AbcCurrencyWallet} from 'airbitz-core-types'
+import type {AbcParsedUri, AbcCurrencyWallet} from 'edge-login'
 import {Actions} from 'react-native-router-flux'
 import * as Constants from '../../../../../constants/indexConstants'
-const mapStateToProps = (state: any) => {
+import type {Dispatch, State} from '../../../../ReduxTypes'
+
+const mapStateToProps = (state: State) => {
   const walletId:string = UI_SELECTORS.getSelectedWalletId(state)
   const coreWallet: AbcCurrencyWallet = CORE_SELECTORS.getWallet(state, walletId)
   const currencyCode:string = UI_SELECTORS.getSelectedCurrencyCode(state)
@@ -21,11 +23,11 @@ const mapStateToProps = (state: any) => {
   }
 }
 
-const mapDispatchToProps = (dispatch: any) => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleAddressModal: () => dispatch(toggleAddressModal()),
   updateParsedURI: (parsedURI: AbcParsedUri) => dispatch(updateParsedURI(parsedURI)),
   loginWithEdge: (url: string) => {
-    Actions[Constants.EDGE_LOGIN]() ,
+    Actions[Constants.EDGE_LOGIN]()
     dispatch(loginWithEdge(url))
   }
 })

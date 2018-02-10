@@ -1,14 +1,21 @@
+// @flow
+
 import THEME from '../../theme/variables/airbitz'
-// import platform from '../../theme/variables/platform'
+import { PLATFORM } from '../../theme/variables/platform'
 import * as Styles from '../indexStyles'
 
 const EdgeLoginScreen = {
   container: {...Styles.SceneContainer,
-    height:'100%'
+    height: PLATFORM.deviceHeight - THEME.HEADER - (THEME.FOOTER_TABS_HEIGHT * 2)
+  },
+  gradient: {
+    height: THEME.HEADER,
+    width: '100%'
   },
   header: {
-    flex: 2,
-    flexDirection: 'column',
+    position: 'relative',
+    flex: 3,
+    flexDirection: 'column'
   },
   headerTopShim: {
     flex: 2
@@ -20,8 +27,8 @@ const EdgeLoginScreen = {
 
   },
   image: {
-    width: 70,
-    height: 70
+    width: 80,
+    height: 80
   },
   headerTextRow: {
     flex: 3,
@@ -30,17 +37,23 @@ const EdgeLoginScreen = {
   },
   headerText: {
     color: THEME.COLORS.PRIMARY,
-    fontSize: 36,
+    fontSize: 36
   },
   headerBottomShim: {
     flex: 1
   },
-
   body: {
+    position: 'relative',
     flex: 4
   },
+  buttonContainer: {
+    position: 'relative',
+    flex: 3,
+    flexDirection: 'column',
+    width: '100%',
+    justifyContent: 'flex-end'
+  },
   buttons: {
-    flex: 1,
     marginRight: '5%',
     marginLeft: '5%',
     flexDirection: 'row',
@@ -49,10 +62,10 @@ const EdgeLoginScreen = {
   buttonsProcessing: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   spinnerContainer: {
-    flex: 1,
+    flex: 1
   },
   bodyText: {
     marginRight: '5%',

@@ -1,10 +1,16 @@
 // @flow
 
-import type {AbcCurrencyPlugin} from 'airbitz-core-types'
+import type { AbcCurrencyPlugin, AbcDenomination } from 'edge-login'
 
 import type {State} from '../../ReduxTypes'
 
 import isoFiatDenominations from './IsoFiatDenominations.js'
+
+const emptyAbcDenom: AbcDenomination = {
+  name: '',
+  multiplier: '',
+  symbol: ''
+}
 
 export const getSettings = (state: State) => {
   const settings = state.ui.settings
@@ -24,12 +30,6 @@ export const getLoginStatus = (state: State): boolean => {
   const settings = getSettings(state)
   const loginStatus: boolean = settings.loginStatus
   return loginStatus
-}
-
-export const getExchangeTimer = (state: State): number => {
-  const settings = getSettings(state)
-  const exchangeTimer: number = settings.exchangeTimer
-  return exchangeTimer
 }
 
 export const getCurrencySettings = (state: State, currencyCode: string) => {
@@ -59,10 +59,24 @@ export const getDisplayDenominationFromSettings = (settings: any, currencyCode: 
   return selectedDenomination
 }
 
-export const getDisplayDenomination = (state: State, currencyCode: string) => {
+export const getDisplayDenominationFull = (state: State, currencyCode: string) => {
+  const settings = state.ui.settings
+  const currencySettings = settings[currencyCode]
+  const selectedDenominationKey = currencySettings.denomination
+  const denominations = currencySettings.denominations
+  const selectedDenomination = denominations.find((denomination) => denomination.multiplier === selectedDenominationKey)
+  return selectedDenomination
+}
+
+export const getDisplayDenomination = (state: State, currencyCode: string): AbcDenomination => {
   const selectedDenominationKey = getDisplayDenominationKey(state, currencyCode)
   const denominations = getDenominations(state, currencyCode)
-  const selectedDenomination = denominations.find((denomination) => denomination.multiplier === selectedDenominationKey)
+  let selectedDenomination: AbcDenomination = emptyAbcDenom
+  for (const d of denominations) {
+    if (d.multiplier === selectedDenominationKey) {
+      selectedDenomination = d
+    }
+  }
   return selectedDenomination
 }
 
@@ -70,6 +84,11 @@ export const getExchangeDenomination = (state: State, currencyCode: string) => {
   const denominations = getDenominations(state, currencyCode)
   const exchangeDenomination = denominations.find((denomination) => denomination.name === currencyCode)
   return exchangeDenomination
+}
+
+export const getCustomTokens = (state: State) => {
+  const settings = getSettings(state)
+  return settings.customTokens
 }
 
 export const getPlugins = (state: State) => {
@@ -102,16 +121,25 @@ export const getSupportedWalletTypes = (state: State) => {
     if (plugin.currencyInfo.pluginName === 'bitcoin') {
       supportedWalletTypes.push({
         label: 'Bitcoin (Segwit)',
-        value: 'wallet:bitcoin-bip49'
+        value: 'wallet:bitcoin-bip49',
+        symbolImage: plugin.currencyInfo.symbolImage,
+        symbolImageDarkMono: plugin.currencyInfo.symbolImageDarkMono,
+        currencyCode: plugin.currencyInfo.currencyCode
       })
       supportedWalletTypes.push({
-        label: 'Bitcoin',
-        value: 'wallet:bitcoin-bip44'
+        label: 'Bitcoin (no Segwit)',
+        value: 'wallet:bitcoin-bip44',
+        symbolImage: plugin.currencyInfo.symbolImage,
+        symbolImageDarkMono: plugin.currencyInfo.symbolImageDarkMono,
+        currencyCode: plugin.currencyInfo.currencyCode
       })
     } else {
       supportedWalletTypes.push({
         label: plugin.currencyInfo.currencyName,
-        value: plugin.currencyInfo.walletTypes[0]
+        value: plugin.currencyInfo.walletTypes[0],
+        symbolImage: plugin.currencyInfo.symbolImage,
+        symbolImageDarkMono: plugin.currencyInfo.symbolImageDarkMono,
+        currencyCode: plugin.currencyInfo.currencyCode
       })
     }
   }
@@ -139,4 +167,38 @@ export const getDefaultFiat = (state: State) => {
   const settings = getSettings(state)
   const defaultFiat: string = settings.defaultFiat
   return defaultFiat
+}
+
+export const getIsOtpEnabled = (state: State) => {
+  const settings = getSettings(state)
+  const enabled: boolean = settings.isOtpEnabled
+  return enabled
+}
+export const getOtpKey = (state: State) => {
+  const settings = getSettings(state)
+  const otpKey: string = settings.otpKey
+  return otpKey
+}
+
+export const getOtpResetDate = (state: State) => {
+  const settings = getSettings(state)
+  const otpResetDate = settings.otpResetDate
+  return otpResetDate
+}
+
+export const getConfirmPasswordErrorMessage = (state: State) => {
+  const settings = getSettings(state)
+  return settings.confirmPasswordError
+}
+
+export const getSendLogsStatus = (state: State) => {
+  const settings = getSettings(state)
+  const sendLogsStatus = settings.sendLogsStatus
+  return sendLogsStatus
+}
+
+export const getPinLoginEnabled = (state: State) => {
+  const settings = getSettings(state)
+  const pinLoginEnabled = settings.pinLoginEnabled
+  return pinLoginEnabled
 }

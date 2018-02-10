@@ -1,43 +1,26 @@
-import {combineReducers} from 'redux'
-import * as ACTION from './action'
+// @flow
 
-const walletName = (state = '', action) => {
-  const {type, data = {} } = action
-  const {walletName} = data
-  switch (type) {
-  case ACTION.UPDATE_WALLET_NAME :
-    return walletName
-  default:
-    return state
+import { combineReducers } from 'redux'
+import * as ACTION from '../../Wallets/action'
+import type { Action } from '../../../ReduxTypes.js'
+
+export type IsCreatingWallet = boolean
+
+const isCreatingWallet = (state = false, action: Action) => {
+  switch (action.type) {
+    case ACTION.CREATE_WALLET_START:
+      return true
+    case ACTION.CREATE_WALLET_SUCCESS:
+      return false
+    case ACTION.CREATE_WALLET_FAILURE:
+      return false
+    default:
+      return state
   }
 }
 
-const selectedWalletType = (state = '', action) => {
-  const {type, data = {} } = action
-  const {walletType} = data
-  switch (type) {
-  case ACTION.SELECT_WALLET_TYPE:
-    return walletType
-  default:
-    return state
-  }
-}
-
-const selectedFiat = (state = '', action) => {
-  const {type, data = {} } = action
-  const {fiat} = data
-  switch (type) {
-  case ACTION.SELECT_FIAT:
-    return fiat
-  default:
-    return state
-  }
-}
-
-const createWallet = combineReducers({
-  walletName,
-  selectedWalletType,
-  selectedFiat
+export const createWallet = combineReducers({
+  isCreatingWallet
 })
 
 export default createWallet

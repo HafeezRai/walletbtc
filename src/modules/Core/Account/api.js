@@ -1,6 +1,6 @@
 // @flow
 // Core/Account/api.js
-import {AbcAccount, AbcCreateCurrencyWalletOptions} from 'airbitz-core-types'
+import type {AbcAccount, AbcCreateCurrencyWalletOptions} from 'edge-login'
 
 export const logoutRequest = (account: AbcAccount) => {
   return account.logout()
@@ -22,10 +22,6 @@ export const getFirstActiveWalletInfo = (
   }
 }
 
-export const checkForExistingWallets = (account: AbcAccount) => {
-  return account.activeWalletIds.length > 0
-}
-
 export const createCurrencyWalletRequest = (
   account: AbcAccount,
   walletType: string,
@@ -35,15 +31,15 @@ export const createCurrencyWalletRequest = (
 }
 
 export const activateWalletRequest = (account: AbcAccount, walletId: string) => {
-  return account.changeWalletStates({[walletId]: {archived: false} })
+  return account.changeWalletStates({ [walletId]: {archived: false} })
 }
 
 export const archiveWalletRequest = (account: AbcAccount, walletId: string) => {
-  return account.changeWalletStates({[walletId]: {archived: true} })
+  return account.changeWalletStates({ [walletId]: {archived: true} })
 }
 
 export const deleteWalletRequest = (account: AbcAccount, walletId: string) => {
-  return account.changeWalletStates({[walletId]: {deleted: true} })
+  return account.changeWalletStates({ [walletId]: {deleted: true} })
 }
 
 export const updateActiveWalletsOrderRequest = (
@@ -55,6 +51,7 @@ export const updateActiveWalletsOrderRequest = (
     return keyStates
   }, {})
   return account.changeWalletStates(newKeyStates)
+  .then(() => account.activeWalletIds)
 }
 
 export const updateArchivedWalletsOrderRequest = (
@@ -67,4 +64,5 @@ export const updateArchivedWalletsOrderRequest = (
   }, {})
 
   return account.changeWalletStates(newKeyStates)
+  .then(() => account.archivedWalletIds)
 }

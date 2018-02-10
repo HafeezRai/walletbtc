@@ -1,5 +1,9 @@
+// @flow
+
 import {StyleSheet, Platform} from 'react-native'
+
 import THEME from '../../../../theme/variables/airbitz'
+import { PLATFORM } from '../../../../theme/variables/platform.js'
 
 export const styles = {
   container: {
@@ -223,7 +227,7 @@ export const styles = {
   footerArea: {
     backgroundColor: THEME.COLORS.GRAY_4,
     paddingTop: 20,
-    height: 700,
+    height: PLATFORM.deviceHeight * 1 / 3,
     paddingLeft: 15,
     paddingRight: 15
   },
@@ -351,13 +355,16 @@ export const styles = {
     color: THEME.COLORS.ACCENT_RED
   },
   typeTransfer: {
-    color: THEME.COLORS.ACCENT_PRIMARY
+    color: THEME.COLORS.PRIMARY
   },
   typeIncome: {
     color: THEME.COLORS.ACCENT_GREEN
   },
   underlayColor: {
     color: THEME.COLORS.GRAY_4
+  },
+  symbol: {
+    fontFamily: THEME.FONTS.SYMBOLS
   }
 }
 

@@ -1,14 +1,20 @@
+// @flow
+
 import {StyleSheet} from 'react-native'
+
 import THEME from '../../../../theme/variables/airbitz.js'
-import PLATFORM from '../../../../theme/variables/platform.js'
+import { PLATFORM } from '../../../../theme/variables/platform.js'
+import { isIphoneX } from '../../../../lib/isIphoneX.js'
 
 export default StyleSheet.create({
   stylizedModal: {
-    height: (PLATFORM.deviceHeight * 2 / 3)
+    top: isIphoneX ? 30 : 0,
+    left: 0,
+    right: 0
   },
   webView: {
     justifyContent: 'center',
-    alignItems:'center',
+    alignItems: 'center',
     flex: 1
   },
   modalBottomContainer: {
@@ -22,28 +28,30 @@ export default StyleSheet.create({
     padding: 4
   },
   modalMiddleWebView: {
-    flex: 1,
+    flex: 1
+  },
+  modalHeaderIcon: {
+    top: 0
   },
   modalVisibleStyle: {
     flex: 1,
+    top: -27,
+    width: PLATFORM.deviceWidth - 20,
+    height: isIphoneX ? PLATFORM.deviceHeight - 120 : PLATFORM.deviceHeight - 80
   },
   modalBoxStyle: {
-    flex: 1,
+    flex: 1
   },
   modalContentStyle: {
-    flex: 1,
+    flex: 1
   },
   modalBodyStyle: {
-    flex: 1,
-  },
-  modalFeaturedIcon: {
-    top: 12,
-    left: 12
+    flex: 1
   },
   closeButtonWrap: {
     marginTop: 12,
     width: 100,
-    height: 44,
+    height: 44
   },
   closeButton: {
     justifyContent: 'center',

@@ -48,8 +48,8 @@ exports.config = {
         autoGrantPermissions: true,
        
         platformName: 'Android',
-        platformVersion: '7.1',
-        deviceName: 'Android GoogleAPI Emulator',
+        platformVersion: '5.0',
+        deviceName: 'Android Emulator',
         fullReset: 'false',
         noReset: 'true',
         /*

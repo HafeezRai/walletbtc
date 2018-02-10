@@ -87,7 +87,7 @@ android {
     buildToolsVersion "25.0.3"
 
     defaultConfig {
-        applicationId "co.edgesecure.wallet"
+        applicationId "co.edgesecure.app"
         minSdkVersion 23
         targetSdkVersion 25
         versionCode 21000000
@@ -101,10 +101,6 @@ android {
     }
     signingConfigs {
         release {
-            storeFile file("airbitz.keystore")
-            storePassword "password"
-            keyAlias "airbitz"
-            keyPassword "password"
         }
     }
     splits {
@@ -141,9 +137,26 @@ android {
     }
 }
 
+// specify signing properties on the command line
+if (hasProperty('storeFile')) {
+    println 'Generating a signed package'
+    android.signingConfigs.release.storeFile     = file(storeFile)
+    android.signingConfigs.release.storePassword = storePassword
+    android.signingConfigs.release.keyAlias      = keyAlias
+    android.signingConfigs.release.keyPassword   = keyPassword
+} else {
+    println 'Generating a debug package'
+    android.signingConfigs.release.storeFile     = file("airbitz.keystore")
+    android.signingConfigs.release.storePassword = "password"
+    android.signingConfigs.release.keyAlias      = "airbitz"
+    android.signingConfigs.release.keyPassword   = "password"
+}
+
 dependencies {
+    compile project(':react-native-mail')
+    compile project(':react-native-smart-splash-screen')
+    compile project(':react-native-background-task')
     compile project(':react-native-picker')
-    compile project(':react-native-smart-splashscreen')
     compile project(':airbitz-core-js-ui')
     compile project(':react-native-sound')
     compile project(':react-native-share')
@@ -166,6 +179,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:27.0.1'
     compile 'com.facebook.react:react-native:+'
+    compile project(':react-native-push-notification')
     // From node_modules
 }
 

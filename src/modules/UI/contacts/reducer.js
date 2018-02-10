@@ -1,16 +1,22 @@
+// @flow
+
 import {combineReducers} from 'redux'
 import * as ACTION from './action'
 
-const contactList = (state = [], action) => {
+import type {GuiContact} from '../../../types'
+import type {Action} from '../../ReduxTypes'
+
+type ContactListState = Array<GuiContact>
+export const contactList = (state: ContactListState = [], action: Action) => {
   switch (action.type) {
-  case ACTION.SET_CONTACT_LIST:
-    return action.data
-  default:
-    return state
+    case ACTION.SET_CONTACT_LIST:
+      return action.data
+    default:
+      return state
   }
 }
 
-const contacts = combineReducers({
+export const contacts = combineReducers({
   contactList
 })
 

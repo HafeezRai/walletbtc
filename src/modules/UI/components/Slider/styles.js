@@ -7,26 +7,26 @@ const styles = StyleSheet.create({
     marginHorizontal: 30
   },
   slider: {
-    backgroundColor: `${THEME.COLORS.PRIMARY}${THEME.ALPHA.LOW}`,
+    backgroundColor: THEME.COLORS.OPACITY_WHITE,
     overflow: 'hidden',
-    borderRadius: 27,
-    height: 55
+    borderRadius: 26,
+    height: 52
   },
   thumb: {
     width: 52,
     height: 52,
     position: 'absolute',
-    bottom: -26,
-    backgroundColor: THEME.COLORS.WHITE,
+    backgroundColor: THEME.COLORS.ACCENT_MINT,
     borderRadius: 52
   },
   textOverlay: {
     backgroundColor: THEME.COLORS.TRANSPARENT,
-    fontSize: 18,
+    fontSize: 16,
     position: 'absolute',
     color: THEME.COLORS.WHITE,
     alignSelf: 'center',
-    top: 17
+    top: 15,
+    zIndex: -100
   }
 })
 

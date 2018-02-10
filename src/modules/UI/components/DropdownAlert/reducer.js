@@ -1,4 +1,5 @@
 // @flow
+
 import * as ACTIONS from './actions'
 
 const initialState = {
@@ -15,25 +16,25 @@ type DropdownAlertState = {
   message: string
 }
 
-const dropdownAlert = (state: DropdownAlertState = initialState, action: any) => {
-  const {type, data = {} } = action
+export const dropdownAlert = (state: DropdownAlertState = initialState, action: any) => {
+  const { type, data = {} } = action
   switch (type) {
-  case ACTIONS.DISPLAY_DROPDOWN_ALERT: {
-    const {type, title, message} = data
+    case ACTIONS.DISPLAY_DROPDOWN_ALERT: {
+      const { type, title, message } = data
 
-    return {
-      visible: true,
-      type,
-      title,
-      message
+      return {
+        visible: true,
+        type,
+        title,
+        message
+      }
     }
-  }
 
-  case ACTIONS.DISMISS_DROPDOWN_ALERT:
-    return initialState
+    case ACTIONS.DISMISS_DROPDOWN_ALERT:
+      return initialState
 
-  default:
-    return state
+    default:
+      return state
   }
 }
 

@@ -2,32 +2,40 @@
 
 import * as ACTIONS from './actions'
 import {combineReducers} from 'redux'
+import type {Action} from '../../../ReduxTypes.js'
+import type {AbcTransaction} from 'edge-login'
 
-const displayAlert = (state = false, action = {}) => {
+const displayAlert = (state: boolean = false, action: Action) => {
   const {type} = action
   switch (type) {
-  case ACTIONS.DISPLAY_TRANSACTION_ALERT:
-    return true
-  case ACTIONS.DISMISS_TRANSACTION_ALERT:
-    return false
-  default:
-    return state
+    case ACTIONS.DISPLAY_TRANSACTION_ALERT:
+      return true
+    case ACTIONS.DISMISS_TRANSACTION_ALERT:
+      return false
+    default:
+      return state
   }
 }
 
-const abcTransaction = (state = '', action = {}) => {
-  const {type, data: {abcTransaction} = {} } = action
-  switch (type) {
-  case ACTIONS.DISPLAY_TRANSACTION_ALERT:
-    return abcTransaction
-  case ACTIONS.DISMISS_TRANSACTION_ALERT:
-    return ''
-  default:
-    return state
+type AbcTransactionState = AbcTransaction | ''
+
+const abcTransaction = (state: AbcTransactionState = '', action: Action) => {
+  switch (action.type) {
+    case ACTIONS.DISPLAY_TRANSACTION_ALERT:
+      if (action.data) {
+        return action.data.abcTransaction
+      }
+      return state
+    case ACTIONS.DISMISS_TRANSACTION_ALERT:
+      return ''
+    default:
+      return state
   }
 }
 
-export default combineReducers({
+export const transactionAlert = combineReducers({
   displayAlert,
   abcTransaction
 })
+
+export default transactionAlert

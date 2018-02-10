@@ -5,14 +5,17 @@ import {
   Image
 } from 'react-native'
 import MDIcon from 'react-native-vector-icons/MaterialIcons'
+import SafeAreaView from '../SafeAreaView/SafeAreaViewDrawer.ui.js'
 import Gradient from '../Gradient/Gradient.ui'
 
 import Main from './Component/MainConnector'
-import ExchangeRate from '../ExchangeRate/ExchangedExchangeRate.ui.js'
+import ExchangedExchangeRate from '../ExchangeRate/ExchangedExchangeRate.ui.js'
 import styles from './style'
 import T from '../../components/FormattedText'
 
 import person from '../../../../assets/images/sidenav/accounts.png'
+import { emptyGuiDenomination } from '../../../../types'
+import { getDenomFromIsoCode } from '../../../utils.js'
 
 export default class ControlPanel extends Component {
   _handlePressUserList = () => {
@@ -25,47 +28,60 @@ export default class ControlPanel extends Component {
   }
 
   render () {
-    const primaryDisplayAmount = '1'
     const {
-      primaryInfo,
-      secondaryInfo,
-      secondaryDisplayAmount,
+      primaryDisplayCurrencyCode,
+      primaryDisplayDenomination,
+      primaryExchangeDenomination,
+      secondaryDisplayCurrencyCode,
       secondaryToPrimaryRatio
     } = this.props
+
+    const secondaryExchangeDenomination = secondaryDisplayCurrencyCode ? getDenomFromIsoCode(secondaryDisplayCurrencyCode) : ''
+
+    const primaryInfo = {
+      displayCurrencyCode: primaryDisplayCurrencyCode,
+      displayDenomination: primaryDisplayDenomination || emptyGuiDenomination,
+      exchangeDenomination: primaryExchangeDenomination || emptyGuiDenomination
+    }
+    const secondaryInfo = {
+      displayCurrencyCode: secondaryDisplayCurrencyCode,
+      displayDenomination: secondaryExchangeDenomination || emptyGuiDenomination,
+      exchangeDenomination: secondaryExchangeDenomination || emptyGuiDenomination
+    }
 
     const arrowIcon = this.props.usersView
       ? 'keyboard-arrow-up'
       : 'keyboard-arrow-down'
 
     return (
-      <Gradient style={styles.container}>
-        <View style={styles.bitcoin.container}>
-          <T style={styles.bitcoin.icon} />
-          <ExchangeRate
-            primaryDisplayAmount={primaryDisplayAmount}
-            primaryInfo={primaryInfo}
-            secondaryDisplayAmount={secondaryDisplayAmount}
-            secondaryInfo={secondaryInfo}
-            secondaryToPrimaryRatio={secondaryToPrimaryRatio} />
-        </View>
-
-        <TouchableHighlight style={styles.user.container}
-          onPress={this._handlePressUserList}
-          underlayColor={styles.underlay.color}>
-          <View style={{flexDirection: 'row'}}>
-            <View style={styles.iconImageContainer}>
-              <Image style={styles.iconImage}
-                source={person} />
-            </View>
-            <T style={styles.user.name}>
-              {this.props.username}
-            </T>
-            <MDIcon style={styles.icon} name={arrowIcon} />
+      <SafeAreaView>
+        <Gradient style={styles.container}>
+          <View style={styles.bitcoin.container}>
+            <T style={styles.bitcoin.icon} />
+            <ExchangedExchangeRate
+              primaryCurrencyInfo={primaryInfo}
+              secondaryCurrencyInfo={secondaryInfo}
+              exchangeSecondaryToPrimaryRatio={secondaryToPrimaryRatio} />
           </View>
-        </TouchableHighlight>
 
-        <Main />
-      </Gradient>
+          <TouchableHighlight style={styles.user.container}
+            onPress={this._handlePressUserList}
+            underlayColor={styles.underlay.color}>
+            <View style={{flexDirection: 'row'}}>
+              <View style={styles.iconImageContainer}>
+                <Image style={styles.iconImage}
+                  source={person} />
+              </View>
+              <T style={styles.user.name}>
+                {this.props.username}
+              </T>
+              <MDIcon style={styles.icon} name={arrowIcon} />
+            </View>
+          </TouchableHighlight>
+
+          <Main />
+        </Gradient>
+      </SafeAreaView>
     )
   }
 }

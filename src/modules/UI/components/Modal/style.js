@@ -4,7 +4,7 @@ import {
   StyleSheet
 } from 'react-native'
 import THEME from '../../../../theme/variables/airbitz'
-import PLATFORM from '../../../../theme/variables/platform'
+import { PLATFORM } from '../../../../theme/variables/platform'
 export const styles = {
   // modal styles
   modalContainer: {
@@ -18,11 +18,11 @@ export const styles = {
     position: 'absolute',
     top: PLATFORM.deviceHeight * 1 / 8,
     left: PLATFORM.deviceWidth * 1 / 8 - 20,
-    backgroundColor:'transparent'
+    backgroundColor: 'transparent'
   },
   visibleModal: {
     zIndex: 1,
-    paddingVertical: 6,
+    paddingBottom: 14,
     borderRadius: 3,
     backgroundColor: THEME.COLORS.WHITE,
     width: PLATFORM.deviceWidth * 3 / 4
@@ -41,9 +41,12 @@ export const styles = {
     justifyContent: 'center',
     zIndex: 200
   },
+  exitRowEmpty: {
+    height: 30
+  },
   exitButton: {
     backgroundColor: 'transparent',
-    width: 40,
+    width: 30,
     height: 30,
     alignItems: 'center',
     justifyContent: 'center'
