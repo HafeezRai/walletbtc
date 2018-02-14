@@ -27,7 +27,7 @@
     "cover": "jest --coverage",
     "flow": "flow",
     "flow:0": "flow; exit 0",
-    "format": "import-sort -l --write '*.js' 'src/**/*.js'; prettier-eslint --write '*.js' 'src/**/*.js'",
+    "format": "prettier-eslint --write '*.js' 'src/**/*.js'",
     "postinstall": "sh ./postinstall.sh",
     "ios:run": "react-native run-ios",
     "jest": "jest",
@@ -158,9 +158,6 @@
     "express": "^4.16.2",
     "flow-bin": "^0.54.1",
     "husky": "^0.12.0",
-    "import-sort-cli": "^4.2.0",
-    "import-sort-parser-babylon": "^3.2.0",
-    "import-sort-style-module": "^3.0.0",
     "jest": "^20.0.4",
     "jsonfile": "^4.0.0",
     "nyc": "^10.0.0",
@@ -168,20 +165,10 @@
     "rn-nodeify": "^7.0.1",
     "updot": "^1.1.5"
   },
-  "importSort": {
-    ".js, .es": {
-      "parser": "babylon",
-      "style": "module"
-    }
-  },
   "jest": {
     "preset": "react-native",
-    "transformIgnorePatterns": [
-      "node_modules/mobx-react"
-    ],
-    "setupFiles": [
-      "./testSetup.js"
-    ]
+    "transformIgnorePatterns": ["node_modules/mobx-react"],
+    "setupFiles": ["./testSetup.js"]
   },
   "prettier": {
     "printWidth": 160
@@ -212,8 +199,6 @@
     "zlib": "browserify-zlib"
   },
   "rnpm": {
-    "assets": [
-      "./src/assets/fonts"
-    ]
+    "assets": ["./src/assets/fonts"]
   }
 }
