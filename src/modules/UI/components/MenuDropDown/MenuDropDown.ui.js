@@ -1,10 +1,10 @@
 // @flow
-import React, {Component} from 'react'
-import {View, Text, UIManager, findNodeHandle} from 'react-native'
-import Menu, {MenuOptions, MenuOption, MenuTrigger} from 'react-native-menu'
-import {Icon} from '../Icon/Icon.ui'
+import React, { Component } from 'react'
+import { View, Text, UIManager, findNodeHandle } from 'react-native'
+import Menu, { MenuOptions, MenuOption, MenuTrigger } from 'react-native-menu'
+import { Icon } from '../Icon/Icon.ui'
 import * as Constants from '../../../../constants/indexConstants'
-import {PLATFORM} from '../../../../theme/variables/platform.js'
+import { PLATFORM } from '../../../../theme/variables/platform.js'
 
 type Props = {
   style: any,
@@ -64,7 +64,7 @@ export default class MenuDropDown extends Component<Props, State> {
 
   render () {
     const deviceHeight = PLATFORM.deviceHeight
-    const verticalBuffer = ((this.state.pageY + this.state.height - 8) > PLATFORM.deviceHeight) ? 12 : 0
+    const verticalBuffer = this.state.pageY + this.state.height - 8 > PLATFORM.deviceHeight ? 12 : 0
     const lowerLimitOfMenu = this.state.pageY + this.state.height
     const offset = lowerLimitOfMenu - deviceHeight
     const newPageY = this.state.pageY - offset - verticalBuffer
@@ -75,15 +75,13 @@ export default class MenuDropDown extends Component<Props, State> {
     }
     return (
       <View style={[style.container]}>
-        <Menu style={[style.menuButton]} onSelect={(value) => this.props.onSelect(value)}>
-          <MenuTrigger style={[style.menuTrigger]}>
-            {this.renderMenuIcon(style)}
-          </MenuTrigger>
-            <MenuOptions ref='menuInteriorParent' optionsContainerStyle={[optionsStyle]}>
-              <View ref='menuInterior' onLayout={this._onInternalLayout}>
-                {this.renderMenuOptions(style)}
-              </View>
-            </MenuOptions>
+        <Menu style={[style.menuButton]} onSelect={value => this.props.onSelect(value)}>
+          <MenuTrigger style={[style.menuTrigger]}>{this.renderMenuIcon(style)}</MenuTrigger>
+          <MenuOptions ref="menuInteriorParent" optionsContainerStyle={[optionsStyle]}>
+            <View ref="menuInterior" onLayout={this._onInternalLayout}>
+              {this.renderMenuOptions(style)}
+            </View>
+          </MenuOptions>
         </Menu>
       </View>
     )
