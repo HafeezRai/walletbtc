@@ -450,7 +450,6 @@ const strings = {
   password_check_incorrect_password_message: 'Incorrect Password. Try again?',
   password_check_incorrect_password_title: 'Incorrect Password.',
   password_check_remember_message: 'Do you still remember your password? You will need your password if your device gets lost or stolen, or if you uninstall the app.\\nEnter it below to make sure:',
-  password_check_remember_title: 'Remember your password?',
   password_check_skip_formatted: 'Please create a new account and transfer your funds if you forgot your password. Your password CANNOT BE RECOVERED by %1$s and you will lose access to your funds without your password.',
   password_check_skip: 'Please create a new account and transfer your funds if you forgot your password.',
   password_rule_no_lowercase: 'Must have at least one lower case letter',
