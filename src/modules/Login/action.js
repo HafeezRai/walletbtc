@@ -135,6 +135,7 @@ export const initializeAccount = (account: AbcAccount, touchIdInfo: Object) => a
     const coreFinal = { ...coreDefaults, ...coreSettings }
     accountInitObject.pinMode = coreFinal.pinMode
     accountInitObject.otpMode = coreFinal.otpMode
+    console.log(accountInitObject)
     dispatch(actions.dispatchActionObject(Constants.ACCOUNT_INIT_COMPLETE, accountInitObject))
     // $FlowFixMe
     dispatch(updateWalletsRequest())

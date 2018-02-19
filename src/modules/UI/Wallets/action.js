@@ -262,12 +262,16 @@ export async function deleteCustomTokenAsync (walletId: string, currencyCode: st
   const account = CORE_SELECTORS.getAccount(state)
   const coreWalletsToUpdate = []
   const receivedSyncSettings = await SETTINGS_API.getSyncedSettings(account)
+
   receivedSyncSettings[currencyCode].isVisible = false
+
   const syncedCustomTokens: Array<CustomTokenInfo> = [...receivedSyncSettings.customTokens]
   const indexOfSyncedToken: number = _.findIndex(syncedCustomTokens, item => item.currencyCode === currencyCode)
+
   syncedCustomTokens[indexOfSyncedToken].isVisible = false
   receivedSyncSettings.customTokens = syncedCustomTokens
   await SETTINGS_API.setSyncedSettingsAsync(account, receivedSyncSettings)
+
   const walletPromises = Object.values(guiWallets).map(wallet => {
     // Flow is having issues here, need to fix
     // $FlowFixMe
@@ -282,6 +286,7 @@ export async function deleteCustomTokenAsync (walletId: string, currencyCode: st
     return Promise.resolve()
   })
   await Promise.all(walletPromises)
+
   return coreWalletsToUpdate
 }
 
