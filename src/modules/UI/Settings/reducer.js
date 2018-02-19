@@ -210,13 +210,6 @@ export const settings = (state: SettingsState = initialState, action: Action) =>
         confirmPasswordError: confirmPasswordError
       }
     }
-    case ACTION.SET_LOGIN_STATUS: {
-      const { loginStatus } = data
-      return {
-        ...state,
-        loginStatus
-      }
-    }
 
     case ACTION.TOGGLE_PIN_LOGIN_ENABLED: {
       const { pinLoginEnabled } = data
@@ -376,6 +369,7 @@ export const settings = (state: SettingsState = initialState, action: Action) =>
         otpResetPending: false
       }
     }
+
     case ACTION.UPDATE_SETTINGS: {
       const { settings } = data
       return settings
@@ -506,10 +500,6 @@ export const settings = (state: SettingsState = initialState, action: Action) =>
         ...state,
         isTouchEnabled: data.isTouchEnabled
       }
-    }
-
-    case ACTION.ADD_CURRENCY_PLUGIN: {
-      return currencyPLuginUtil(state, data)
     }
 
     default:
