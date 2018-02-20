@@ -423,3 +423,10 @@ export function precisionAdjust (params: PrecisionAdjustParams): number {
 export const noOp = (optionalArgument: any = null) => {
   return optionalArgument
 }
+
+export const MILLISECONDS_PER_DAY = 86400000
+export const daysBetween = (a: Date, b: Date) => {
+  const millisecondsBetween = b.getTime() - a.getTime()
+  const daysBetween = millisecondsBetween / MILLISECONDS_PER_DAY
+  return daysBetween
+}
